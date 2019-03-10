@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- * tiles.xml * * Copyright (C) 2018 Universidad de Sevilla * * The use 
+	of this project is hereby constrained to the conditions of the * TDG Licence, 
+	a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+
+	<definition name="actor/listSuspicious" extends="master.page">
+		<put-attribute name="title" value="List of suspicious actors" />
+		<put-attribute name="body" value="/views/actor/listSuspicious.jsp" />
+	</definition>
+
+	<definition name="actor/display" extends="master.page">
+		<put-attribute name="title" value="Actor display" />
+		<put-attribute name="body" value="/views/actor/display.jsp" />
+	</definition>
+
+	<definition name="actor/displayBrotherhood" extends="master.page">
+		<put-attribute name="title" value="Actor display" />
+		<put-attribute name="body"
+			value="/views/actor/displayBrotherhood.jsp" />
+	</definition>
+
+
+	<definition name="actor/register" extends="master.page">
+		<put-attribute name="title" value="Actor register" />
+		<put-attribute name="body" value="/views/actor/register.jsp" />
+	</definition>
+
+	<definition name="actor/registerBrotherhood" extends="master.page">
+		<put-attribute name="title" value="Actor register" />
+		<put-attribute name="body"
+			value="/views/actor/registerBrotherhood.jsp" />
+	</definition>
+
+	<definition name="actor/registerAdministrator" extends="master.page">
+		<put-attribute name="title" value="Actor register" />
+		<put-attribute name="body"
+			value="/views/actor/registerAdministrator.jsp" />
+	</definition>
+
+	<definition name="actor/edit" extends="master.page">
+		<put-attribute name="title" value="Edit actor" />
+		<put-attribute name="body" value="/views/actor/edit.jsp" />
+	</definition>
+
+	<definition name="actor/editBrotherhood" extends="master.page">
+		<put-attribute name="title" value="Edit actor" />
+		<put-attribute name="body" value="/views/actor/editBrotherhood.jsp" />
+	</definition>
+
+
+</tiles-definitions>

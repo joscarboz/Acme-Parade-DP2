@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * PopulateDatabase.xml * * Copyright (C) 2019 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+
+	<!-- User accounts -->
+<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+		<property name="accountNonLocked" value="true" />
+	</bean>
+
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Administrator Name 1" />
+		<property name="middleName" value="Administrator Middle Name 1" />
+		<property name="surname" value="Administrator Surname 1" />
+		<property name="photo" value="https://photoadministrator1.jpg" />
+		<property name="email" value="administrator@email.com" />
+		<property name="address" value="Administrator Address 1" />
+		<property name="phone" value="+34 (111) 666666666" />
+		<property name="userAccount" ref="userAccount1" />
+		<property name="socialProfiles">
+
+			<list>
+			</list>
+		</property>
+
+		<property name="spammer" value="false" />
+		<property name="score" value="0.0" />
+		<property name="boxes">
+
+			<list>
+				<ref bean="inbox1" />
+				<ref bean="outbox1" />
+				<ref bean="trashbox1" />
+				<ref bean="spambox1" />
+				<ref bean="custombox1" />
+				<ref bean="notificationbox1" />
+			</list>
+		</property>
+
+	</bean>
+
+	<!-- In box 1 -->
+	<bean id="inbox1" class="domain.Box">
+		<property name="title" value="in box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- out box 1 -->
+	<bean id="outbox1" class="domain.Box">
+		<property name="title" value="out box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Trash box 1 -->
+	<bean id="trashbox1" class="domain.Box">
+		<property name="title" value="trash box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Spam box 1 -->
+	<bean id="spambox1" class="domain.Box">
+		<property name="title" value="spam box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Custom box 1 -->
+	<bean id="custombox1" class="domain.Box">
+		<property name="title" value="Custom box" />
+		<property name="custom" value="True" />
+	</bean>
+
+	<!-- Notification box 1 -->
+	<bean id="notificationbox1" class="domain.Box">
+		<property name="title" value="notification box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Other domain beans come here -->
+
+	<bean id="defaultArea" class="domain.Area">
+		<property name="name" value="defaultArea" />
+		<property name="pictures">
+			<list>
+				<value></value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- SystemConfig -->
+
+	<bean id="systemConfig" class="domain.SystemConfig">
+		<property name="name" value="Acme Madrugá" />
+		<property name="banner" value="https://tinyurl.com/acme-madruga" />
+		<property name="welcomeMessageEng"
+			value="Welcome to Acme Madrugá, the site to organise your processions." />
+		<property name="welcomeMessageEsp"
+			value="¡Bienvenidos a Acme Madrugá!  Tu sitio para organizar procesiones." />
+		<property name="phonePrefix" value="+34" />
+		<property name="finderMaxResults" value="10" />
+		<property name="finderCacheHours" value="1" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you've been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millon</value>
+				<value>has sido seleccionado</value>
+			</list>
+		</property>
+		<property name="positiveWords">
+			<list>
+				<value>good</value>
+				<value>fantastic</value>
+				<value>excellent</value>
+				<value>great</value>
+				<value>amazing</value>
+				<value>terrific</value>
+				<value>beautiful</value>
+				<value>bueno</value>
+				<value>fantastico</value>
+				<value>excelente</value>
+				<value>bien</value>
+				<value>impresionante</value>
+				<value>estupendo</value>
+				<value>precioso</value>
+			</list>
+		</property>
+		<property name="negativeWords">
+			<list>
+				<value>not</value>
+				<value>bad</value>
+				<value>horrible</value>
+				<value>average</value>
+				<value>disaster</value>
+				<value>no</value>
+				<value>malo</value>
+				<value>horrible</value>
+				<value>mediocre</value>
+				<value>desastroso</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<!-- Positions -->
+
+
+	<bean id="position1" class="domain.Position">
+
+		<property name="title" value="President" />
+
+		<property name="spanishTitle" value="Presidente" />
+
+	</bean>
+
+	<bean id="position2" class="domain.Position">
+
+		<property name="title" value="Vice President" />
+
+		<property name="spanishTitle" value="Vicepresidente" />
+
+	</bean>
+
+	<bean id="position3" class="domain.Position">
+
+		<property name="title" value="Secretary" />
+
+		<property name="spanishTitle" value="Secretario" />
+
+	</bean>
+
+	<bean id="position4" class="domain.Position">
+
+		<property name="title" value="Treasurer" />
+
+		<property name="spanishTitle" value="Tesorero" />
+
+	</bean>
+
+	<bean id="position5" class="domain.Position">
+
+		<property name="title" value="Historian" />
+
+		<property name="spanishTitle" value="Historiador" />
+
+	</bean>
+
+	<bean id="position6" class="domain.Position">
+
+		<property name="title" value="Fundraiser" />
+
+		<property name="spanishTitle" value="Promotor" />
+
+	</bean>
+
+	<bean id="position7" class="domain.Position">
+
+		<property name="title" value="Officer" />
+
+		<property name="spanishTitle" value="Vocal" />
+
+	</bean>
+	
+
+</beans>

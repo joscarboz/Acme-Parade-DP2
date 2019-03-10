@@ -43,7 +43,7 @@ public class SystemConfigService {
 		Assert.notNull(systemConfig);
 		Assert.isTrue(systemConfig.getId() != 0);
 		SystemConfig result;
-		// Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(Authority.ADMIN));
+		//Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(Authority.ADMIN));
 		result = this.systemConfigRepository.save(systemConfig);
 
 		return result;
@@ -161,5 +161,7 @@ public class SystemConfigService {
 		result.setSpamWords(spamWords);
 		return result;
 	}
-
+	public void flush() {
+		this.systemConfigRepository.flush();
+	}
 }

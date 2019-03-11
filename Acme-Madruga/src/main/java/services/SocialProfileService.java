@@ -99,4 +99,7 @@ public class SocialProfileService {
 		return socialIdentity;
 	}
 
+	public void flush() {
+		this.socialprofileRepository.flush();
+	}
 }

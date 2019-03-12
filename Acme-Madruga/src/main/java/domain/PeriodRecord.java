@@ -18,6 +18,7 @@ public class PeriodRecord extends DomainEntity {
 	private Collection<String> pictures;
 	private int startYear;
 	private int endYear;
+	private String title;
 
 	@SafeHtml
 	@NotBlank
@@ -53,7 +54,15 @@ public class PeriodRecord extends DomainEntity {
 	public void setEndYear(int endYear) {
 		this.endYear = endYear;
 	}
-	
-	
+
+	@SafeHtml
+	@NotBlank
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 }

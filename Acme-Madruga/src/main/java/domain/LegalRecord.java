@@ -15,6 +15,7 @@ public class LegalRecord extends DomainEntity {
 	private String legalName;
 	private int VAT;
 	private String laws;
+	private String title;
 
 	@SafeHtml
 	@NotBlank
@@ -52,6 +53,16 @@ public class LegalRecord extends DomainEntity {
 
 	public void setLaws(String laws) {
 		this.laws = laws;
+	}
+	
+	@SafeHtml
+	@NotBlank
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

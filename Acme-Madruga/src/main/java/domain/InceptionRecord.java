@@ -16,6 +16,7 @@ public class InceptionRecord extends DomainEntity {
 
 	private String description;
 	private Collection<String> pictures;
+	private String title;
 
 	@SafeHtml
 	@NotBlank
@@ -35,5 +36,17 @@ public class InceptionRecord extends DomainEntity {
 	public void setPictures(Collection<String> pictures) {
 		this.pictures = pictures;
 	}
+
+	@SafeHtml
+	@NotBlank
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	
 
 }

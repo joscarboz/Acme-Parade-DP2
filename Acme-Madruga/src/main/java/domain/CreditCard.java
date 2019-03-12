@@ -3,12 +3,11 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -22,6 +21,7 @@ public class CreditCard extends DomainEntity {
 	private int expirationYear;
 
 	@NotBlank
+	@SafeHtml
 	public String getHolder() {
 		return this.holder;
 	}
@@ -31,6 +31,7 @@ public class CreditCard extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getMake() {
 		return make;
 	}
@@ -49,8 +50,7 @@ public class CreditCard extends DomainEntity {
 		this.number = number;
 	}
 
-	@Min(value = 100)
-	@Max(value = 999)
+	@Range(min=100, max=999)
 	public int getCvv() {
 		return this.cvv;
 	}

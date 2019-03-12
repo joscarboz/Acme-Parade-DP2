@@ -99,6 +99,7 @@ public class Procession extends DomainEntity {
 	// Relationships
 	private Collection<Float> floats;
 	private Collection<Request> requests;
+	private Collection<Segment> segments;
 
 	@OneToMany
 	@NotEmpty
@@ -126,6 +127,15 @@ public class Procession extends DomainEntity {
 
 	public void setStatus(final String status) {
 		this.status = status;
+	}
+
+	@OneToMany
+	public Collection<Segment> getSegments() {
+		return segments;
+	}
+
+	public void setSegments(Collection<Segment> segments) {
+		this.segments = segments;
 	}
 
 }

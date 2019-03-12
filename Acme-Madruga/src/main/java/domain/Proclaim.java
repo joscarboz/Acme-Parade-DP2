@@ -10,6 +10,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -31,6 +32,7 @@ public class Proclaim extends DomainEntity {
 	}
 
 	@Size(min = 0, max = 250)
+	@SafeHtml
 	public String getText() {
 		return text;
 	}

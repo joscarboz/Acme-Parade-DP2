@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 public class MiscellaneousRecord extends DomainEntity {
 
 	private String description;
+	private String title;
 
 	@SafeHtml
 	@NotBlank
@@ -23,5 +24,14 @@ public class MiscellaneousRecord extends DomainEntity {
 		this.description = description;
 	}
 
+	@SafeHtml
+	@NotBlank
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 }

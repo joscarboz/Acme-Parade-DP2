@@ -11,27 +11,27 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<b><spring:message code="procession.ticker" /></b>
-<jstl:out value="${procession.ticker}" />
+<b><spring:message code="parade.ticker" /></b>
+<jstl:out value="${parade.ticker}" />
 <br />
 
-<b><spring:message code="procession.title" /></b>
-<jstl:out value="${procession.title}" />
+<b><spring:message code="parade.title" /></b>
+<jstl:out value="${parade.title}" />
 <br />
 
-<b><spring:message code="procession.description" /></b>
-<jstl:out value="${procession.description}" />
+<b><spring:message code="parade.description" /></b>
+<jstl:out value="${parade.description}" />
 <br />
 
-<b><spring:message code="procession.moment" /></b>
-<jstl:out value="${procession.moment}" />
+<b><spring:message code="parade.moment" /></b>
+<jstl:out value="${parade.moment}" />
 <br />
 
-<b><spring:message code="procession.draftMode" /></b>
-<jstl:out value="${procession.draftMode}" />
+<b><spring:message code="parade.draftMode" /></b>
+<jstl:out value="${parade.draftMode}" />
 <br />
 
-<b><spring:message code="procession.floats" /></b>
+<b><spring:message code="parade.floats" /></b>
 <display:table pagesize="5" class="displaytag" name="floats"
 	requestURI="float/list.do" id="row">
 	<spring:message code="float.title" var="titleHeader" />
@@ -48,7 +48,7 @@
 
 <jstl:choose>
 	<jstl:when test="${role == 'brotherhood'}">
-		<acme:cancel code="procession.cancel" url="procession/${role}/list.do" />
+		<acme:cancel code="parade.cancel" url="parade/${role}/list.do" />
 	</jstl:when>
 </jstl:choose>
 

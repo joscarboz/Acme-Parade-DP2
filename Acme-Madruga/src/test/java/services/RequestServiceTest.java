@@ -28,11 +28,11 @@ public class RequestServiceTest extends AbstractTest {
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
 			{	//Creación correcta de una request
-				"member2", "procession2", null
+				"member2", "parade2", null
 			}, {//Anonimo no puede crear una Position
-				null, "procession2", IllegalArgumentException.class
+				null, "parade2", IllegalArgumentException.class
 			}, {//Solo member puede crear una Position
-				"brotherhood1", "procession2", IllegalArgumentException.class
+				"brotherhood1", "parade2", IllegalArgumentException.class
 			},
 
 		};
@@ -66,15 +66,15 @@ public class RequestServiceTest extends AbstractTest {
 	}
 
 	// Ancillary methods ------------------------------------------------------
-	protected void createAndSaveTemplate(final String userName, final String processionBeanName, final Class<?> expected) {
+	protected void createAndSaveTemplate(final String userName, final String paradeBeanName, final Class<?> expected) {
 		Class<?> caught;
 		final Request request;
 
 		caught = null;
 		try {
 			this.authenticate(userName);
-			final Integer processionId = super.getEntityId(processionBeanName);
-			request = this.requestService.registerPrincipal(processionId);
+			final Integer paradeId = super.getEntityId(paradeBeanName);
+			request = this.requestService.registerPrincipal(paradeId);
 			this.requestService.save(request);
 			this.requestService.flush();
 			this.unauthenticate();

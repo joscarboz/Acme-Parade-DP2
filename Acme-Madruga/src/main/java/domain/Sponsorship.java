@@ -59,15 +59,15 @@ public class Sponsorship extends DomainEntity {
 
 	// Relations
 
-	private Procession parade;
+	private Parade parade;
 	private CreditCard creditCard;
 
 	@ManyToOne(optional = false)
-	public Procession getParade() {
+	public Parade getParade() {
 		return parade;
 	}
 
-	public void setParade(Procession parade) {
+	public void setParade(Parade parade) {
 		this.parade = parade;
 	}
 

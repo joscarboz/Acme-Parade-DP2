@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.MemberService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
 import controllers.AbstractController;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Controller
@@ -33,7 +33,7 @@ public class RequestMemberController extends AbstractController {
 	private MemberService		memberService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 
 	//Constructor
@@ -67,14 +67,14 @@ public class RequestMemberController extends AbstractController {
 	// Creation --------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(final Integer processionId) {
+	public ModelAndView create(final Integer paradeId) {
 		ModelAndView result;
-		final Procession procession = this.processionService.findOne(processionId);
+		final Parade parade = this.paradeService.findOne(paradeId);
 		final Member member = this.memberService.findByPrincipal();
 
 		final Request request = this.requestService.create();
 		request.setMember(member);
-		request.setProcession(procession);
+		request.setParade(parade);
 
 		try {
 			final Request saved = this.requestService.save(request);
@@ -164,12 +164,12 @@ public class RequestMemberController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Request request, final String message) {
 		final ModelAndView result;
 
-		final Collection<Procession> processions = this.processionService.findAll();
+		final Collection<Parade> parades = this.paradeService.findAll();
 
 		result = new ModelAndView("request/edit");
 		result.addObject("request", request);
 		result.addObject("role", "member");
-		result.addObject("processions", processions);
+		result.addObject("parades", parades);
 		result.addObject("message", message);
 		result.addObject("requestURI", "request/member/edit.do");
 		return result;

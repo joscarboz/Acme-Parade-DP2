@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import domain.Administrator;
 import domain.Area;
 import domain.Position;
-import domain.Procession;
+import domain.Parade;
 
 @Repository
 public interface AdministratorRepository extends
@@ -27,8 +27,8 @@ public interface AdministratorRepository extends
 	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='PENDING'")
 	Double pendingRequestRatio();
 
-	@Query("select p from Procession p where p.moment between CURRENT_DATE and CURRENT_DATE + 30")
-	Collection<Procession> upcomingProcessions();
+	@Query("select p from Parade p where p.moment between CURRENT_DATE and CURRENT_DATE + 30")
+	Collection<Parade> upcomingParades();
 
 	@Query("select p from Position p, Enrolment e where e.position=p group by p")
 	Collection<Position> positionHistogram();
@@ -36,14 +36,14 @@ public interface AdministratorRepository extends
 	@Query("select count(p) from Position p, Enrolment e where e.position=p group by p")
 	Collection<Long> longHistogram();
 
-	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='REJECTED' and r.procession.id=?1")
-	Double rejectedRequestRatioPerProcession(int id);
+	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='REJECTED' and r.parade.id=?1")
+	Double rejectedRequestRatioPerParade(int id);
 
-	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='APPROVED' and r.procession.id=?1")
-	Double approvedRequestRatioPerProcession(int id);
+	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='APPROVED' and r.parade.id=?1")
+	Double approvedRequestRatioPerParade(int id);
 
-	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='PENDING' and r.procession.id=?1")
-	Double pendingRequestRatioPerProcession(int id);
+	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='PENDING' and r.parade.id=?1")
+	Double pendingRequestRatioPerParade(int id);
 
 	@Query("select count(r)/(select COUNT(r) from Request r)*1.0 from Request r where r.status='APPROVED' and r.member.id=?1")
 	Double approvedRequestRatioPerMemberID(int id);

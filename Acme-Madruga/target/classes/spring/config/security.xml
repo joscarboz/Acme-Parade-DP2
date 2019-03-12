@@ -76,7 +76,7 @@
 		<security:intercept-url pattern="/member/display.do"
 			access="permitAll" />
 
-		<security:intercept-url pattern="/procession/display.do"
+		<security:intercept-url pattern="/parade/display.do"
 			access="permitAll" />
 
 		<security:intercept-url pattern="/float/display.do"
@@ -104,9 +104,9 @@
 
 		<security:intercept-url pattern="/request/brotherhood/**"
 			access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/procession/brotherhood/**"
+		<security:intercept-url pattern="/parade/brotherhood/**"
 			access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/procession/member/list.do"
+		<security:intercept-url pattern="/parade/member/list.do"
 			access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/enrolment/member/**"
 			access="hasRole('MEMBER')" />

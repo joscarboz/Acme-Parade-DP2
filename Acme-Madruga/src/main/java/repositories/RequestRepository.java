@@ -12,8 +12,8 @@ import domain.Request;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
-	@Query("select r from Procession p join p.requests r where p.id=?1 and r.status = '?2'")
-	Collection<Request> findByProcessionAndStatus(int id, String status);
+	@Query("select r from Parade p join p.requests r where p.id=?1 and r.status = '?2'")
+	Collection<Request> findByParadeAndStatus(int id, String status);
 
 	@Query("select count(r) from Request r where r.member.id=?1")
 	int countByMember(int memberId);
@@ -24,7 +24,7 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	@Query("select r from Request r where r.member.id = ?1")
 	Collection<Request> findByMemberId(int id);
 
-	@Query("select p.requests from Brotherhood b join b.processions p where b.id = ?1")
+	@Query("select p.requests from Brotherhood b join b.parades p where b.id = ?1")
 	Collection<Request> findByBrotherhoodId(int id);
 
 }

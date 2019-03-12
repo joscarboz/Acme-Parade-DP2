@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
 import repositories.FloatRepository;
 import domain.Brotherhood;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -85,7 +85,7 @@ public class FloatService {
 
 		floats.remove(flot);
 
-		for (final Procession p : brotherhood.getProcessions())
+		for (final Parade p : brotherhood.getParades())
 			p.getFloats().remove(flot);
 
 		this.brotherhoodService.save(brotherhood);

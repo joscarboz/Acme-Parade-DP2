@@ -35,7 +35,7 @@ import domain.Area;
 import domain.Brotherhood;
 import domain.Member;
 import domain.Position;
-import domain.Procession;
+import domain.Parade;
 import domain.SystemConfig;
 import forms.RegisterAdminForm;
 import forms.RegisterForm;
@@ -101,8 +101,8 @@ public class AdministratorController extends AbstractController {
 		if (rejected == null)
 			rejected = 0.;
 
-		Collection<Procession> processions = this.adminService
-				.upcomingProcessions();
+		Collection<Parade> parades = this.adminService
+				.upcomingParades();
 
 		Collection<Member> acceptedReqMem = this.adminService
 				.acceptedRequestMembers();
@@ -151,7 +151,7 @@ public class AdministratorController extends AbstractController {
 
 		result.addObject("rejected", rejected);
 
-		result.addObject("upcomProces", processions);
+		result.addObject("upcomProces", parades);
 
 		result.addObject("acceptedReqMem", acceptedReqMem);
 

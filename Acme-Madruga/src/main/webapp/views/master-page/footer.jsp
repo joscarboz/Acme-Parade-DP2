@@ -17,7 +17,7 @@
 
 <hr />
 
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Co., Inc.</b>
+<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Madruga Co., Inc.</b>
 
 <br>
 <a href="law/terms-conditions.do"><spring:message code="master.page.law" /> </a>

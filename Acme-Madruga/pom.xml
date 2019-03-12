@@ -323,6 +323,6 @@
 	</dependencies>
 
 	<description>This system allows people share their favourite Shouts.</description>
-	<artifactId>Acme-Madruga</artifactId>
-	<name>Acme Madruga</name>
+	<artifactId>Acme-Parade</artifactId>
+	<name>Acme Parade</name>
 </project> 

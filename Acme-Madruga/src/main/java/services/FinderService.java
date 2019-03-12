@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 import repositories.FinderRepository;
 import domain.Finder;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -31,7 +31,7 @@ public class FinderService {
 	private MemberService		memberService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 	@Autowired
 	private SystemConfigService	systemConfigService;
@@ -49,7 +49,7 @@ public class FinderService {
 		Member member;
 
 		result = new Finder();
-		result.setResult(new HashSet<Procession>());
+		result.setResult(new HashSet<Parade>());
 		result.setKeyWord("");
 		result.setAreaName("");
 		result.setFinderTime(new Date());
@@ -72,9 +72,9 @@ public class FinderService {
 		Finder result;
 
 		Assert.notNull(finder);
-		List<Procession> findByKeyword = new ArrayList<Procession>(this.processionService.findByKeyword(finder));
-		final List<Procession> findByArea = new ArrayList<Procession>(this.processionService.findByArea(finder));
-		final List<Procession> findByDate = new ArrayList<Procession>(this.processionService.findByDate(finder));
+		List<Parade> findByKeyword = new ArrayList<Parade>(this.paradeService.findByKeyword(finder));
+		final List<Parade> findByArea = new ArrayList<Parade>(this.paradeService.findByArea(finder));
+		final List<Parade> findByDate = new ArrayList<Parade>(this.paradeService.findByDate(finder));
 		findByKeyword.retainAll(findByArea);
 		findByKeyword.retainAll(findByDate);
 		if (findByKeyword.size() > this.systemConfigService.findSystemConfiguration().getFinderMaxResults())

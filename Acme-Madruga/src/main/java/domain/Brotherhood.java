@@ -55,19 +55,19 @@ public class Brotherhood extends Actor {
 
 	// Relationships
 
-	private Collection<Procession> processions;
+	private Collection<Parade> parades;
 	private Collection<Float> floats;
 	private Collection<Enrolment> enrolments;
 	private Area area;
 	private Collection<History> history;
 
 	@OneToMany
-	public Collection<Procession> getProcessions() {
-		return this.processions;
+	public Collection<Parade> getParades() {
+		return this.parades;
 	}
 
-	public void setProcessions(final Collection<Procession> processions) {
-		this.processions = processions;
+	public void setParades(final Collection<Parade> parades) {
+		this.parades = parades;
 	}
 
 	@OneToMany

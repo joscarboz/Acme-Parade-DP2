@@ -65,7 +65,7 @@ public class Request extends DomainEntity {
 
 	//Relationships
 	private Member		member;
-	private Procession	procession;
+	private Parade	parade;
 
 
 	@ManyToOne(optional = false)
@@ -79,10 +79,10 @@ public class Request extends DomainEntity {
 
 	@ManyToOne(optional = false)
 	@NotNull
-	public Procession getProcession() {
-		return this.procession;
+	public Parade getParade() {
+		return this.parade;
 	}
-	public void setProcession(final Procession procession) {
-		this.procession = procession;
+	public void setParade(final Parade parade) {
+		this.parade = parade;
 	}
 }

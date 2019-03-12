@@ -17,20 +17,20 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ProcessionRepository;
+import repositories.ParadeRepository;
 import domain.Brotherhood;
 import domain.Finder;
 import domain.Float;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Service
 @Transactional
-public class ProcessionService {
+public class ParadeService {
 
 	@Autowired
-	private ProcessionRepository	processionRepository;
+	private ParadeRepository	paradeRepository;
 
 	@Autowired
 	private SystemConfigService		systemConfigService;
@@ -48,32 +48,32 @@ public class ProcessionService {
 	private Validator				validator;
 
 
-	public ProcessionService() {
+	public ParadeService() {
 		super();
 	}
 
-	public Collection<Procession> findAll() {
-		Collection<Procession> result;
+	public Collection<Parade> findAll() {
+		Collection<Parade> result;
 
-		result = this.processionRepository.findAll();
-
-		return result;
-	}
-
-	public Procession findOne(final int processionId) {
-		Assert.isTrue(processionId != 0);
-
-		Procession result;
-
-		result = this.processionRepository.findOne(processionId);
+		result = this.paradeRepository.findAll();
 
 		return result;
 	}
 
-	public Procession create() {
+	public Parade findOne(final int paradeId) {
+		Assert.isTrue(paradeId != 0);
+
+		Parade result;
+
+		result = this.paradeRepository.findOne(paradeId);
+
+		return result;
+	}
+
+	public Parade create() {
 
 		Assert.isTrue(!this.brotherhoodService.findByPrincipal().getArea().getName().equals("defaultArea"));
-		final Procession result = new Procession();
+		final Parade result = new Parade();
 		result.setTicker(this.systemConfigService.generateTicker());
 
 		result.setFloats(new LinkedList<Float>());
@@ -83,72 +83,72 @@ public class ProcessionService {
 		return result;
 	}
 
-	public Procession save(final Procession procession) {
+	public Parade save(final Parade parade) {
 
-		Assert.notNull(procession);
-		Assert.isTrue(procession.getMoment().after(Calendar.getInstance().getTime()));
+		Assert.notNull(parade);
+		Assert.isTrue(parade.getMoment().after(Calendar.getInstance().getTime()));
 
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
-		final Procession result = this.processionRepository.save(procession);
-		if (procession.getId() == 0) {
-			brotherhood.getProcessions().add(result);
+		final Parade result = this.paradeRepository.save(parade);
+		if (parade.getId() == 0) {
+			brotherhood.getParades().add(result);
 			this.brotherhoodService.save(brotherhood);
 
 		}
 		return result;
 	}
 
-	public void delete(final Procession procession) {
+	public void delete(final Parade parade) {
 
-		Assert.notNull(procession);
+		Assert.notNull(parade);
 
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 
-		final Collection<Procession> processions = brotherhood.getProcessions();
+		final Collection<Parade> parades = brotherhood.getParades();
 
-		Assert.isTrue(processions.contains(procession));
+		Assert.isTrue(parades.contains(parade));
 
-		final Collection<Request> requests = new HashSet<Request>(procession.getRequests());
-		Assert.isTrue(procession.isDraftMode());
+		final Collection<Request> requests = new HashSet<Request>(parade.getRequests());
+		Assert.isTrue(parade.isDraftMode());
 		for (final Request r : requests)
 			this.requestService.delete(r);
 
 		this.requestService.flush();
 
-		processions.remove(procession);
+		parades.remove(parade);
 		this.brotherhoodService.save(brotherhood);
 		this.brotherhoodService.flush();
-		this.processionRepository.delete(procession);
+		this.paradeRepository.delete(parade);
 	}
 
 	// Finder Methods
 
-	public Collection<Procession> findByKeyword(final Finder finder) {
-		List<Procession> result = new ArrayList<Procession>();
+	public Collection<Parade> findByKeyword(final Finder finder) {
+		List<Parade> result = new ArrayList<Parade>();
 		if (finder.getKeyWord().isEmpty()) { //TODO: Revisar
 			result.addAll(this.findAll());
 			if (result.size() > this.systemConfigService.findSystemConfiguration().getFinderMaxResults())
 				result = result.subList(0, this.systemConfigService.findSystemConfiguration().getFinderMaxResults());
 		} else
-			result.addAll(this.processionRepository.findByKeyword(finder.getKeyWord()));
+			result.addAll(this.paradeRepository.findByKeyword(finder.getKeyWord()));
 
 		return result;
 	}
 
-	public Collection<Procession> findByArea(final Finder finder) {
-		List<Procession> result = new ArrayList<Procession>();
+	public Collection<Parade> findByArea(final Finder finder) {
+		List<Parade> result = new ArrayList<Parade>();
 		if (finder.getAreaName().isEmpty()) { //TODO: Revisar
 			result.addAll(this.findAll());
 			if (result.size() > this.systemConfigService.findSystemConfiguration().getFinderMaxResults())
 				result = result.subList(0, this.systemConfigService.findSystemConfiguration().getFinderMaxResults());
 		} else
-			result.addAll(this.processionRepository.findByArea(finder.getAreaName()));
+			result.addAll(this.paradeRepository.findByArea(finder.getAreaName()));
 
 		return result;
 	}
 
-	public Collection<Procession> findByDate(final Finder finder) {
-		List<Procession> result = new ArrayList<Procession>();
+	public Collection<Parade> findByDate(final Finder finder) {
+		List<Parade> result = new ArrayList<Parade>();
 		if (finder.getMinDate() == null && finder.getMaxDate() == null) { //TODO: Revisar
 			result.addAll(this.findAll());
 			if (result.size() > this.systemConfigService.findSystemConfiguration().getFinderMaxResults())
@@ -158,57 +158,57 @@ public class ProcessionService {
 				final Date minimumDate = new Date(0);
 				minimumDate.setYear(0);
 				final Date maximumDate = finder.getMaxDate();
-				result.addAll(this.processionRepository.findByDate(minimumDate, maximumDate));
+				result.addAll(this.paradeRepository.findByDate(minimumDate, maximumDate));
 			}
 
 			if (finder.getMaxDate() == null) {
 				final Date maximumDate = new Date(0);
 				maximumDate.setYear(500);
 				final Date minimumDate = finder.getMinDate();
-				result.addAll(this.processionRepository.findByDate(minimumDate, maximumDate));
+				result.addAll(this.paradeRepository.findByDate(minimumDate, maximumDate));
 			} else {
 				final Date minimumDate = finder.getMinDate();
 				final Date maximumDate = finder.getMaxDate();
-				result.addAll(this.processionRepository.findByDate(minimumDate, maximumDate));
+				result.addAll(this.paradeRepository.findByDate(minimumDate, maximumDate));
 			}
 
 		}
 		return result;
 	}
 
-	public Collection<Procession> findAvailable(final Member member) {
+	public Collection<Parade> findAvailable(final Member member) {
 		Assert.isTrue(member.getId() != 0);
 		Assert.notNull(member);
 
-		final Collection<Procession> res = new ArrayList<>();
+		final Collection<Parade> res = new ArrayList<>();
 		final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findByActiveMember(member.getId());
-		final Collection<Procession> memberProcessions = this.processionRepository.findByMemberId(member.getId());
+		final Collection<Parade> memberParades = this.paradeRepository.findByMemberId(member.getId());
 
 		for (final Brotherhood b : brotherhoods)
-			res.addAll(b.getProcessions());
+			res.addAll(b.getParades());
 
-		res.removeAll(memberProcessions);
+		res.removeAll(memberParades);
 
 		Assert.notNull(res);
 
 		return res;
 
 	}
-	public Procession reconstruct(final Procession procession, final BindingResult bindingResult) {
-		Procession result;
+	public Parade reconstruct(final Parade parade, final BindingResult bindingResult) {
+		Parade result;
 
-		if (procession.getId() == 0)
-			result = procession;
+		if (parade.getId() == 0)
+			result = parade;
 		else {
-			final Procession p = this.processionRepository.findOne(procession.getId());
-			result = new Procession(p);
+			final Parade p = this.paradeRepository.findOne(parade.getId());
+			result = new Parade(p);
 			result.setId(p.getId());
 			result.setVersion(p.getVersion());
-			result.setTitle(procession.getTitle());
-			result.setDescription(procession.getDescription());
-			result.setDraftMode(procession.isDraftMode());
-			result.setMoment(procession.getMoment());
-			result.setFloats(procession.getFloats());
+			result.setTitle(parade.getTitle());
+			result.setDescription(parade.getDescription());
+			result.setDraftMode(parade.isDraftMode());
+			result.setMoment(parade.getMoment());
+			result.setFloats(parade.getFloats());
 			this.validator.validate(result, bindingResult);
 
 		}
@@ -218,11 +218,11 @@ public class ProcessionService {
 
 	// Update so the member can delete a Request
 
-	public Procession update(final Procession procession) {
+	public Parade update(final Parade parade) {
 
-		Assert.notNull(procession);
+		Assert.notNull(parade);
 
-		return this.processionRepository.save(procession);
+		return this.paradeRepository.save(parade);
 	}
 
 }

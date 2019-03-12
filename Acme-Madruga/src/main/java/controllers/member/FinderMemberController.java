@@ -20,7 +20,7 @@ import services.SystemConfigService;
 import controllers.AbstractController;
 import domain.Finder;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
 @RequestMapping("/finder/member")
@@ -71,7 +71,7 @@ public class FinderMemberController extends AbstractController {
 		result = new ModelAndView("finder/member/edit");
 		result.addObject("finder", finder);
 		result.addObject("requestURI", "finder/member/edit.do");
-		result.addObject("processions", finder.getResult());
+		result.addObject("parades", finder.getResult());
 		return result;
 
 	}
@@ -122,12 +122,12 @@ public class FinderMemberController extends AbstractController {
 	}
 	protected ModelAndView createEditModelAndView(final Finder finder, final String messageCode) {
 		ModelAndView result;
-		final Collection<Procession> processions = this.finderService.findOne(finder.getId()).getResult();
+		final Collection<Parade> parades = this.finderService.findOne(finder.getId()).getResult();
 
 		result = new ModelAndView("finder/member/edit");
 		result.addObject("finder", finder);
 		result.addObject("message", messageCode);
-		result.addObject("fixUpTasks", processions);
+		result.addObject("fixUpTasks", parades);
 
 		return result;
 	}

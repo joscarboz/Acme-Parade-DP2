@@ -16,7 +16,7 @@ import services.BrotherhoodService;
 import services.MemberService;
 import domain.Brotherhood;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.SocialProfile;
 
 @Controller
@@ -63,9 +63,9 @@ public class BrotherhoodController extends AbstractController {
 		brotherhood = this.brotherhoodService.findOne(brotherhoodId);
 		members = this.memberService.findByBrotherhood(brotherhoodId);
 
-		final Collection<Procession> res = new ArrayList<>();
+		final Collection<Parade> res = new ArrayList<>();
 
-		for (final Procession p : brotherhood.getProcessions())
+		for (final Parade p : brotherhood.getParades())
 			if (p.isDraftMode() == false && p.getMoment().after(Calendar.getInstance().getTime()))
 				res.add(p);
 
@@ -76,7 +76,7 @@ public class BrotherhoodController extends AbstractController {
 
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("floats", brotherhood.getFloats());
-		result.addObject("processions", res);
+		result.addObject("parades", res);
 		result.addObject("members", members);
 		return result;
 	}

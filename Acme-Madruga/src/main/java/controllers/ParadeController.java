@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
-import services.ProcessionService;
+import services.ParadeService;
 import domain.Brotherhood;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
-@RequestMapping("/procession")
-public class ProcessionController extends AbstractController {
+@RequestMapping("/parade")
+public class ParadeController extends AbstractController {
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
@@ -30,29 +30,29 @@ public class ProcessionController extends AbstractController {
 
 	//Constructor
 
-	public ProcessionController() {
+	public ParadeController() {
 		super();
 	}
 
-	// Listing Processions from a Brotherhood
+	// Listing Parades from a Brotherhood
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(final int brotherhoodId) {
 		ModelAndView result;
-		Collection<Procession> processions;
+		Collection<Parade> parades;
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.findOne(brotherhoodId);
-		processions = brotherhood.getProcessions();
-		final Collection<Procession> res = new ArrayList<>();
+		parades = brotherhood.getParades();
+		final Collection<Parade> res = new ArrayList<>();
 
-		for (final Procession p : processions)
+		for (final Parade p : parades)
 			if (p.isDraftMode() == false)
 				res.add(p);
 
-		result = new ModelAndView("procession/list");
-		result.addObject("processions", res);
-		result.addObject("requestURI", "processions/list.do");
+		result = new ModelAndView("parade/list");
+		result.addObject("parades", res);
+		result.addObject("requestURI", "parades/list.do");
 
 		return result;
 	}
@@ -60,15 +60,15 @@ public class ProcessionController extends AbstractController {
 	// Display --------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int processionId) {
+	public ModelAndView display(@RequestParam final int paradeId) {
 		ModelAndView result;
-		final Procession procession;
+		final Parade parade;
 
-		procession = this.processionService.findOne(processionId);
-		final Collection<Float> floats = procession.getFloats();
-		result = new ModelAndView("procession/display");
+		parade = this.paradeService.findOne(paradeId);
+		final Collection<Float> floats = parade.getFloats();
+		result = new ModelAndView("parade/display");
 		result.addObject("floats", floats);
-		result.addObject("procession", procession);
+		result.addObject("parade", parade);
 		result.addObject("role", "none");
 
 		return result;

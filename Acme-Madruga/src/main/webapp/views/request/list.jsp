@@ -32,7 +32,7 @@
 		<jstl:otherwise>
 			<spring:message code="request.status" var="statusHeader" />
 			<jstl:choose>
-				<jstl:when test="${row.procession.moment < date}">
+				<jstl:when test="${row.parade.moment < date}">
 					<display:column property="status" title="${statusHeader}"
 						style="background-color:#9c9c9c" sortable="true" />
 				</jstl:when>
@@ -57,8 +57,8 @@
 	</jstl:choose>
 	
 	<display:column>
-	<a href="procession/display.do?processionId=${row.procession.id }">
-	<jstl:out value="${row.procession.ticker}"/>
+	<a href="parade/display.do?paradeId=${row.parade.id }">
+	<jstl:out value="${row.parade.ticker}"/>
 	</a> 
 	</display:column>
 	

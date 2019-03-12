@@ -42,17 +42,17 @@
 	
 	<!--  Listing grid -->
 
-<display:table pagesize="10" class="displaytag" name="processions" requestURI="${requestURI}" id="row">
+<display:table pagesize="10" class="displaytag" name="parades" requestURI="${requestURI}" id="row">
 	
 	<!-- Attributes -->
 	
-	<spring:message code="procession.ticker" var="tickerHeader" />
+	<spring:message code="parade.ticker" var="tickerHeader" />
 	<display:column property="ticker" title="${tickerHeader}" sortable="false"/>
 
-	<spring:message code="procession.title" var="titleHeader" />
+	<spring:message code="parade.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" sortable="true" />
 
-	<spring:message code="procession.moment" var="momentHeader" />
+	<spring:message code="parade.moment" var="momentHeader" />
 	<display:column property="moment" title="${momentHeader}"
 		sortable="true" />
 </display:table>

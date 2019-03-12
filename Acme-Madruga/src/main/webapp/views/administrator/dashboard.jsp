@@ -71,16 +71,16 @@ ${accepted}
 ${rejected}
 
 <h2>
-	<spring:message code="administrator.upcomingProcessions" />
+	<spring:message code="administrator.upcomingParades" />
 </h2>
 
 <jstl:if test="${upcomProces.isEmpty()}">
-	<spring:message code="administrator.emptyupcomingProcessions" />
+	<spring:message code="administrator.emptyupcomingParades" />
 </jstl:if>
 
-<jstl:forEach var="procession" items="${upcomProces}">
+<jstl:forEach var="parade" items="${upcomProces}">
 
-${procession.ticker} ${procession.title}
+${parade.ticker} ${parade.title}
 <br>
 </jstl:forEach>
 

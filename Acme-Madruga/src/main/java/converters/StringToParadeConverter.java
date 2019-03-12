@@ -8,20 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import repositories.ProcessionRepository;
-import domain.Procession;
+import repositories.ParadeRepository;
+import domain.Parade;
 
 @Component
 @Transactional
-public class StringToProcessionConverter implements Converter<String, Procession> {
+public class StringToParadeConverter implements Converter<String, Parade> {
 
 	@Autowired
-	private ProcessionRepository	positionRepository;
+	private ParadeRepository	positionRepository;
 
 
 	@Override
-	public Procession convert(final String text) {
-		Procession result;
+	public Parade convert(final String text) {
+		Parade result;
 		int id;
 
 		try {

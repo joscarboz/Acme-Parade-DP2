@@ -12,40 +12,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.MemberService;
-import services.ProcessionService;
+import services.ParadeService;
 import controllers.AbstractController;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
-@RequestMapping("/procession/member")
-public class ProcessionMemberController extends AbstractController {
+@RequestMapping("/parade/member")
+public class ParadeMemberController extends AbstractController {
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 	@Autowired
 	private MemberService		memberService;
 
 
-	// Listing Processions from a Brotherhood
+	// Listing Parades from a Brotherhood
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-		Collection<Procession> processions;
+		Collection<Parade> parades;
 		final Member member = this.memberService.findByPrincipal();
-		processions = this.processionService.findAvailable(member);
+		parades = this.paradeService.findAvailable(member);
 
-		final Collection<Procession> res = new ArrayList<>();
+		final Collection<Parade> res = new ArrayList<>();
 
-		for (final Procession p : processions)
+		for (final Parade p : parades)
 			if (p.isDraftMode() == false && p.getMoment().after(Calendar.getInstance().getTime()))
 				res.add(p);
 
-		result = new ModelAndView("procession/list");
-		result.addObject("processions", res);
-		result.addObject("requestURI", "procession/member/list.do");
+		result = new ModelAndView("parade/list");
+		result.addObject("parades", res);
+		result.addObject("requestURI", "parade/member/list.do");
 
 		return result;
 	}

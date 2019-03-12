@@ -13,25 +13,25 @@
 
 <!--  Listing grid -->
 
-<display:table pagesize="5" class="displaytag" name="processions"
+<display:table pagesize="5" class="displaytag" name="parades"
 	requestURI="${requestURI}" id="row">
 
 	<!-- Attributes -->
 
-	<spring:message code="procession.ticker" var="tickerHeader" />
+	<spring:message code="parade.ticker" var="tickerHeader" />
 	<display:column title="${tickerHeader}" sortable="false">
-		<a href="procession/display.do?processionId=${row.id}">${row.ticker}</a>
+		<a href="parade/display.do?paradeId=${row.id}">${row.ticker}</a>
 	</display:column>
 
-	<spring:message code="procession.title" var="titleHeader" />
+	<spring:message code="parade.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" sortable="true" />
 
-	<spring:message code="procession.moment" var="momentHeader" />
+	<spring:message code="parade.moment" var="momentHeader" />
 	<display:column property="moment" title="${momentHeader}"
 		sortable="true" />
 
 	<security:authorize access="hasRole('BROTHERHOOD')">
-		<spring:message code="procession.draftMode" var="draftModeHeader" />
+		<spring:message code="parade.draftMode" var="draftModeHeader" />
 		<display:column property="draftMode" title="${draftModeHeader}"
 			sortable="true" />
 
@@ -41,8 +41,8 @@
 		<display:column>
 			<jstl:choose>
 				<jstl:when test="${row.draftMode == true }">
-					<a href="procession/brotherhood/edit.do?processionId=${row.id}">
-						<spring:message code="procession.edit" />
+					<a href="parade/brotherhood/edit.do?paradeId=${row.id}">
+						<spring:message code="parade.edit" />
 					</a>
 				</jstl:when>
 			</jstl:choose>
@@ -52,8 +52,8 @@
 			<jstl:choose>
 				<jstl:when test="${row.draftMode == true }">
 					<display:column>
-						<a href="procession/brotherhood/delete.do?processionId=${row.id}">
-							<spring:message code="procession.delete" />
+						<a href="parade/brotherhood/delete.do?paradeId=${row.id}">
+							<spring:message code="parade.delete" />
 						</a>
 					</display:column>
 				</jstl:when>
@@ -66,8 +66,8 @@
 
 	<security:authorize access="hasRole('MEMBER')">
 		<display:column>
-			<a href="request/member/create.do?processionId=${row.id}"> <spring:message
-					code="procession.request" />
+			<a href="request/member/create.do?paradeId=${row.id}"> <spring:message
+					code="parade.request" />
 			</a>
 		</display:column>
 	</security:authorize>
@@ -78,11 +78,11 @@
 <security:authorize access="hasRole('BROTHERHOOD')">
 	<jstl:choose>
 		<jstl:when test="${hasArea==true}">
-			<a href="procession/brotherhood/create.do"> <spring:message
-					code="procession.create" /></a>
+			<a href="parade/brotherhood/create.do"> <spring:message
+					code="parade.create" /></a>
 		</jstl:when>
 		<jstl:otherwise>
-		<h1><spring:message code="procession.noArea"/></h1>
+		<h1><spring:message code="parade.noArea"/></h1>
 		</jstl:otherwise>
 	</jstl:choose>
 </security:authorize>

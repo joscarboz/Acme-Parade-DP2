@@ -20,7 +20,7 @@ import domain.Administrator;
 import domain.Brotherhood;
 import domain.Member;
 import domain.Message;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Service
@@ -34,7 +34,7 @@ public class RequestService {
 	// Supporting Services
 
 	@Autowired
-	private ProcessionService		processionService;
+	private ParadeService		paradeService;
 
 	@Autowired
 	private BrotherhoodService		brotherhoodService;
@@ -91,7 +91,7 @@ public class RequestService {
 			Assert.isTrue(request.getColumn() != 0);
 		}
 
-		final Collection<Request> all = request.getProcession().getRequests();
+		final Collection<Request> all = request.getParade().getRequests();
 
 		all.remove(request);
 
@@ -102,11 +102,11 @@ public class RequestService {
 		}
 
 		if (request.getId() == 0) {
-			final Collection<Request> requests = request.getProcession().getRequests();
+			final Collection<Request> requests = request.getParade().getRequests();
 			requests.add(request);
-			final Procession proc = request.getProcession();
+			final Parade proc = request.getParade();
 			proc.setRequests(requests);
-			this.processionService.save(proc);
+			this.paradeService.save(proc);
 
 			final Collection<Request> memberrequests = request.getMember().getRequests();
 			memberrequests.add(request);
@@ -159,11 +159,11 @@ public class RequestService {
 		if (principal.getUserAccount().getAuthorities().contains(memberauth))
 			Assert.isTrue(request.getMember().getId() == principal.getId());
 
-		Collection<Request> requests = request.getProcession().getRequests();
+		Collection<Request> requests = request.getParade().getRequests();
 		requests.remove(request);
-		final Procession p = request.getProcession();
+		final Parade p = request.getParade();
 		p.setRequests(requests);
-		this.processionService.update(p);
+		this.paradeService.update(p);
 
 		requests = request.getMember().getRequests();
 		requests.remove(request);
@@ -181,11 +181,11 @@ public class RequestService {
 
 	// Other Business Methods
 
-	public Collection<Request> findByProcessionAndStatus(final int processionId, final String status) {
-		Assert.isTrue(processionId != 0);
+	public Collection<Request> findByParadeAndStatus(final int paradeId, final String status) {
+		Assert.isTrue(paradeId != 0);
 		Assert.isTrue(status == "PENDING" || status == "APPROVED" || status == "REJECTED");
 
-		final Collection<Request> res = this.requestRepository.findByProcessionAndStatus(processionId, status);
+		final Collection<Request> res = this.requestRepository.findByParadeAndStatus(paradeId, status);
 		Assert.notNull(res);
 
 		return res;
@@ -329,13 +329,13 @@ public class RequestService {
 
 	// Methods for tests
 
-	public Request registerPrincipal(final Integer processionId) {
-		final Procession procession = this.processionService.findOne(processionId);
+	public Request registerPrincipal(final Integer paradeId) {
+		final Parade parade = this.paradeService.findOne(paradeId);
 		final Member member = this.memberService.findByPrincipal();
 
 		final Request request = this.create();
 		request.setMember(member);
-		request.setProcession(procession);
+		request.setParade(parade);
 
 		return request;
 	}

@@ -34,8 +34,8 @@
 	<security:authorize access="hasRole('MEMBER')">
 	<jstl:choose>
 		<jstl:when test="${request.id == 0}">
-			<acme:select code="request.procession" path="procession"
-				items="${processions}" itemLabel="ticker" />
+			<acme:select code="request.parade" path="parade"
+				items="${parades}" itemLabel="ticker" />
 		</jstl:when>
 	</jstl:choose>
 	</security:authorize>

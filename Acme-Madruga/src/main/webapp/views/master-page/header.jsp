@@ -96,8 +96,8 @@
 
 					<li><a href="brotherhood/list.do"><spring:message
 								code="master.page.brotherhood.list" /></a></li>
-					<li><a href="procession/member/list.do"><spring:message
-								code="master.page.member.procession" /></a></li>
+					<li><a href="parade/member/list.do"><spring:message
+								code="master.page.member.parade" /></a></li>
 				</ul></li>
 		</security:authorize>
 
@@ -108,8 +108,8 @@
 					<li class="arrow"></li>
 					<li><a href="request/brotherhood/list.do"><spring:message
 								code="master.page.brotherhood.request" /></a></li>
-					<li><a href="procession/brotherhood/list.do"><spring:message
-								code="master.page.brotherhood.procession" /></a></li>
+					<li><a href="parade/brotherhood/list.do"><spring:message
+								code="master.page.brotherhood.parade" /></a></li>
 					<li><a href="float/brotherhood/list.do"><spring:message
 								code="master.page.brotherhood.float" /></a></li>
 					<li><a href="enrolment/brotherhood/list.do"><spring:message

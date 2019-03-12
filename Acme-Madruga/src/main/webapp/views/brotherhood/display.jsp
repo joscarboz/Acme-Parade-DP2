@@ -78,25 +78,25 @@
 <br />
 <!--  Listing grid -->
 
-<b><spring:message code="brotherhood.processions" /></b>
+<b><spring:message code="brotherhood.parades" /></b>
 
-<display:table pagesize="5" class="displaytag" name="processions"
-	requestURI="procession/list.do" id="row">
+<display:table pagesize="5" class="displaytag" name="parades"
+	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
 	
-	<spring:message code="procession.ticker" var="tickerHeader" />
+	<spring:message code="parade.ticker" var="tickerHeader" />
 	<display:column title="${tickerHeader}">
-	<a href="procession/display.do?processionId=${row.id}">${row.ticker}</a>
+	<a href="parade/display.do?paradeId=${row.id}">${row.ticker}</a>
 	</display:column>
 	
-	<spring:message code="procession.title" var="titleHeader" />
+	<spring:message code="parade.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"/>
 	
-	<spring:message code="procession.description" var="descriptionHeader" />
+	<spring:message code="parade.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}"/>
 
-	<spring:message code="procession.moment" var="momentHeader" />
+	<spring:message code="parade.moment" var="momentHeader" />
 	<display:column property="moment" title="${momentHeader}"/>
 
 </display:table>

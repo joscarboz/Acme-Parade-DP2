@@ -76,16 +76,16 @@ public class Finder extends DomainEntity {
 
 	// Relationships
 
-	private Collection<Procession>	result;
+	private Collection<Parade>	result;
 	private Member					member;
 
 
 	@ManyToMany
-	public Collection<Procession> getResult() {
+	public Collection<Parade> getResult() {
 		return this.result;
 	}
 
-	public void setResult(final Collection<Procession> result) {
+	public void setResult(final Collection<Parade> result) {
 		this.result = result;
 	}
 

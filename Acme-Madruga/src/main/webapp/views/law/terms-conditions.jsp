@@ -11,6 +11,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<p><spring:message code="law.terms.company" /></p>
 <p><spring:message code="law.terms.body1" /></p>
 <p><spring:message code="law.terms.body2" /></p>
 <p><spring:message code="law.terms.about"/>

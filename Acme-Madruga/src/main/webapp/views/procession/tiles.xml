@@ -16,19 +16,19 @@
        
 <tiles-definitions>
 
-	<definition name="procession/edit" extends="master.page">	
-		<put-attribute name="title" value="Edit procession" />
-		<put-attribute name="body" value="/views/procession/edit.jsp" />
+	<definition name="parade/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit parade" />
+		<put-attribute name="body" value="/views/parade/edit.jsp" />
 	</definition>
 	
-	<definition name="procession/list" extends="master.page">	
-		<put-attribute name="title" value="List processions" />
-		<put-attribute name="body" value="/views/procession/list.jsp" />
+	<definition name="parade/list" extends="master.page">	
+		<put-attribute name="title" value="List parades" />
+		<put-attribute name="body" value="/views/parade/list.jsp" />
 	</definition>
 	
-	<definition name="procession/display" extends="master.page">	
-		<put-attribute name="title" value="Display procession" />
-		<put-attribute name="body" value="/views/procession/display.jsp" />
+	<definition name="parade/display" extends="master.page">	
+		<put-attribute name="title" value="Display parade" />
+		<put-attribute name="body" value="/views/parade/display.jsp" />
 	</definition>
 	
 </tiles-definitions>

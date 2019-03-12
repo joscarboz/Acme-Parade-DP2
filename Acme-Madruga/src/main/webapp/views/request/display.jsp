@@ -15,8 +15,8 @@
 <jstl:out value="${request.status}" />
 <br />
 
-<b><spring:message code="request.procession" /></b>
-<jstl:out value="${request.procession.ticker}" />
+<b><spring:message code="request.parade" /></b>
+<jstl:out value="${request.parade.ticker}" />
 <br />
 
 <b><spring:message code="request.name" /></b>

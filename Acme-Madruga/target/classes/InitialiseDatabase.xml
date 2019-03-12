@@ -105,12 +105,12 @@
 	<!-- SystemConfig -->
 
 	<bean id="systemConfig" class="domain.SystemConfig">
-		<property name="name" value="Acme Madrugá" />
-		<property name="banner" value="https://tinyurl.com/acme-madruga" />
+		<property name="name" value="Acme Parade" />
+		<property name="banner" value="https://imgur.com/vZI1Sft" />
 		<property name="welcomeMessageEng"
-			value="Welcome to Acme Madrugá, the site to organise your processions." />
+			value="Welcome to Acme Parade, the site to organise your parades." />
 		<property name="welcomeMessageEsp"
-			value="¡Bienvenidos a Acme Madrugá!  Tu sitio para organizar procesiones." />
+			value="¡Bienvenidos a Acme Parade!  Tu sitio para organizar procesiones." />
 		<property name="phonePrefix" value="+34" />
 		<property name="finderMaxResults" value="10" />
 		<property name="finderCacheHours" value="1" />

@@ -32,7 +32,7 @@ import domain.Brotherhood;
 import domain.Member;
 import domain.Message;
 import domain.Position;
-import domain.Procession;
+import domain.Parade;
 import domain.SocialProfile;
 import forms.RegisterAdminForm;
 
@@ -231,8 +231,8 @@ public class AdministratorService {
 		return this.administratorRepository.pendingRequestRatio();
 	}
 
-	public Collection<Procession> upcomingProcessions() {
-		return this.administratorRepository.upcomingProcessions();
+	public Collection<Parade> upcomingParades() {
+		return this.administratorRepository.upcomingParades();
 	}
 
 	public Map<Position, Long> positionHistogram() {

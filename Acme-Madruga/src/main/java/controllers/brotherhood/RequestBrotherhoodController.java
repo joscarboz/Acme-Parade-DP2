@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
 import controllers.AbstractController;
 import domain.Brotherhood;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Controller
@@ -30,7 +30,7 @@ public class RequestBrotherhoodController extends AbstractController {
 	private RequestService		requestService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
@@ -64,15 +64,15 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView display(@RequestParam final int requestId) {
 		ModelAndView result;
 		final Request request;
-		Procession procession;
-		Collection<Procession> processions;
+		Parade parade;
+		Collection<Parade> parades;
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.findByPrincipal();
-		processions = brotherhood.getProcessions();
+		parades = brotherhood.getParades();
 		request = this.requestService.findOne(requestId);
-		procession = this.processionService.findOne(request.getProcession().getId());
-		Assert.isTrue(processions.contains(procession));
+		parade = this.paradeService.findOne(request.getParade().getId());
+		Assert.isTrue(parades.contains(parade));
 
 		result = new ModelAndView("request/display");
 		result.addObject("request", request);
@@ -87,15 +87,15 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int requestId) {
 		ModelAndView result;
 		Request request;
-		Procession procession;
-		Collection<Procession> processions;
+		Parade parade;
+		Collection<Parade> parades;
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.findByPrincipal();
-		processions = brotherhood.getProcessions();
+		parades = brotherhood.getParades();
 		request = this.requestService.findOne(requestId);
-		procession = this.processionService.findOne(request.getProcession().getId());
-		Assert.isTrue(processions.contains(procession));
+		parade = this.paradeService.findOne(request.getParade().getId());
+		Assert.isTrue(parades.contains(parade));
 
 		request = this.requestService.findOne(requestId);
 
@@ -109,15 +109,15 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView accept(@RequestParam final int requestId) {
 		ModelAndView result;
 		Request request;
-		Procession procession;
-		Collection<Procession> processions;
+		Parade parade;
+		Collection<Parade> parades;
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.findByPrincipal();
-		processions = brotherhood.getProcessions();
+		parades = brotherhood.getParades();
 		request = this.requestService.findOne(requestId);
-		procession = this.processionService.findOne(request.getProcession().getId());
-		Assert.isTrue(processions.contains(procession));
+		parade = this.paradeService.findOne(request.getParade().getId());
+		Assert.isTrue(parades.contains(parade));
 
 		request = this.requestService.findOne(requestId);
 		request.setStatus("APPROVED");
@@ -132,15 +132,15 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView reject(@RequestParam final int requestId) {
 		ModelAndView result;
 		Request request;
-		Procession procession;
-		Collection<Procession> processions;
+		Parade parade;
+		Collection<Parade> parades;
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.findByPrincipal();
-		processions = brotherhood.getProcessions();
+		parades = brotherhood.getParades();
 		request = this.requestService.findOne(requestId);
-		procession = this.processionService.findOne(request.getProcession().getId());
-		Assert.isTrue(processions.contains(procession));
+		parade = this.paradeService.findOne(request.getParade().getId());
+		Assert.isTrue(parades.contains(parade));
 
 		request = this.requestService.findOne(requestId);
 		request.setStatus("REJECTED");

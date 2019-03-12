@@ -23,7 +23,7 @@ import domain.Box;
 import domain.Brotherhood;
 import domain.Enrolment;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 import domain.SocialProfile;
 import forms.RegisterBrotherhoodForm;
@@ -102,7 +102,7 @@ public class BrotherhoodService {
 		result.setSpammer(false);
 		result.setEnrolments(new HashSet<Enrolment>());
 		result.setFloats(new HashSet<Float>());
-		result.setProcessions(new HashSet<Procession>());
+		result.setParades(new HashSet<Parade>());
 		result.setEstablishment(new Date());
 		result.setSocialProfiles(new HashSet<SocialProfile>());
 		result.setPictures(new HashSet<String>());
@@ -214,12 +214,12 @@ public class BrotherhoodService {
 		return result;
 	}
 
-	public Collection<Float> brotherhoodFloats(final Brotherhood brotherhood, final Procession procession) {
+	public Collection<Float> brotherhoodFloats(final Brotherhood brotherhood, final Parade parade) {
 		final Collection<Float> floats = brotherhood.getFloats();
 		final Collection<Float> res = new ArrayList<Float>(floats);
-		final Collection<Procession> processions = brotherhood.getProcessions();
-		for (final Procession p : processions)
-			if (!p.equals(procession))
+		final Collection<Parade> parades = brotherhood.getParades();
+		for (final Parade p : parades)
+			if (!p.equals(parade))
 				res.removeAll(p.getFloats());
 		return res;
 	}

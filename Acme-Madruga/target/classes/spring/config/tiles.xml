@@ -32,7 +32,7 @@
 		<value>/views/position/tiles.xml</value>
 		<value>/views/area/tiles.xml</value>
 		<value>/views/float/tiles.xml</value>
-		<value>/views/procession/tiles.xml</value>
+		<value>/views/parade/tiles.xml</value>
 		<value>/views/brotherhood/tiles.xml</value>
 	
 		<value>/views/enrolment/tiles.xml</value>

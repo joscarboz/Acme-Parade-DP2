@@ -23,24 +23,24 @@ import services.AdministratorService;
 import services.BrotherhoodService;
 import services.MemberService;
 import services.MessageService;
-import services.ProcessionService;
+import services.ParadeService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Administrator;
 import domain.Brotherhood;
 import domain.Float;
 import domain.Message;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
-@RequestMapping("/procession/brotherhood")
-public class ProcessionBrotherhoodController extends AbstractController {
+@RequestMapping("/parade/brotherhood")
+public class ParadeBrotherhoodController extends AbstractController {
 
 	@Autowired
 	private BrotherhoodService		brotherhoodService;
 
 	@Autowired
-	private ProcessionService		processionService;
+	private ParadeService		paradeService;
 
 	@Autowired
 	private Validator				validator;
@@ -60,32 +60,32 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
-		final Collection<Procession> processions;
+		final Collection<Parade> parades;
 		Brotherhood brotherhood;
 
 		brotherhood = this.brotherhoodService.findByPrincipal();
-		processions = brotherhood.getProcessions();
+		parades = brotherhood.getParades();
 
-		result = new ModelAndView("procession/list");
+		result = new ModelAndView("parade/list");
 		final Boolean hasArea = !this.brotherhoodService.findByPrincipal().getArea().getName().equals("defaultArea");
 		result.addObject("hasArea", hasArea);
-		result.addObject("processions", processions);
+		result.addObject("parades", parades);
 		result.addObject("role", "brotherhood");
-		result.addObject("requestURI", "procession/brotherhood/list.do");
+		result.addObject("requestURI", "parade/brotherhood/list.do");
 
 		return result;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int processionId) {
+	public ModelAndView delete(@RequestParam final int paradeId) {
 		ModelAndView result;
-		final Procession procession = this.processionService.findOne(processionId);
+		final Parade parade = this.paradeService.findOne(paradeId);
 
 		try {
-			this.processionService.delete(procession);
+			this.paradeService.delete(parade);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(procession, "procession.commit.error");
+			result = this.createEditModelAndView(parade, "parade.commit.error");
 		}
 
 		return result;
@@ -93,15 +93,15 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 	// Create ---------------------------------------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(final Integer processionId) {
+	public ModelAndView create(final Integer paradeId) {
 		ModelAndView result;
-		final Procession procession;
+		final Parade parade;
 
-		procession = this.processionService.create();
-		result = this.createEditModelAndView(procession);
+		parade = this.paradeService.create();
+		result = this.createEditModelAndView(parade);
 
-		result.addObject("procession", procession);
-		result.addObject("requestURI", "procession/create.do");
+		result.addObject("parade", parade);
+		result.addObject("requestURI", "parade/create.do");
 
 		return result;
 
@@ -110,20 +110,20 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	// Display --------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int processionId) {
+	public ModelAndView display(@RequestParam final int paradeId) {
 		ModelAndView result;
-		final Procession procession;
+		final Parade parade;
 		Brotherhood brotherhood;
-		Collection<Procession> processions;
+		Collection<Parade> parades;
 
 		brotherhood = this.brotherhoodService.findByPrincipal();
-		processions = brotherhood.getProcessions();
-		procession = this.processionService.findOne(processionId);
-		Assert.isTrue(processions.contains(procession));
-		final Collection<Float> floats = procession.getFloats();
-		result = new ModelAndView("procession/display");
+		parades = brotherhood.getParades();
+		parade = this.paradeService.findOne(paradeId);
+		Assert.isTrue(parades.contains(parade));
+		final Collection<Float> floats = parade.getFloats();
+		result = new ModelAndView("parade/display");
 		result.addObject("floats", floats);
-		result.addObject("procession", procession);
+		result.addObject("parade", parade);
 		result.addObject("role", "brotherhood");
 
 		return result;
@@ -132,41 +132,41 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	// Edition --------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int processionId) {
+	public ModelAndView edit(@RequestParam final int paradeId) {
 		ModelAndView result;
-		Procession procession;
+		Parade parade;
 		Brotherhood brotherhood;
-		Collection<Procession> processions;
+		Collection<Parade> parades;
 
 		brotherhood = this.brotherhoodService.findByPrincipal();
-		processions = brotherhood.getProcessions();
-		procession = this.processionService.findOne(processionId);
-		Assert.isTrue(processions.contains(procession));
+		parades = brotherhood.getParades();
+		parade = this.paradeService.findOne(paradeId);
+		Assert.isTrue(parades.contains(parade));
 
-		result = this.createEditModelAndView(procession);
+		result = this.createEditModelAndView(parade);
 		return result;
 	}
 
 	// Save --------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("procession") @Valid final Procession procession, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("parade") @Valid final Parade parade, final BindingResult binding) {
 		ModelAndView result;
-		Procession procession2 = new Procession();
-		procession2 = this.processionService.reconstruct(procession, binding);
-		this.validator.validate(procession2, binding);
+		Parade parade2 = new Parade();
+		parade2 = this.paradeService.reconstruct(parade, binding);
+		this.validator.validate(parade2, binding);
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(procession2);
+			result = this.createEditModelAndView(parade2);
 		else
 			try {
 				boolean isPublished = false;
 
-				if (procession2.getId() == 0 && procession2.isDraftMode() == false)
+				if (parade2.getId() == 0 && parade2.isDraftMode() == false)
 					isPublished = true;
-				if (procession2.getId() != 0) {
-					final Procession previousProcession = this.processionService.findOne(procession2.getId());
-					if (previousProcession.isDraftMode() == true && procession2.isDraftMode() == false)
+				if (parade2.getId() != 0) {
+					final Parade previousParade = this.paradeService.findOne(parade2.getId());
+					if (previousParade.isDraftMode() == true && parade2.isDraftMode() == false)
 						isPublished = true;
 				}
 
@@ -183,16 +183,16 @@ public class ProcessionBrotherhoodController extends AbstractController {
 					message.setSpam(false);
 					message.setTags("");
 					message.setSubject("Enrolment accepted / Inscripcion aceptada");
-					message.setBody("Brotherhood " + brotherhood.getTitle() + " has published procession " + procession2.getTitle() + " / " + "La hermandad " + brotherhood.getTitle() + " ha publicado la procesion" + procession2.getTitle());
+					message.setBody("Brotherhood " + brotherhood.getTitle() + " has published parade " + parade2.getTitle() + " / " + "La hermandad " + brotherhood.getTitle() + " ha publicado la procesion" + parade2.getTitle());
 					this.messageService.saveAdmin(message);
 				}
-				this.processionService.save(procession2);
+				this.paradeService.save(parade2);
 
 				result = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {
 
-				result = this.createEditModelAndView(procession, "procession.commit.error");
+				result = this.createEditModelAndView(parade, "parade.commit.error");
 			}
 		return result;
 	}
@@ -200,27 +200,27 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	// Ancillary methods
 	// --------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Procession procession) {
-		return this.createEditModelAndView(procession, null);
+	protected ModelAndView createEditModelAndView(final Parade parade) {
+		return this.createEditModelAndView(parade, null);
 	}
 
-	protected ModelAndView createEditModelAndView(final Procession procession, final String message) {
+	protected ModelAndView createEditModelAndView(final Parade parade, final String message) {
 		ModelAndView result;
 		final LinkedList<Float> floats = new LinkedList<Float>(this.brotherhoodService.findByPrincipal().getFloats());
 
-		final LinkedList<Procession> processions = new LinkedList<Procession>(this.brotherhoodService.findByPrincipal().getProcessions());
-		processions.remove(procession);
-		for (final Procession p : processions)
+		final LinkedList<Parade> parades = new LinkedList<Parade>(this.brotherhoodService.findByPrincipal().getParades());
+		parades.remove(parade);
+		for (final Parade p : parades)
 			floats.removeAll(p.getFloats());
 		final Boolean hasArea = !this.brotherhoodService.findByPrincipal().getArea().getName().equals("defaultArea");
 
-		result = new ModelAndView("procession/edit");
-		result.addObject("procession", procession);
+		result = new ModelAndView("parade/edit");
+		result.addObject("parade", parade);
 		result.addObject("role", "brotherhood");
 		result.addObject("hasArea", hasArea);
 		result.addObject("message", message);
 		result.addObject("floats", floats);
-		result.addObject("requestURI", "procession/brotherhood/edit.do");
+		result.addObject("requestURI", "parade/brotherhood/edit.do");
 		return result;
 	}
 }

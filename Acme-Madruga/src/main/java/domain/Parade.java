@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = { @Index(columnList = "moment, draftMode") })
-public class Procession extends DomainEntity {
+public class Parade extends DomainEntity {
 
 	private String ticker;
 	private String title;
@@ -32,11 +32,11 @@ public class Procession extends DomainEntity {
 	private boolean draftMode;
 	private String status;
 
-	public Procession() {
+	public Parade() {
 
 	}
 
-	public Procession(final Procession p) {
+	public Parade(final Parade p) {
 		super();
 		this.ticker = p.getTicker();
 		this.title = p.getTitle();
@@ -111,7 +111,7 @@ public class Procession extends DomainEntity {
 		this.floats = floats;
 	}
 
-	@OneToMany(mappedBy = "procession", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "parade", cascade = CascadeType.PERSIST)
 	public Collection<Request> getRequests() {
 		return this.requests;
 	}

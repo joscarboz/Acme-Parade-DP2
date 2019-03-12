@@ -1,0 +1,109 @@
+
+package services;
+
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import utilities.AbstractTest;
+import domain.Request;
+
+@ContextConfiguration(locations = {
+	"classpath:spring/junit.xml"
+})
+@RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
+public class RequestServiceTest extends AbstractTest {
+
+	//SUT
+	@Autowired
+	private RequestService	requestService;
+
+
+	@Test
+	public void createAndSaveDriver() {
+		final Object testingData[][] = {
+			{	//Creación correcta de una request
+				"member2", "procession2", null
+			}, {//Anonimo no puede crear una Position
+				null, "procession2", IllegalArgumentException.class
+			}, {//Solo member puede crear una Position
+				"brotherhood1", "procession2", IllegalArgumentException.class
+			},
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			try {
+				super.startTransaction();
+				this.createAndSaveTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][6]);
+			} catch (final Throwable oops) {
+				throw new RuntimeException(oops);
+			} finally {
+				super.rollbackTransaction();
+			}
+	}
+
+	@Test
+	public void deleteDriver() {
+		final Object testingData[][] = {
+			{	//Un member borra correctamente una request
+				"member1", "request1", null
+			}, { //Un member no puede borrar la request de otro
+				"member2", "request1", IllegalArgumentException.class
+			}, { //Un anónimo no puede borrar una request
+				null, "request1", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.deleteTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	// Ancillary methods ------------------------------------------------------
+	protected void createAndSaveTemplate(final String userName, final String processionBeanName, final Class<?> expected) {
+		Class<?> caught;
+		final Request request;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			final Integer processionId = super.getEntityId(processionBeanName);
+			request = this.requestService.registerPrincipal(processionId);
+			this.requestService.save(request);
+			this.requestService.flush();
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	protected void deleteTemplate(final String userName, final String requestBeanName, final Class<?> expected) {
+		Class<?> caught;
+		final int requestId;
+		Request request;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			requestId = super.getEntityId(requestBeanName);
+			request = this.requestService.findOne(requestId);
+			this.requestService.delete(request);
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+}

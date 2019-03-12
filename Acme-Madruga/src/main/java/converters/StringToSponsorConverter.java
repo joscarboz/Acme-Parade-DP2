@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import repositories.SponsorRepository;
 import domain.Sponsor;
 
 @Component
@@ -15,7 +16,7 @@ import domain.Sponsor;
 public class StringToSponsorConverter implements Converter<String, Sponsor> {
 
 	@Autowired
-	private SponsorRepository	SponsorRepository;
+	private SponsorRepository	sponsorRepository;
 
 
 	@Override

@@ -422,9 +422,9 @@
 	<bean id="request1" class="domain.Request">
 
 		<property name="status" value="PENDING" />
-		
+
 		<property name="row" value="1" />
-		
+
 		<property name="column" value="1" />
 
 		<property name="member" ref="member1" />
@@ -464,7 +464,7 @@
 	<bean id="request4" class="domain.Request">
 
 		<property name="status" value="PENDING" />
-		
+
 		<property name="column" value="0" />
 
 		<property name="row" value="0" />
@@ -674,6 +674,7 @@
 				<ref bean="request2" />
 			</list>
 		</property>
+		<property name="status" value="submitted" />
 	</bean>
 
 	<bean id="procession2" class="domain.Procession">
@@ -692,6 +693,7 @@
 				<ref bean="request3" />
 			</list>
 		</property>
+		<property name="status" value="submitted" />
 	</bean>
 
 	<bean id="procession3" class="domain.Procession">
@@ -710,6 +712,7 @@
 				<ref bean="request4" />
 			</list>
 		</property>
+		<property name="status" value="submitted" />
 	</bean>
 
 	<bean id="procession4" class="domain.Procession">
@@ -727,6 +730,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="status" value="submitted" />
 	</bean>
 
 	<bean id="procession5" class="domain.Procession">
@@ -744,6 +748,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="status" value="submitted" />
 	</bean>
 
 	<bean id="defaultArea" class="domain.Area">
@@ -903,7 +908,16 @@
 				<value>desastroso</value>
 			</list>
 		</property>
-
+		<property name="creditCardMakes">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>DINNERS</value>
+				<value>AMEX</value>
+			</list>
+		</property>
+		<property name="VAT" value="21" />
+		<property name="fareCharge" value="12.23" />
 	</bean>
 
 	<!-- In box 1 -->
@@ -1205,6 +1219,371 @@
 		<property name="nick" value="Social Profile Nick" />
 		<property name="socialNetwork" value="Social Network" />
 		<property name="profileLink" value="http://profilelink.com" />
+	</bean>
+
+	<!-- User accounts -->
+	<bean id="userAccount12" class="security.UserAccount">
+		<property name="username" value="chapter1" />
+		<property name="password" value="178494d73a41f7d68e80f685324d3662" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHAPTER" />
+				</bean>
+			</list>
+		</property>
+		<property name="accountNonLocked" value="true" />
+	</bean>
+
+	<!-- Proclaim 1 -->
+	<bean id="proclaim1" class="domain.Proclaim">
+		<property name="moment" value="2017/07/10 01:41" />
+		<property name="text" value="Text" />
+	</bean>
+
+	<!-- Proclaim 2 -->
+	<bean id="proclaim2" class="domain.Proclaim">
+		<property name="moment" value="2017/08/10 01:41" />
+		<property name="text" value="Text2" />
+	</bean>
+
+	<bean id="chapter1" class="domain.Chapter">
+		<property name="name" value="Chapter Name 1" />
+		<property name="middleName" value="Chapter Middle Name 1" />
+		<property name="surname" value="Chapter Surname 1" />
+		<property name="photo" value="https://photochapter1.jpg" />
+		<property name="email" value="chapter@email.com" />
+		<property name="address" value="Chapter Address 1" />
+		<property name="phone" value="+34 (111) 666666666" />
+		<property name="userAccount" ref="userAccount12" />
+		<property name="socialProfiles">
+
+			<list>
+			</list>
+		</property>
+		<property name="area" ref="area1" />
+		<property name="proclaims">
+			<list>
+				<ref bean="proclaim1" />
+				<ref bean="proclaim2" />
+			</list>
+		</property>
+		<property name="spammer" value="false" />
+		<property name="score" value="0.0" />
+		<property name="boxes">
+
+			<list>
+				<ref bean="inbox12" />
+				<ref bean="outbox12" />
+				<ref bean="trashbox12" />
+				<ref bean="spambox12" />
+				<ref bean="custombox12" />
+				<ref bean="notificationbox12" />
+			</list>
+		</property>
+
+	</bean>
+
+	<!-- In box 12 -->
+	<bean id="inbox12" class="domain.Box">
+		<property name="title" value="in box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- out box 12 -->
+	<bean id="outbox12" class="domain.Box">
+		<property name="title" value="out box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Trash box 12 -->
+	<bean id="trashbox12" class="domain.Box">
+		<property name="title" value="trash box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Spam box 12 -->
+	<bean id="spambox12" class="domain.Box">
+		<property name="title" value="spam box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Custom box 12 -->
+	<bean id="custombox12" class="domain.Box">
+		<property name="title" value="Custom box" />
+		<property name="custom" value="True" />
+	</bean>
+
+	<!-- Notification box 12 -->
+	<bean id="notificationbox12" class="domain.Box">
+		<property name="title" value="notification box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- CreditCard 1 -->
+
+	<bean id="creditCard1" class="domain.CreditCard">
+		<property name="holder" value="Michael King" />
+		<property name="make" value="Visa" />
+		<property name="number" value="4841310263816033" />
+		<property name="expirationMonth" value="8" />
+		<property name="expirationYear" value="22" />
+		<property name="cvv" value="481" />
+	</bean>
+
+	<!-- CreditCard 2 -->
+
+	<bean id="creditCard2" class="domain.CreditCard">
+		<property name="holder" value="Frank Jones" />
+		<property name="make" value="MasterCard" />
+		<property name="number" value="4280074903090072" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="19" />
+		<property name="cvv" value="794" />
+	</bean>
+
+	<!-- History 1 -->
+	<bean id="history1" class="domain.History">
+		<property name="inceptionRecord" ref="inceptionRecord1" />
+		<property name="periodRecords">
+			<list>
+				<ref bean="periodRecord1" />
+			</list>
+		</property>
+		<property name="legalRecords">
+			<list>
+				<ref bean="legalRecord1" />
+			</list>
+		</property>
+		<property name="linkRecords">
+			<list>
+				<ref bean="linkRecord1" />
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+				<ref bean="miscellaneousRecord1" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- History 2 -->
+	<bean id="history2" class="domain.History">
+		<property name="inceptionRecord" ref="inceptionRecord2" />
+		<property name="periodRecords">
+			<list>
+			</list>
+		</property>
+		<property name="legalRecords">
+			<list>
+			</list>
+		</property>
+		<property name="linkRecords">
+			<list>
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- History 3 -->
+	<bean id="history3" class="domain.History">
+		<property name="inceptionRecord" ref="inceptionRecord3" />
+		<property name="periodRecords">
+			<list>
+			</list>
+		</property>
+		<property name="legalRecords">
+			<list>
+				<ref bean="legalRecord2" />
+			</list>
+		</property>
+		<property name="linkRecords">
+			<list>
+				<ref bean="linkRecord2" />
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- InceptionRecord 1 -->
+	<bean id="inceptionRecord1" class="domain.InceptionRecord">
+		<property name="description" value="description1" />
+		<property name="pictures">
+			<list>
+				<value>https://picture1.jpg</value>
+				<value>https://picture2.jpg</value>
+				<value>https://picture3.jpg</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- InceptionRecord 2 -->
+	<bean id="inceptionRecord2" class="domain.InceptionRecord">
+		<property name="description" value="description2" />
+		<property name="pictures">
+			<list>
+				<value>https://picture1.jpg</value>
+				<value>https://picture2.jpg</value>
+				<value>https://picture3.jpg</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- InceptionRecord 3 -->
+	<bean id="inceptionRecord3" class="domain.InceptionRecord">
+		<property name="description" value="description3" />
+		<property name="pictures">
+			<list>
+				<value>https://picture1.jpg</value>
+				<value>https://picture2.jpg</value>
+				<value>https://picture3.jpg</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- LegalRecord1 -->
+	<bean id="legalRecord1" class="domain.LegalRecord">
+		<property name="description" value="descript" />
+		<property name="legalName" value="Legalito" />
+		<property name="VAT" value="21" />
+		<property name="laws" value="law1" />
+	</bean>
+
+	<!-- LegalRecord2 -->
+	<bean id="legalRecord2" class="domain.LegalRecord">
+		<property name="description" value="descript" />
+		<property name="legalName" value="Legalitu" />
+		<property name="VAT" value="17" />
+		<property name="laws" value="law1" />
+	</bean>
+
+	<!-- LinkRecord1 -->
+	<bean id="linkRecord1" class="domain.LinkRecord">
+		<property name="description" value="descript" />
+		<property name="link" value="https://www.linkrecord.com" />
+	</bean>
+
+	<!-- LinkRecord2 -->
+	<bean id="linkRecord2" class="domain.LinkRecord">
+		<property name="description" value="descript" />
+		<property name="link" value="https://www.linkrecord.com" />
+	</bean>
+
+	<!-- MiscellaneousRecord1 -->
+	<bean id="miscellaneousRecord1" class="domain.MiscellaneousRecord">
+		<property name="description" value="descript" />
+	</bean>
+
+	<!-- PeriodRecord 1 -->
+	<bean id="periodRecord1" class="domain.PeriodRecord">
+		<property name="description" value="description3" />
+		<property name="pictures">
+			<list>
+				<value>https://picture1.jpg</value>
+				<value>https://picture2.jpg</value>
+				<value>https://picture3.jpg</value>
+			</list>
+		</property>
+		<property name="startYear" value="1995" />
+		<property name="endYear" value="2005" />
+	</bean>
+	
+	<!-- Sponsor 1 -->
+
+	<bean id="userAccount11" class="security.UserAccount">
+		<property name="username" value="sponsor1" />
+		<property name="password" value="42c63ad66d4dc07ed17753772bef96d6" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+		<property name="accountNonLocked" value="true" />
+	</bean>
+
+	<bean id="sponsor1" class="domain.Sponsor">
+		<property name="name" value="Sponsor" />
+		<property name="middleName" value="Joe" />
+		<property name="surname" value="Jr" />
+		<property name="photo" value="http://www.defaulturl.com" />
+		<property name="email" value="sponsor@gmail.com" />
+		<property name="address" value="Fake Street 123" />
+		<property name="phone" value="+34 562048568" />
+		<property name="spammer" value="false" />
+		<property name="score" value="0"/>
+		<property name="userAccount" ref="userAccount11" />
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="boxes">
+			<list>
+				<ref bean="inbox8" />
+				<ref bean="outbox8" />
+				<ref bean="trashbox8" />
+				<ref bean="spambox8" />
+				<ref bean="custombox8" />
+			</list>
+		</property>
+		<property name="sponsorships">
+		<list>
+		<ref bean="sponsorship1"/>
+		</list>
+		</property>
+
+	</bean>
+	
+	<!-- In box 8 -->
+	<bean id="inbox8" class="domain.Box">
+		<property name="title" value="in box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- out box 8 -->
+	<bean id="outbox8" class="domain.Box">
+		<property name="title" value="out box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Trash box 8 -->
+	<bean id="trashbox8" class="domain.Box">
+		<property name="title" value="trash box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Spam box 8 -->
+	<bean id="spambox8" class="domain.Box">
+		<property name="title" value="spam box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Custom box 8 -->
+	<bean id="custombox8" class="domain.Box">
+		<property name="title" value="Custom box" />
+		<property name="custom" value="True" />
+	</bean>
+
+	<!-- Notification box 8 -->
+	<bean id="notificationbox8" class="domain.Box">
+		<property name="title" value="notification box" />
+		<property name="custom" value="False" />
+	</bean>
+	
+	<!-- Sponsorship -->
+	<bean id="sponsorship1" class="domain.Sponsorship">
+	<property name="banner" value="http://www.banner.com"/>
+	<property name="targetUrl" value="http://www.target.com"/>
+	<property name="fare" value="2"/>
+	<property name="creditCard" ref="creditCard1"/>
+	<property name="parade" ref="procession1"/>
 	</bean>
 
 </beans>

@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -7,7 +8,6 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -35,10 +35,10 @@ public class Chapter extends Actor {
 
 	@OneToMany
 	public Collection<Proclaim> getProclaims() {
-		return proclaims;
+		return this.proclaims;
 	}
 
-	public void setProclaims(Collection<Proclaim> proclaims) {
+	public void setProclaims(final Collection<Proclaim> proclaims) {
 		this.proclaims = proclaims;
 	}
 

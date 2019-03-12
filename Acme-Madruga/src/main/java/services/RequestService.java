@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.RequestRepository;
+import security.Authority;
 import domain.Actor;
 import domain.Administrator;
 import domain.Brotherhood;
@@ -43,6 +44,9 @@ public class RequestService {
 
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private MemberService			memberService;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -147,6 +151,13 @@ public class RequestService {
 		Assert.notNull(request);
 		Assert.isTrue(request.getId() != 0);
 		Assert.isTrue(this.requestRepository.exists(request.getId()));
+
+		final Actor principal = this.actorService.findByPrincipal();
+		final Authority memberauth = new Authority();
+		memberauth.setAuthority(Authority.MEMBER);
+
+		if (principal.getUserAccount().getAuthorities().contains(memberauth))
+			Assert.isTrue(request.getMember().getId() == principal.getId());
 
 		Collection<Request> requests = request.getProcession().getRequests();
 		requests.remove(request);
@@ -314,6 +325,19 @@ public class RequestService {
 		}
 
 		return result;
+	}
+
+	// Methods for tests
+
+	public Request registerPrincipal(final Integer processionId) {
+		final Procession procession = this.processionService.findOne(processionId);
+		final Member member = this.memberService.findByPrincipal();
+
+		final Request request = this.create();
+		request.setMember(member);
+		request.setProcession(procession);
+
+		return request;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.PositionRepository;
 import security.Authority;
 import domain.Actor;
+import domain.Member;
 import domain.Position;
 
 @Service
@@ -24,6 +25,9 @@ public class PositionService {
 
 	@Autowired
 	private ActorService		actorService;
+
+	@Autowired
+	private MemberService		memberService;
 
 
 	//Constructor
@@ -59,6 +63,9 @@ public class PositionService {
 		Assert.notNull(position);
 		Assert.isTrue(position.getId() != 0);
 		Assert.isTrue(this.positionRepository.exists(position.getId()));
+
+		final Collection<Member> members = this.memberService.findByPosition(position.getId());
+		Assert.isTrue(members.isEmpty());
 
 		final Actor principal = this.actorService.findByPrincipal();
 		final Authority auth = new Authority();

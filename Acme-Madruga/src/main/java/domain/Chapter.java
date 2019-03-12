@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -6,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -13,25 +15,26 @@ public class Chapter extends Actor {
 
 	// Relations
 
-	private Collection<Proclaim> proclaims;
-	private Collection<Area> areas;
+	private Collection<Proclaim>	proclaims;
+	private Area					area;
+
 
 	@OneToMany
 	public Collection<Proclaim> getProclaims() {
-		return proclaims;
+		return this.proclaims;
 	}
 
-	public void setProclaims(Collection<Proclaim> proclaims) {
+	public void setProclaims(final Collection<Proclaim> proclaims) {
 		this.proclaims = proclaims;
 	}
 
-	@OneToMany
-	public Collection<Area> getAreas() {
-		return areas;
+	@OneToOne
+	public Area getArea() {
+		return this.area;
 	}
 
-	public void setAreas(Collection<Area> areas) {
-		this.areas = areas;
+	public void setArea(final Area area) {
+		this.area = area;
 	}
 
 }

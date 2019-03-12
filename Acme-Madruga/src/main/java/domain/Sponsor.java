@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -13,15 +14,16 @@ public class Sponsor extends Actor {
 
 	// Relations
 
-	private Collection<Sponsorship> sponshorships;
+	private Collection<Sponsorship>	sponsorships;
+
 
 	@OneToMany
-	public Collection<Sponsorship> getSponshorships() {
-		return sponshorships;
+	public Collection<Sponsorship> getSponsorships() {
+		return this.sponsorships;
 	}
 
-	public void setSponshorships(Collection<Sponsorship> sponshorships) {
-		this.sponshorships = sponshorships;
+	public void setSponsorships(final Collection<Sponsorship> sponsorships) {
+		this.sponsorships = sponsorships;
 	}
 
 }

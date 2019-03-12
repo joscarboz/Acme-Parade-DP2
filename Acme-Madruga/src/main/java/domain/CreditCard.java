@@ -77,12 +77,4 @@ public class CreditCard extends DomainEntity {
 		this.expirationYear = expirationYear;
 	}
 
-	// TODO ver que se hace con el formato de fecha de caducidad
-
-	// @Temporal(TemporalType.DATE)
-	// @DateTimeFormat(pattern = "MM/yy")
-	// public Date getExpirationDate() {
-	// return expirationDate;
-	// }
-
 }

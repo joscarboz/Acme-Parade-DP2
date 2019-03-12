@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -16,17 +15,19 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class SystemConfig extends DomainEntity {
 
-	private String				name;
-	private String				banner;
-	private String				welcomeMessageEng;
-	private String				welcomeMessageEsp;
-	private String				phonePrefix;
-	private Collection<String>	positiveWords;
-	private Collection<String>	negativeWords;
-	private Collection<String>	spamWords;
-	private int					finderMaxResults;
-	private Double				finderCacheHours;
-
+	private String name;
+	private String banner;
+	private String welcomeMessageEng;
+	private String welcomeMessageEsp;
+	private String phonePrefix;
+	private Collection<String> positiveWords;
+	private Collection<String> negativeWords;
+	private Collection<String> spamWords;
+	private int finderMaxResults;
+	private Double finderCacheHours;
+	private int VAT;
+	private double fareCharge;
+	private Collection<String> creditCardMakes;
 
 	@NotBlank
 	public String getName() {
@@ -78,6 +79,7 @@ public class SystemConfig extends DomainEntity {
 	public Collection<String> getPositiveWords() {
 		return this.positiveWords;
 	}
+
 	public void setPositiveWords(final Collection<String> positiveWords) {
 		this.positiveWords = positiveWords;
 	}
@@ -86,6 +88,7 @@ public class SystemConfig extends DomainEntity {
 	public Collection<String> getNegativeWords() {
 		return this.negativeWords;
 	}
+
 	public void setNegativeWords(final Collection<String> negativeWords) {
 		this.negativeWords = negativeWords;
 	}
@@ -94,6 +97,7 @@ public class SystemConfig extends DomainEntity {
 	public Collection<String> getSpamWords() {
 		return this.spamWords;
 	}
+
 	public void setSpamWords(final Collection<String> spamWords) {
 		this.spamWords = spamWords;
 	}
@@ -115,4 +119,30 @@ public class SystemConfig extends DomainEntity {
 	public void setFinderCacheHours(final Double finderCacheHours) {
 		this.finderCacheHours = finderCacheHours;
 	}
+
+	public int getVAT() {
+		return VAT;
+	}
+
+	public void setVAT(int vAT) {
+		VAT = vAT;
+	}
+
+	public double getFareCharge() {
+		return fareCharge;
+	}
+
+	public void setFareCharge(double fareCharge) {
+		this.fareCharge = fareCharge;
+	}
+
+	@ElementCollection
+	public Collection<String> getCreditCardMakes() {
+		return creditCardMakes;
+	}
+
+	public void setCreditCardMakes(Collection<String> creditCardMakes) {
+		this.creditCardMakes = creditCardMakes;
+	}
+
 }

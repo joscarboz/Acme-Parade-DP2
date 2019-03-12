@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -23,21 +22,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-	@Index(columnList = "moment, draftMode")
-})
+@Table(indexes = { @Index(columnList = "moment, draftMode") })
 public class Procession extends DomainEntity {
 
-	private String	ticker;
-	private String	title;
-	private String	description;
-	private Date	moment;
-	private boolean	draftMode;
-
+	private String ticker;
+	private String title;
+	private String description;
+	private Date moment;
+	private boolean draftMode;
+	private String status;
 
 	public Procession() {
 
 	}
+
 	public Procession(final Procession p) {
 		super();
 		this.ticker = p.getTicker();
@@ -98,11 +96,9 @@ public class Procession extends DomainEntity {
 		this.draftMode = draftMode;
 	}
 
-
-	//Relationships
-	private Collection<Float>	floats;
-	private Collection<Request>	requests;
-
+	// Relationships
+	private Collection<Float> floats;
+	private Collection<Request> requests;
 
 	@OneToMany
 	@NotEmpty
@@ -121,6 +117,15 @@ public class Procession extends DomainEntity {
 
 	public void setRequests(final Collection<Request> requests) {
 		this.requests = requests;
+	}
+
+	@NotBlank
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(final String status) {
+		this.status = status;
 	}
 
 }

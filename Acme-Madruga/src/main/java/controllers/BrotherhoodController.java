@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.BrotherhoodService;
 import services.MemberService;
 import domain.Brotherhood;
+import domain.History;
 import domain.Member;
 import domain.Parade;
 import domain.SocialProfile;
@@ -71,10 +72,15 @@ public class BrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("brotherhood/display");
 		final Collection<SocialProfile> socialProfiles = brotherhood.getSocialProfiles();
-
+		final History history = brotherhood.getHistory();
 		result.addObject("socialProfiles", socialProfiles);
 
 		result.addObject("brotherhood", brotherhood);
+		result.addObject("inceptionRecord", history.getInceptionRecord());
+		result.addObject("legalRecords", history.getLegalRecords());
+		result.addObject("linkRecords", history.getLinkRecords());
+		result.addObject("miscellaneousRecords", history.getMiscellaneousRecords());
+		result.addObject("periodRecords", history.getPeriodRecords());
 		result.addObject("floats", brotherhood.getFloats());
 		result.addObject("parades", res);
 		result.addObject("members", members);

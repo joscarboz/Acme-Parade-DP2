@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -9,6 +10,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -20,9 +22,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Brotherhood extends Actor {
 
-	private String title;
-	private Date establishment;
-	private Collection<String> pictures;
+	private String				title;
+	private Date				establishment;
+	private Collection<String>	pictures;
+
 
 	@NotBlank
 	public String getTitle() {
@@ -53,13 +56,15 @@ public class Brotherhood extends Actor {
 		this.pictures = pictures;
 	}
 
+
 	// Relationships
 
-	private Collection<Parade> parades;
-	private Collection<Float> floats;
-	private Collection<Enrolment> enrolments;
-	private Area area;
-	private Collection<History> history;
+	private Collection<Parade>		parades;
+	private Collection<Float>		floats;
+	private Collection<Enrolment>	enrolments;
+	private Area					area;
+	private History					history;
+
 
 	@OneToMany
 	public Collection<Parade> getParades() {
@@ -98,17 +103,13 @@ public class Brotherhood extends Actor {
 		this.area = area;
 	}
 
-	@OneToMany
-	public Collection<History> getHistory() {
-		return history;
+	@OneToOne
+	public History getHistory() {
+		return this.history;
 	}
 
-	public void setHistory(Collection<History> history) {
+	public void setHistory(final History history) {
 		this.history = history;
 	}
-
-
-	
-	
 
 }

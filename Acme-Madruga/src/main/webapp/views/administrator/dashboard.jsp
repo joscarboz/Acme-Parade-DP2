@@ -151,3 +151,40 @@ ${mem.name} ${mem.middleName} ${mem.surname}
 	<spring:message code="administrator.ratioEmpty" />
 </h2>
 ${emptyf}
+
+<h2>
+	<spring:message code="administrator.recPerHist" />
+</h2>
+
+<p>
+	<b><spring:message code="administrator.maximum" /> :</b> ${maximumrph}
+</p>
+<p>
+	<b><spring:message code="administrator.minimum" /> :</b> ${minimumrph}
+</p>
+<p>
+	<b><spring:message code="administrator.average" /> :</b> ${averagerph}
+</p>
+<p>
+	<b><spring:message code="administrator.stdev" /> :</b> ${stdevrph}
+</p>
+
+<h2>
+	<spring:message code="administrator.largestHistory" />
+</h2>
+<jstl:forEach var="lhbrotherhood" items="${largestHistory}">
+
+${lhbrotherhood.name} ${lhbrotherhood.middleName} ${lhbrotherhood.surname} ${lhbrotherhood.title}
+<br>
+</jstl:forEach>
+
+<h2>
+	<spring:message code="administrator.largerAverage" />
+</h2>
+<jstl:forEach var="labrotherhood" items="${largerAverageHistory}">
+
+${labrotherhood.name} ${labrotherhood.middleName} ${labrotherhood.surname} ${labrotherhood.title}
+<br>
+</jstl:forEach>
+
+

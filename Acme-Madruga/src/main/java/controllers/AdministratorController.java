@@ -101,8 +101,7 @@ public class AdministratorController extends AbstractController {
 		if (rejected == null)
 			rejected = 0.;
 
-		Collection<Parade> parades = this.adminService
-				.upcomingParades();
+		Collection<Parade> parades = this.adminService.upcomingParades();
 
 		Collection<Member> acceptedReqMem = this.adminService
 				.acceptedRequestMembers();
@@ -132,6 +131,25 @@ public class AdministratorController extends AbstractController {
 
 		if (emptyFinders == null)
 			emptyFinders = 0.;
+
+		Double[] rph = new Double[4];
+
+		rph = this.adminService.recordsPerHistory();
+
+		if (rph == null) {
+			rph = new Double[4];
+			rph[0] = 0.;
+			rph[1] = 0.;
+			rph[2] = 0.;
+			rph[3] = 0.;
+
+		}
+
+		Collection<Brotherhood> largestHistory = this.adminService
+				.largestHistory();
+
+		Collection<Brotherhood> largerAverageHistory = this.adminService
+				.getLargestBrotherhoodAverageHistory();
 
 		result = new ModelAndView("administrator/dashboard");
 
@@ -172,6 +190,16 @@ public class AdministratorController extends AbstractController {
 		result.addObject("stdevfs", find[3]);
 
 		result.addObject("emptyf", emptyFinders);
+
+		// RecordsPerHistory
+		result.addObject("maximumrph", rph[2]);
+		result.addObject("minimumrph", rph[1]);
+		result.addObject("averagerph", rph[0]);
+		result.addObject("stdevrph", rph[3]);
+
+		result.addObject("largestHistory", largestHistory);
+
+		result.addObject("largerAverageHistory", largerAverageHistory);
 
 		return result;
 

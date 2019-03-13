@@ -19,6 +19,7 @@ import repositories.AdministratorRepository;
 import repositories.BoxRepository;
 import repositories.BrotherhoodRepository;
 import repositories.FinderRepository;
+import repositories.HistoryRepository;
 import repositories.MessageRepository;
 import repositories.RequestRepository;
 import security.Authority;
@@ -31,8 +32,8 @@ import domain.Box;
 import domain.Brotherhood;
 import domain.Member;
 import domain.Message;
-import domain.Position;
 import domain.Parade;
+import domain.Position;
 import domain.SocialProfile;
 import forms.RegisterAdminForm;
 
@@ -55,6 +56,11 @@ public class AdministratorService {
 	// Supporting Services
 	@Autowired
 	private SystemConfigService systemConfigService;
+
+	// Es probable que todo lo referente a history debiera ir en el servicio de
+	// history, al no estar creado de momento se hará referencia al repositorio
+	@Autowired
+	private HistoryRepository historyRepository;
 
 	@Autowired
 	private MessageRepository messageRepository;
@@ -353,6 +359,25 @@ public class AdministratorService {
 
 	public Double countNonEmptyFinders() {
 		return 1. - this.finderRepository.countEmptyFinders();
+	}
+
+	public Double[] recordsPerHistory() {
+		return this.historyRepository.getRecordsPerHistory();
+	}
+
+	public Collection<Brotherhood> largestHistory() {
+
+		LinkedList<Brotherhood> brotherhoods = new LinkedList<Brotherhood>();
+		for (Object[] b : this.historyRepository.largestHistory()) {
+
+			brotherhoods.add((Brotherhood) b[1]);
+		}
+		return brotherhoods;
+	}
+
+	public Collection<Brotherhood> getLargestBrotherhoodAverageHistory() {
+
+		return this.historyRepository.largerAverage();
 	}
 
 }

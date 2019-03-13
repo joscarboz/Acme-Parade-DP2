@@ -7,7 +7,6 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,7 +36,6 @@ public class Segment extends DomainEntity {
 		this.destination = destination;
 	}
 	
-	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getOriginReachMoment() {
@@ -47,7 +45,6 @@ public class Segment extends DomainEntity {
 		this.originReachMoment = originReachMoment;
 	}
 	
-	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getDestinationReachMoment() {

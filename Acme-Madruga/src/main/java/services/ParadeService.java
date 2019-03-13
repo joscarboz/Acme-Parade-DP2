@@ -24,6 +24,7 @@ import domain.Float;
 import domain.Member;
 import domain.Parade;
 import domain.Request;
+import domain.Segment;
 
 @Service
 @Transactional
@@ -33,19 +34,19 @@ public class ParadeService {
 	private ParadeRepository	paradeRepository;
 
 	@Autowired
-	private SystemConfigService		systemConfigService;
+	private SystemConfigService	systemConfigService;
 
 	@Autowired
-	private BrotherhoodService		brotherhoodService;
+	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private MemberService			memberService;
+	private MemberService		memberService;
 
 	@Autowired
-	private RequestService			requestService;
+	private RequestService		requestService;
 
 	@Autowired
-	private Validator				validator;
+	private Validator			validator;
 
 
 	public ParadeService() {
@@ -79,6 +80,8 @@ public class ParadeService {
 		result.setFloats(new LinkedList<Float>());
 
 		result.setRequests(new LinkedList<Request>());
+
+		result.setSegments(new LinkedList<Segment>());
 
 		return result;
 	}
@@ -119,6 +122,10 @@ public class ParadeService {
 		this.brotherhoodService.save(brotherhood);
 		this.brotherhoodService.flush();
 		this.paradeRepository.delete(parade);
+	}
+
+	public void flush() {
+		this.paradeRepository.flush();
 	}
 
 	// Finder Methods

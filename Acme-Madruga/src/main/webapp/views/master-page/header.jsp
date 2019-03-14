@@ -114,6 +114,8 @@
 								code="master.page.brotherhood.float" /></a></li>
 					<li><a href="enrolment/brotherhood/list.do"><spring:message
 								code="master.page.brotherhood.member" /></a></li>
+					<li><a href="history/brotherhood/display.do"><spring:message
+								code="master.page.brotherhood.history" /></a></li>
 
 				</ul></li>
 		</security:authorize>

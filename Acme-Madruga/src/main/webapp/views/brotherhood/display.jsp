@@ -195,8 +195,6 @@
 	<spring:message code="record.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}"/>
 
-	<spring:message code="record.link" var="linkHeader" />
-	<display:column property="link" title="${linkHeader}"/>
 
 </display:table>
 

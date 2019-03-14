@@ -36,6 +36,7 @@
 		<value>/views/float/messages</value>
 		<value>/views/law/messages</value>
 		<value>/views/systemConfig/messages</value>
+		<value>/views/history/messages</value>
 		
 	</util:list>
 

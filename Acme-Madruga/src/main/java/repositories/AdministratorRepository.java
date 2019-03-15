@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import domain.Administrator;
 import domain.Area;
-import domain.Position;
 import domain.Parade;
+import domain.Position;
 
 @Repository
 public interface AdministratorRepository extends
@@ -56,4 +56,7 @@ public interface AdministratorRepository extends
 
 	@Query("select count(a) from Area a, Brotherhood b where b.area=a group by a")
 	Collection<Long> BrotherhoodsPerAreaNumber();
+	
+	@Query("select a from Administrator a where a.userAccount.id = ?1")
+	Administrator findbyUserAccountID(int id);
 }

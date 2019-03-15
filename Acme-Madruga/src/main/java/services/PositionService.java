@@ -56,6 +56,12 @@ public class PositionService {
 	public Position save(final Position position) {
 		Position result;
 		Assert.notNull(position);
+
+		final Actor principal = this.actorService.findByPrincipal();
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getUserAccount().getAuthorities().contains(auth));
+
 		result = this.positionRepository.save(position);
 		return result;
 	}

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import utilities.AbstractTest;
+import domain.Float;
 import domain.Parade;
 
 @ContextConfiguration(locations = {
@@ -26,6 +28,9 @@ public class ParadeServiceTest extends AbstractTest {
 	@Autowired
 	private ParadeService	paradeService;
 
+	@Autowired
+	private FloatService	floatService;
+
 
 	@Test
 	public void createAndSaveDriver() {
@@ -38,12 +43,8 @@ public class ParadeServiceTest extends AbstractTest {
 				"member1", "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() + 10000), true, "sampleStatus", IllegalArgumentException.class
 			}, { // Title vacío
 				"brotherhood1", "", "sampleDescription", new Date(System.currentTimeMillis() + 10000), true, "sampleStatus", ConstraintViolationException.class
-			}, { // Description vacío
-				"brotherhood1", "sampleTitle", "", new Date(System.currentTimeMillis() + 10000), true, "sampleStatus", ConstraintViolationException.class
 			}, { // Moment pasado
-				"brotherhood1", "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() - 10000), true, "sampleStatus", ConstraintViolationException.class
-			}, { // Draft mode null
-				"brotherhood1", "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() + 10000), null, "sampleStatus", ConstraintViolationException.class
+				"brotherhood1", "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() - 10000), true, "sampleStatus", IllegalArgumentException.class
 			}
 
 		};
@@ -63,13 +64,13 @@ public class ParadeServiceTest extends AbstractTest {
 	public void deleteDriver() {
 		final Object testingData[][] = {
 			{	//Una brotherhood elimina correctamente una parade
-				"brotherhood1", "parade2", null
+				"brotherhood1", "parade1", null
 			}, { //Una brotherhood no puede eliminar la parade de otra
 				"brotherhood1", "parade3", IllegalArgumentException.class
 			}, { //Sólo una brotherhood puede eliminar una parade
-				"member1", "parade2", IllegalArgumentException.class
+				"member1", "parade1", IllegalArgumentException.class
 			}, { //Un anónimo no puede eliminar una parade
-				null, "parade2", IllegalArgumentException.class
+				null, "parade1", IllegalArgumentException.class
 			}
 
 		};
@@ -87,11 +88,22 @@ public class ParadeServiceTest extends AbstractTest {
 		try {
 			this.authenticate(userName);
 			parade = this.paradeService.create();
+
+			final Float floatt = this.floatService.create();
+			floatt.setTitle("sampleTitle");
+			floatt.setDescription("sampleDescription");
+			final Float res = this.floatService.save(floatt);
+
+			final Collection<Float> floats = parade.getFloats();
+			floats.add(res);
+
+			parade.setFloats(floats);
 			parade.setTitle(title);
 			parade.setDescription(description);
 			parade.setMoment(moment);
 			parade.setDraftMode(draftMode);
 			parade.setStatus(status);
+
 			this.paradeService.save(parade);
 			this.paradeService.flush();
 			this.unauthenticate();
@@ -102,7 +114,6 @@ public class ParadeServiceTest extends AbstractTest {
 
 		this.checkExceptions(expected, caught);
 	}
-
 	protected void deleteTemplate(final String userName, final String paradeBeanName, final Class<?> expected) {
 		Class<?> caught;
 		int paradeId;

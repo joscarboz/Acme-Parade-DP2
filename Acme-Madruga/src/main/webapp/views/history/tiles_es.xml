@@ -21,4 +21,9 @@
 		<put-attribute name="body" value="/views/history/display.jsp" />
 	</definition>
 	
+	<definition name="inceptionRecord/edit" extends="master.page">	
+		<put-attribute name="title" value="Crear registro de inicio" />
+		<put-attribute name="body" value="/views/history/inceptionRecord.jsp" />
+	</definition>
+	
 </tiles-definitions>

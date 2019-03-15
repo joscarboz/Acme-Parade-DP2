@@ -123,7 +123,7 @@
 			access="isAnonymous()" />
 		<security:intercept-url pattern="/float/brotherhood/**"
 			access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/history/brotherhood/**"
+		<security:intercept-url pattern="/history/**"
 			access="hasRole('BROTHERHOOD')" />
 		
 		

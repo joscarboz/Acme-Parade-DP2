@@ -32,7 +32,7 @@
 
 			<display:column>
 				<a
-					href="history/brotherhood/inceptionRecord/edit.do?inceptionRecordId=${row.id}">
+					href="history/inceptionRecord/edit.do?inceptionRecordId=${row.id}">
 					<spring:message code="record.edit" />
 				</a>
 			</display:column>
@@ -67,20 +67,20 @@
 
 			<display:column>
 				<a
-					href="history/brotherhood/legalRecord/edit.do?legalRecordId=${row.id}">
+					href="history/legalRecord/edit.do?legalRecordId=${row.id}">
 					<spring:message code="record.edit" />
 				</a>
 			</display:column>
 
 			<display:column>
 				<a
-					href="history/brotherhood/legalRecord/delete.do?legalRecordId=${row.id}">
+					href="history/legalRecord/delete.do?legalRecordId=${row.id}">
 					<spring:message code="record.delete" />
 				</a>
 			</display:column>
 
 		</display:table>
-		<a href="history/brotherhood/legalRecord/create.do"> <spring:message
+		<a href="history/legalRecord/create.do"> <spring:message
 				code="record.create" />
 		</a>
 		<br />
@@ -104,20 +104,20 @@
 
 			<display:column>
 				<a
-					href="history/brotherhood/linkRecord/edit.do?linkRecordId=${row.id}">
+					href="history/linkRecord/edit.do?linkRecordId=${row.id}">
 					<spring:message code="record.edit" />
 				</a>
 			</display:column>
 
 			<display:column>
 				<a
-					href="history/brotherhood/linkRecord/delete.do?linkRecordId=${row.id}">
+					href="history/linkRecord/delete.do?linkRecordId=${row.id}">
 					<spring:message code="record.delete" />
 				</a>
 			</display:column>
 
 		</display:table>
-		<a href="history/brotherhood/linkRecord/create.do"> <spring:message
+		<a href="history/linkRecord/create.do"> <spring:message
 				code="record.create" />
 		</a>
 		<br />
@@ -137,21 +137,21 @@
 
 			<display:column>
 				<a
-					href="history/brotherhood/miscellaneousRecord/edit.do?miscellaneousRecordId=${row.id}">
+					href="history/miscellaneousRecord/edit.do?miscellaneousRecordId=${row.id}">
 					<spring:message code="record.edit" />
 				</a>
 			</display:column>
 
 			<display:column>
 				<a
-					href="history/brotherhood/miscellaneousRecord/delete.do?miscellaneousRecordId=${row.id}">
+					href="history/miscellaneousRecord/delete.do?miscellaneousRecordId=${row.id}">
 					<spring:message code="record.delete" />
 				</a>
 			</display:column>
 
 
 		</display:table>
-		<a href="history/brotherhood/miscellaneousRecord/create.do"> <spring:message
+		<a href="history/miscellaneousRecord/create.do"> <spring:message
 				code="record.create" />
 		</a>
 		<br />
@@ -181,26 +181,26 @@
 
 			<display:column>
 				<a
-					href="history/brotherhood/periodRecord/edit.do?periodRecordId=${row.id}">
+					href="history/periodRecord/edit.do?periodRecordId=${row.id}">
 					<spring:message code="record.edit" />
 				</a>
 			</display:column>
 
 			<display:column>
 				<a
-					href="history/brotherhood/periodRecord/delete.do?periodRecordId=${row.id}">
+					href="history/periodRecord/delete.do?periodRecordId=${row.id}">
 					<spring:message code="record.delete" />
 				</a>
 			</display:column>
 
 		</display:table>
-		<a href="history/brotherhood/periodRecord/create.do"> <spring:message
+		<a href="history/periodRecord/create.do"> <spring:message
 				code="record.create" />
 		</a>
 		<br />
 	</jstl:when>
 	<jstl:otherwise>
-		<a href="history/brotherhood/inceptionRecord/create.do"> <spring:message
+		<a href="history/inceptionRecord/create.do"> <spring:message
 				code="record.createInception" />
 		</a>
 		

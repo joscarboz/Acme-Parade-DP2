@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
 import repositories.BoxRepository;
@@ -23,6 +24,7 @@ import repositories.HistoryRepository;
 import repositories.MessageRepository;
 import repositories.RequestRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
 import domain.Actor;
@@ -95,6 +97,10 @@ public class AdministratorService {
 
 	public Administrator create() {
 		Administrator result;
+
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 
 		result = new Administrator();
 
@@ -376,8 +382,34 @@ public class AdministratorService {
 	}
 
 	public Collection<Brotherhood> getLargestBrotherhoodAverageHistory() {
-
 		return this.historyRepository.largerAverage();
+	}
+
+	public void flush() {
+		this.administratorRepository.flush();
+	}
+
+	public Administrator findByPrincipal() {
+		Administrator result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.findByUserAccount(userAccount);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Administrator findByUserAccount(final UserAccount userAccount) {
+		Assert.notNull(userAccount);
+
+		Administrator result;
+
+		result = this.administratorRepository.findbyUserAccountID(userAccount
+				.getId());
+
+		return result;
 	}
 
 }

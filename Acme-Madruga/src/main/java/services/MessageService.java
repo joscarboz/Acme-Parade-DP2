@@ -148,7 +148,6 @@ public class MessageService {
 
 	public Collection<Message> findByBoxName(final String boxName) {
 		final Actor actor = this.actorService.findByPrincipal();
-		final Collection<Actor> actors = this.actorService.findAll();
 		final Collection<Box> boxes = actor.getBoxes();
 		final List<Message> messages = new ArrayList<Message>(this.findAll());
 		final Collection<Message> result = new ArrayList<Message>();

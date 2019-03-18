@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,21 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
-import services.InceptionRecordService;
+import services.LinkRecordService;
 import controllers.AbstractController;
 import domain.Brotherhood;
 import domain.History;
-import domain.InceptionRecord;
+import domain.LinkRecord;
 
 @Controller
-@RequestMapping("/history/inceptionRecord")
-public class InceptionRecordBrotherhoodController extends AbstractController {
+@RequestMapping("history/linkRecord")
+public class LinkRecordBrotherhoodController extends AbstractController {
 
 	@Autowired
-	private BrotherhoodService		brotherhoodService;
+	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private InceptionRecordService	inceptionRecordService;
+	private LinkRecordService	linkRecordService;
 
 
 	// Creating --------------------------------------------------------
@@ -35,43 +36,42 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		InceptionRecord res;
+		LinkRecord res;
 
-		res = this.inceptionRecordService.create();
+		res = this.linkRecordService.create();
 
-		result = new ModelAndView("inceptionRecord/edit");
-		result.addObject("inceptionRecord", res);
+		result = new ModelAndView("linkRecord/edit");
+		result.addObject("linkRecord", res);
 		result.addObject("id", res.getId());
-		result.addObject("requestURI", "history/inceptionRecord/create.do");
+		result.addObject("requestURI", "history/linkRecord/create.do");
 		return result;
 	}
 
 	// Edition --------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int inceptionRecordId) {
-		ModelAndView result;
-		InceptionRecord res;
+	public ModelAndView edit(@RequestParam final int linkRecordId) {
+		final ModelAndView result;
+		LinkRecord res;
 
-		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
-		res = brotherhood.getHistory().getInceptionRecord();
+		res = this.linkRecordService.findOne(linkRecordId);
 
 		result = this.createEditModelAndView(res);
-		result.addObject("requestURI", "history/inceptionRecord/edit.do");
+		result.addObject("requestURI", "history/linkRecord/edit.do");
 		return result;
 	}
 
 	// Save --------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("inceptionRecord") @Valid final InceptionRecord res, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("linkRecord") @Valid final LinkRecord res, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(res);
 		else
 			try {
-				this.inceptionRecordService.save(res);
+				this.linkRecordService.save(res);
 				result = this.list();
 
 			} catch (final Throwable oops) {
@@ -80,17 +80,43 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 		return result;
 	}
 
+	//Delete
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int linkRecordId) {
+		ModelAndView result;
+		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+		final History history = brotherhood.getHistory();
+		try {
+			final LinkRecord linkRecord = this.linkRecordService.findOne(linkRecordId);
+			Assert.isTrue(this.brotherhoodService.findByPrincipal().getHistory().getLinkRecords().contains(linkRecord));
+
+			this.linkRecordService.delete(linkRecord);
+			result = new ModelAndView("history/display");
+			result.addObject("history", history);
+			result.addObject("requestURI", "history/brotherhood/display.do");
+			result.addObject("historyId", history.getId());
+
+		} catch (final Throwable oops) {
+			result = new ModelAndView("history/display");
+			result.addObject("history", history);
+			result.addObject("requestURI", "history/brotherhood/display.do");
+			result.addObject("historyId", history.getId());
+
+		}
+		return result;
+	}
+
 	// Ancillary methods --------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final InceptionRecord res) {
+	protected ModelAndView createEditModelAndView(final LinkRecord res) {
 		return this.createEditModelAndView(res, null);
 	}
 
-	protected ModelAndView createEditModelAndView(final InceptionRecord res, final String message) {
+	protected ModelAndView createEditModelAndView(final LinkRecord res, final String message) {
 		final ModelAndView result;
 
-		result = new ModelAndView("inceptionRecord/edit");
-		result.addObject("inceptionRecord", res);
+		result = new ModelAndView("linkRecord/edit");
+		result.addObject("linkRecord", res);
 		result.addObject("id", res.getId());
 		result.addObject("message", message);
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
@@ -109,5 +135,4 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 		result.addObject("historyId", history.getId());
 		return result;
 	}
-
 }

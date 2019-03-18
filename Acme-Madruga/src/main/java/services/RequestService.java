@@ -34,7 +34,7 @@ public class RequestService {
 	// Supporting Services
 
 	@Autowired
-	private ParadeService		paradeService;
+	private ParadeService			paradeService;
 
 	@Autowired
 	private BrotherhoodService		brotherhoodService;
@@ -107,7 +107,6 @@ public class RequestService {
 			final Parade proc = request.getParade();
 			proc.setRequests(requests);
 			this.paradeService.save(proc);
-
 			final Collection<Request> memberrequests = request.getMember().getRequests();
 			memberrequests.add(request);
 			final Member member = request.getMember();
@@ -141,6 +140,7 @@ public class RequestService {
 					+ "La hermandad  " + brotherhood.getTitle() + " ha rechazado la solicitud de " + member.getName() + " " + member.getMiddleName() + " " + member.getSurname() + ". La razón de rechazo es la siguiente: " + request.getRejectionReason());
 		}
 		this.messageService.saveAdmin(message);
+		System.out.println("mensaje guardado (saveAdmin)");
 		final Request res = this.requestRepository.save(request);
 		this.flush();
 		return res;
@@ -338,6 +338,7 @@ public class RequestService {
 		request.setParade(parade);
 
 		return request;
+
 	}
 
 }

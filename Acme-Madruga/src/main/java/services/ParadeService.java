@@ -91,9 +91,9 @@ public class ParadeService {
 		Assert.notNull(parade);
 		Assert.isTrue(parade.getMoment().after(Calendar.getInstance().getTime()));
 
-		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 		final Parade result = this.paradeRepository.save(parade);
 		if (parade.getId() == 0) {
+			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 			brotherhood.getParades().add(result);
 			this.brotherhoodService.save(brotherhood);
 
@@ -123,7 +123,6 @@ public class ParadeService {
 		this.brotherhoodService.flush();
 		this.paradeRepository.delete(parade);
 	}
-
 	public void flush() {
 		this.paradeRepository.flush();
 	}

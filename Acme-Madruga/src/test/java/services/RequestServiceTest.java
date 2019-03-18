@@ -117,9 +117,11 @@ public class RequestServiceTest extends AbstractTest {
 			caught = oops.getClass();
 		}
 
+		System.out.println("expected: " + expected);
+		System.out.println("caught: " + caught);
+
 		this.checkExceptions(expected, caught);
 	}
-
 	protected void deleteTemplate(final String userName, final String requestBeanName, final Class<?> expected) {
 		Class<?> caught;
 		final int requestId;

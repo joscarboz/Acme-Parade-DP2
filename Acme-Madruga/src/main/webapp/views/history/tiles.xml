@@ -19,5 +19,25 @@
 		<put-attribute name="title" value="Create inception record" />
 		<put-attribute name="body" value="/views/history/inceptionRecord.jsp" />
 	</definition>
+	
+		<definition name="linkRecord/edit" extends="master.page">	
+		<put-attribute name="title" value="Create link record" />
+		<put-attribute name="body" value="/views/history/linkRecord.jsp" />
+	</definition>
+	
+	<definition name="legalRecord/edit" extends="master.page">	
+		<put-attribute name="title" value="Create legal record" />
+		<put-attribute name="body" value="/views/history/legalRecord.jsp" />
+	</definition>
+	
+	<definition name="miscellaneousRecord/edit" extends="master.page">	
+		<put-attribute name="title" value="Create miscellaneous record" />
+		<put-attribute name="body" value="/views/history/miscellaneousRecord.jsp" />
+	</definition>
+	
+	<definition name="periodRecord/edit" extends="master.page">	
+		<put-attribute name="title" value="Create period record" />
+		<put-attribute name="body" value="/views/history/periodRecord.jsp" />
+	</definition>
 
 </tiles-definitions>

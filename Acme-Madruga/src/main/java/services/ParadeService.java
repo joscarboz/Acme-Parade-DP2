@@ -82,7 +82,7 @@ public class ParadeService {
 		result.setRequests(new LinkedList<Request>());
 
 		result.setSegments(new LinkedList<Segment>());
-
+		result.setStatus("PENDING");
 		return result;
 	}
 
@@ -90,7 +90,8 @@ public class ParadeService {
 
 		Assert.notNull(parade);
 		Assert.isTrue(parade.getMoment().after(Calendar.getInstance().getTime()));
-
+		if (parade.isDraftMode())
+			parade.setStatus("PENDING");
 		final Parade result = this.paradeRepository.save(parade);
 		if (parade.getId() == 0) {
 			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
@@ -215,6 +216,7 @@ public class ParadeService {
 			result.setDraftMode(parade.isDraftMode());
 			result.setMoment(parade.getMoment());
 			result.setFloats(parade.getFloats());
+			result.setStatus(parade.getStatus());
 			this.validator.validate(result, bindingResult);
 
 		}

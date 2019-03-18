@@ -106,7 +106,6 @@ public class MemberService {
 		Assert.notNull(member);
 		Member result;
 		result = this.memberRepository.save(member);
-		this.memberRepository.flush();
 		return result;
 	}
 

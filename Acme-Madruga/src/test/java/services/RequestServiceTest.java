@@ -109,7 +109,7 @@ public class RequestServiceTest extends AbstractTest {
 			this.authenticate(userName);
 			final Integer paradeId = super.getEntityId(paradeBeanName);
 			request = this.requestService.registerPrincipal(paradeId);
-			this.requestService.save(request);
+			final Request saved = this.requestService.save(request);
 			this.requestService.flush();
 			this.unauthenticate();
 

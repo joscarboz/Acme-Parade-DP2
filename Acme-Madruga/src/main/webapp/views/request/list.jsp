@@ -44,8 +44,7 @@
 		</jstl:otherwise>
 	</jstl:choose>
 	
-	<jstl:choose>
-	<jstl:when test="${row.status != 'REJECTED'}">
+	
 		<spring:message code="request.row" var="rowHeader" />
 		<display:column property="row" title="${rowHeader}"
 			sortable="false" />
@@ -53,8 +52,6 @@
 		<spring:message code="request.column" var="columnHeader" />
 		<display:column property="column" title="${columnHeader}"
 			sortable="false" />
-	</jstl:when>
-	</jstl:choose>
 	
 	<display:column>
 	<a href="parade/display.do?paradeId=${row.parade.id }">
@@ -67,6 +64,14 @@
 	</display:column>
 	<display:column>
 	<jstl:out value="${row.member.surname}"/>
+	</display:column>
+	
+	<!-- Display a request -->
+	
+	<display:column>
+		<a href="request/${role}/display.do?requestId=${row.id}"> <spring:message
+				code="request.display" />
+		</a>
 	</display:column>
 	
 	<!-- Accept / Reject a request -->
@@ -89,11 +94,7 @@
 		</jstl:choose>
 	</security:authorize>
 	
-	<!-- Display a request -->
+	
 
-	<display:column>
-		<a href="request/${role}/display.do?requestId=${row.id}"> <spring:message
-				code="request.display" />
-		</a>
-	</display:column>
+	
 </display:table>

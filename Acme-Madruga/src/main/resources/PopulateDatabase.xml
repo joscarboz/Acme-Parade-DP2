@@ -423,9 +423,9 @@
 
 		<property name="status" value="PENDING" />
 
-		<property name="row" value="1" />
+		<property name="row" value="0" />
 
-		<property name="column" value="1" />
+		<property name="column" value="0" />
 
 		<property name="member" ref="member1" />
 
@@ -437,9 +437,9 @@
 
 		<property name="status" value="PENDING" />
 
-		<property name="column" value="2" />
+		<property name="column" value="0" />
 
-		<property name="row" value="1" />
+		<property name="row" value="0" />
 
 		<property name="member" ref="member2" />
 
@@ -451,9 +451,9 @@
 
 		<property name="status" value="PENDING" />
 
-		<property name="column" value="1" />
+		<property name="column" value="0" />
 
-		<property name="row" value="2" />
+		<property name="row" value="0" />
 
 		<property name="member" ref="member1" />
 

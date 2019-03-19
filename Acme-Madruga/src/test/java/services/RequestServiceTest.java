@@ -86,17 +86,17 @@ public class RequestServiceTest extends AbstractTest {
 	public void rejectDriver() {
 		final Object testingData[][] = {
 			{	//Una brotherhood rechaza correctamente una request
-				"brotherhood1", "request1", null
+				"brotherhood2", "request4", null
 			}, { //Una brotherhood no puede rechazar la request de otro
 				"brotherhood1", "request4", IllegalArgumentException.class
 			}, { //Un anónimo no puede rechazar una request
-				null, "request1", IllegalArgumentException.class
+				null, "request4", IllegalArgumentException.class
 			}
 
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.acceptTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.rejectTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
 	// Ancillary methods ------------------------------------------------------
@@ -116,9 +116,6 @@ public class RequestServiceTest extends AbstractTest {
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
-
-		System.out.println("expected: " + expected);
-		System.out.println("caught: " + caught);
 
 		this.checkExceptions(expected, caught);
 	}
@@ -152,7 +149,8 @@ public class RequestServiceTest extends AbstractTest {
 			this.authenticate(userName);
 			requestId = super.getEntityId(requestBeanName);
 			request = this.requestService.findOne(requestId);
-			this.requestService.acceptRequest(request);
+			final Request accepted = this.requestService.acceptRequest(request);
+			this.requestService.save(accepted);
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -172,7 +170,8 @@ public class RequestServiceTest extends AbstractTest {
 			this.authenticate(userName);
 			requestId = super.getEntityId(requestBeanName);
 			request = this.requestService.findOne(requestId);
-			this.requestService.rejectRequest(request);
+			final Request rejected = this.requestService.rejectRequest(request);
+			this.requestService.save(rejected);
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

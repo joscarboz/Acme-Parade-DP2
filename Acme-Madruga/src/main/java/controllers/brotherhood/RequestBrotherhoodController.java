@@ -30,7 +30,7 @@ public class RequestBrotherhoodController extends AbstractController {
 	private RequestService		requestService;
 
 	@Autowired
-	private ParadeService	paradeService;
+	private ParadeService		paradeService;
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
@@ -109,20 +109,12 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView accept(@RequestParam final int requestId) {
 		ModelAndView result;
 		Request request;
-		Parade parade;
-		Collection<Parade> parades;
-		Brotherhood brotherhood;
-
-		brotherhood = this.brotherhoodService.findByPrincipal();
-		parades = brotherhood.getParades();
-		request = this.requestService.findOne(requestId);
-		parade = this.paradeService.findOne(request.getParade().getId());
-		Assert.isTrue(parades.contains(parade));
 
 		request = this.requestService.findOne(requestId);
-		request.setStatus("APPROVED");
+		final Request accepted = this.requestService.acceptRequest(request);
 
-		result = this.createEditModelAndView(request);
+		result = this.createEditModelAndView(accepted);
+		result.addObject("action", "accept");
 		return result;
 	}
 
@@ -132,27 +124,19 @@ public class RequestBrotherhoodController extends AbstractController {
 	public ModelAndView reject(@RequestParam final int requestId) {
 		ModelAndView result;
 		Request request;
-		Parade parade;
-		Collection<Parade> parades;
-		Brotherhood brotherhood;
-
-		brotherhood = this.brotherhoodService.findByPrincipal();
-		parades = brotherhood.getParades();
-		request = this.requestService.findOne(requestId);
-		parade = this.paradeService.findOne(request.getParade().getId());
-		Assert.isTrue(parades.contains(parade));
 
 		request = this.requestService.findOne(requestId);
-		request.setStatus("REJECTED");
+		final Request rejected = this.requestService.rejectRequest(request);
 
-		result = this.createEditModelAndView(request);
+		result = this.createEditModelAndView(rejected);
+		result.addObject("action", "reject");
 		return result;
 	}
 
-	// Save Accept --------------------------------------------------------
+	// Save --------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveAccept")
-	public ModelAndView saveAccept(Request request, final BindingResult binding) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(Request request, final BindingResult binding) {
 		ModelAndView result;
 
 		request = this.requestService.reconstruct(request, binding);
@@ -160,28 +144,6 @@ public class RequestBrotherhoodController extends AbstractController {
 			result = this.createEditModelAndView(request);
 		else
 			try {
-				request.setStatus("APPROVED");
-				this.requestService.save(request);
-				result = new ModelAndView("redirect:list.do");
-
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(request, "request.commit.error");
-			}
-		return result;
-	}
-
-	// Save Reject --------------------------------------------------------
-
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveReject")
-	public ModelAndView saveReject(Request request, final BindingResult binding) {
-		ModelAndView result;
-
-		request = this.requestService.reconstruct(request, binding);
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(request);
-		else
-			try {
-				request.setStatus("REJECTED");
 				this.requestService.save(request);
 				result = new ModelAndView("redirect:list.do");
 
@@ -205,10 +167,6 @@ public class RequestBrotherhoodController extends AbstractController {
 		result.addObject("role", "brotherhood");
 		result.addObject("message", message);
 		result.addObject("requestURI", "request/brotherhood/edit.do");
-		if (request.getStatus() == "APPROVED")
-			result.addObject("action", "accept");
-		if (request.getStatus() == "REJECTED")
-			result.addObject("action", "reject");
 		return result;
 	}
 

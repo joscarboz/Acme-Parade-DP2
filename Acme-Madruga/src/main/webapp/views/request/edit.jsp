@@ -15,6 +15,7 @@
 	modelAttribute="request">
 
 	<form:hidden path="id" />
+	<form:hidden path="status" />
 
 	<security:authorize access="hasRole('BROTHERHOOD')">
 	<jstl:choose>
@@ -40,17 +41,8 @@
 	</jstl:choose>
 	</security:authorize>
 	
-	<jstl:choose>
-		<jstl:when test="${action == 'accept'}">
-			<acme:submit name="saveAccept" code="request.save" />
-		</jstl:when>
-		<jstl:when test="${action == 'reject'}">
-			<acme:submit name="saveReject" code="request.save" />
-		</jstl:when>
-		<jstl:otherwise>
-			<acme:submit name="save" code="request.save" />
-		</jstl:otherwise>
-	</jstl:choose>
+	
+	<acme:submit name="save" code="request.save" />
 	
 	<acme:cancel code="request.cancel" url="request/${role}/list.do" />
 	

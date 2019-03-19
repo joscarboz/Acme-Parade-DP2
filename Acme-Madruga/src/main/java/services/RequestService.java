@@ -87,20 +87,22 @@ public class RequestService {
 	public Request save(final Request request) {
 
 		Assert.notNull(request);
-		if (request.getStatus() == "APPROVED") {
+		final String status = request.getStatus();
+		if (status.equals("APPROVED")) {
 			Assert.isTrue(request.getColumn() != 0);
 			Assert.isTrue(request.getColumn() != 0);
+
+			final Collection<Request> all = request.getParade().getRequests();
+
+			all.remove(request);
+
+			for (final Request r : all) {
+				final boolean rows = !(r.getRow() == request.getRow());
+				final boolean columns = !(r.getColumn() == request.getColumn());
+				Assert.isTrue(rows || columns);
+			}
 		}
 
-		final Collection<Request> all = request.getParade().getRequests();
-
-		all.remove(request);
-
-		for (final Request r : all) {
-			final boolean rows = !(r.getRow() == request.getRow());
-			final boolean columns = !(r.getColumn() == request.getColumn());
-			Assert.isTrue(rows || columns);
-		}
 		final Request res = this.requestRepository.save(request);
 
 		if (request.getId() == 0) {
@@ -144,7 +146,7 @@ public class RequestService {
 			}
 			this.messageService.saveAdmin(message);
 		}
-		System.out.println("mensaje guardado (saveAdmin)");
+
 		return res;
 	}
 
@@ -220,66 +222,32 @@ public class RequestService {
 	}
 
 	public Request acceptRequest(final Request request) {
-		Assert.isTrue(request.getStatus() == "PENDING");
+		final String status = request.getStatus();
+		Assert.isTrue(status.equals("PENDING"));
 
 		final Actor actor = this.actorService.findByPrincipal();
 		final Brotherhood brotherhood = this.brotherhoodService.findByRequest(request);
 		Assert.isTrue(actor.getId() == brotherhood.getId());
-
-		final Message message = new Message();
-		final Administrator admin = this.administratorService.findAll().iterator().next();
-		final Collection<Actor> recipients = new ArrayList<Actor>();
-		recipients.add(this.actorService.findByPrincipal());
-		final Member member = request.getMember();
-		recipients.add(member);
-
-		message.setMoment(new Date(System.currentTimeMillis() - 100));
-		message.setSender(admin);
-		message.setRecipients(recipients);
-		message.setPriority("HIGH");
-		message.setSpam(false);
-		message.setTags("");
-		message.setSubject("Request APPROVED / Solicitud ACEPTADA");
-		message.setBody("Brotherhood " + brotherhood.getTitle() + " has accepted " + member.getName() + " " + member.getMiddleName() + " " + member.getSurname() + " request. Position given is row " + request.getRow() + ", column " + request.getColumn()
-			+ ". / " + "La hermandad  " + brotherhood.getTitle() + " ha aceptado la solicitud de " + member.getName() + " " + member.getMiddleName() + " " + member.getSurname());
-
-		this.messageService.saveAdmin(message);
 
 		request.setStatus("APPROVED");
 		final Request suggested = this.suggestRowAndColumn(request);
 
-		return this.save(suggested);
+		return suggested;
 	}
 
 	public Request rejectRequest(final Request request) {
-		Assert.isTrue(request.getStatus() == "PENDING");
+		final String status = request.getStatus();
+		Assert.isTrue(status.equals("PENDING"));
 
 		final Actor actor = this.actorService.findByPrincipal();
 		final Brotherhood brotherhood = this.brotherhoodService.findByRequest(request);
 		Assert.isTrue(actor.getId() == brotherhood.getId());
 
-		final Message message = new Message();
-		final Administrator admin = this.administratorService.findAll().iterator().next();
-		final Collection<Actor> recipients = new ArrayList<Actor>();
-		recipients.add(this.actorService.findByPrincipal());
-		final Member member = request.getMember();
-		recipients.add(member);
-
-		message.setMoment(new Date(System.currentTimeMillis() - 100));
-		message.setSender(admin);
-		message.setRecipients(recipients);
-		message.setPriority("HIGH");
-		message.setSpam(false);
-		message.setTags("");
-		message.setSubject("Request REJECTED / Solicitud RECHAZADA");
-		message.setBody("Brotherhood " + brotherhood.getTitle() + " has rejected " + member.getName() + " " + member.getMiddleName() + " " + member.getSurname() + " request. The rejection reason is the following: " + request.getRejectionReason() + " / "
-			+ "La hermandad  " + brotherhood.getTitle() + " ha rechazado la solicitud de " + member.getName() + " " + member.getMiddleName() + " " + member.getSurname() + ". La razón de rechazo es la siguiente: " + request.getRejectionReason());
-
-		this.messageService.saveAdmin(message);
-
 		request.setStatus("REJECTED");
+		request.setColumn(0);
+		request.setRow(0);
 
-		return this.save(request);
+		return request;
 	}
 
 	public Collection<Request> findByMember(final Member member) {
@@ -322,6 +290,7 @@ public class RequestService {
 			result.setColumn(request.getColumn());
 			result.setRow(request.getRow());
 			result.setRejectionReason(request.getRejectionReason());
+			result.setStatus(request.getStatus());
 
 			this.validator.validate(result, binding);
 		}

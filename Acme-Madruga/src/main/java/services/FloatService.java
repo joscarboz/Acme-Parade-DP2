@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -20,11 +19,10 @@ import domain.Parade;
 public class FloatService {
 
 	@Autowired
-	private FloatRepository		floatRepository;
+	private FloatRepository floatRepository;
 
 	@Autowired
-	private BrotherhoodService	brotherhoodService;
-
+	private BrotherhoodService brotherhoodService;
 
 	public FloatService() {
 		super();
@@ -61,7 +59,8 @@ public class FloatService {
 
 		Assert.notNull(flot);
 
-		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+		final Brotherhood brotherhood = this.brotherhoodService
+				.findByPrincipal();
 
 		final Float result = this.floatRepository.save(flot);
 
@@ -77,7 +76,8 @@ public class FloatService {
 
 		Assert.notNull(flot);
 
-		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+		final Brotherhood brotherhood = this.brotherhoodService
+				.findByPrincipal();
 
 		final Collection<Float> floats = brotherhood.getFloats();
 
@@ -91,5 +91,9 @@ public class FloatService {
 		this.brotherhoodService.save(brotherhood);
 
 		this.floatRepository.delete(flot);
+	}
+
+	public void flush() {
+		this.floatRepository.flush();
 	}
 }

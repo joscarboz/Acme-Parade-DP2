@@ -1,6 +1,5 @@
 package services;
 
-import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.transaction.Transactional;
@@ -9,7 +8,6 @@ import javax.validation.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -24,8 +22,8 @@ public class AreaServiceTest extends AbstractTest {
 	@Autowired
 	private AreaService areaService;
 
-	protected void template(final String userName, String name,
-			Collection<String> pictures, int numPic, Class<?> expected) {
+	protected void template(final String userName, String name, int numPic,
+			Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
@@ -56,47 +54,39 @@ public class AreaServiceTest extends AbstractTest {
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
-			if (oops instanceof DataIntegrityViolationException) {
-				caught = expected;
-			}
 		}
 		super.checkExceptions(expected, caught);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void createAndSaveDriver() {
 
-		LinkedList<String> pictures = new LinkedList<String>();
 		final Object testingData[][] = {
 				// Creación incorrecta con name blank
-				{ "admin", "", pictures, 1, ConstraintViolationException.class },
+				{ "admin", "", 1, ConstraintViolationException.class },
 				// Creación correcta de un area (name correcto)
-				{ "admin", "Name 1", pictures, 1, null },
+				{ "admin", "Name 1", 1, null },
 				// Pictures con un sólo elemento
-				{ "admin", "Name 2", pictures, 1, null },
+				{ "admin", "Name 2", 1, null },
 				// Pictures con dos elementos
-				{ "admin", "Name 3", pictures, 2, null },
+				{ "admin", "Name 3", 2, null },
 				// Pictures con más de dos elementos
-				{ "admin", "Name 4", pictures, 3, null },
+				{ "admin", "Name 4", 3, null },
 				// Seguridad
 
 				// Member no puede crear un area
-				{ "member1", "Name 5", pictures, 1,
-						IllegalArgumentException.class },
+				{ "member1", "Name 5", 1, IllegalArgumentException.class },
 				// Brotherhood no puede crear un area
-				{ "brotherhood1", "Name 6", pictures, 1,
-						IllegalArgumentException.class },
+				{ "brotherhood1", "Name 6", 1, IllegalArgumentException.class },
 				// Anónimo no puede crear area
-				{ null, "Name 7", pictures, 1, IllegalArgumentException.class } };
+				{ null, "Name 7", 1, IllegalArgumentException.class } };
 
 		for (int i = 0; i < testingData.length; i++)
 			try {
 				super.startTransaction();
 				this.template((String) testingData[i][0],
-						(String) testingData[i][1],
-						(Collection<String>) testingData[i][2],
-						(int) testingData[i][3], (Class<?>) testingData[i][4]);
+						(String) testingData[i][1], (int) testingData[i][2],
+						(Class<?>) testingData[i][3]);
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			} finally {
@@ -156,6 +146,81 @@ public class AreaServiceTest extends AbstractTest {
 				this.deleteTemplate((String) testingData[i][0],
 						(boolean) testingData[i][1],
 						(Class<?>) testingData[i][2]);
+			} catch (final Throwable oops) {
+				throw new RuntimeException(oops);
+			} finally {
+				super.rollbackTransaction();
+			}
+	}
+
+	protected void updateTemplate(final String userName, String name,
+			int numPic, Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			int areaId = this.getEntityId("area1");
+			Area areaU = this.areaService.findOne(areaId);
+			areaU.setName(name);
+			LinkedList<String> picturesU = new LinkedList<String>();
+			switch (numPic) {
+			case 1:
+				picturesU.add("http://www.foto1.com");
+				break;
+			case 2:
+				picturesU.add("http://www.foto1.com");
+				picturesU.add("http://www.foto2.com");
+				break;
+
+			default:
+				picturesU.add("http://www.foto1.com");
+				picturesU.add("http://www.foto2.com");
+				picturesU.add("http://www.foto3.com");
+				picturesU.add("http://www.foto4.com");
+				picturesU.add("http://www.foto5.com");
+				picturesU.add("http://www.foto6.com");
+			}
+
+			areaU.setPictures(picturesU);
+			this.areaService.save(areaU);
+			this.areaService.flush();
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+		super.checkExceptions(expected, caught);
+	}
+
+	@Test
+	public void updateDriver() {
+
+		final Object testingData[][] = {
+				// Actualización incorrecta con name blank
+				{ "admin", "", 1, ConstraintViolationException.class },
+				// Actualización correcta de un area (name correcto)
+				{ "admin", "Name 1", 1, null },
+				// Actualización Pictures con un sólo elemento
+				{ "admin", "Name 2", 1, null },
+				// Actualización Pictures con dos elementos
+				{ "admin", "Name 3", 2, null },
+				// Actualización Pictures con más de dos elementos
+				{ "admin", "Name 4", 3, null },
+				// Seguridad
+
+				// Member no puede actualizar un area
+				{ "member1", "Name 5", 1, IllegalArgumentException.class },
+				// Brotherhood no puede actualizar un area
+				{ "brotherhood1", "Name 6", 1, IllegalArgumentException.class },
+				// Anónimo no puede actualizar area
+				{ null, "Name 7", 1, IllegalArgumentException.class } };
+
+		for (int i = 0; i < testingData.length; i++)
+			try {
+				super.startTransaction();
+				this.updateTemplate((String) testingData[i][0],
+						(String) testingData[i][1], (int) testingData[i][2],
+						(Class<?>) testingData[i][3]);
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			} finally {

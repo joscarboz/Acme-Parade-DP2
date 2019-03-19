@@ -77,22 +77,28 @@
 	<!-- Accept / Reject a request -->
 	
 	<security:authorize access="hasRole('BROTHERHOOD')">
+	<display:column>
 		<jstl:choose>
 			<jstl:when test="${row.status=='PENDING'}">
-				<display:column>
 				<a href="request/brotherhood/accept.do?requestId=${row.id}">
 					<spring:message code="request.accept" />
 				</a>
-				</display:column>
-				<br></br>
-				<display:column>
+				</jstl:when>
+		</jstl:choose>
+	</display:column>
+	<br></br>
+	<display:column>
+		<jstl:choose>
+			<jstl:when test="${row.status=='PENDING'}">
 				<a href="request/brotherhood/reject.do?requestId=${row.id}">
 					<spring:message code="request.reject" />
 				</a>
-				</display:column>
-			</jstl:when>
+				</jstl:when>
 		</jstl:choose>
+	</display:column>
 	</security:authorize>
+	
+	
 	
 	
 

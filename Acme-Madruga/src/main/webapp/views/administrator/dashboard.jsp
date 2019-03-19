@@ -187,4 +187,57 @@ ${labrotherhood.name} ${labrotherhood.middleName} ${labrotherhood.surname} ${lab
 <br>
 </jstl:forEach>
 
+<h2>
+	<spring:message code="administrator.ratioNonCoord" />
+</h2>
+${nonCoordinateAreas}
+
+<h2>
+	<spring:message code="administrator.parPerChap" />
+</h2>
+
+<p>
+	<b><spring:message code="administrator.maximum" /> :</b> ${maximumppc}
+</p>
+<p>
+	<b><spring:message code="administrator.minimum" /> :</b> ${minimumppc}
+</p>
+<p>
+	<b><spring:message code="administrator.average" /> :</b> ${averageppc}
+</p>
+<p>
+	<b><spring:message code="administrator.stdev" /> :</b> ${stdevppc}
+</p>
+
+<h2>
+	<spring:message code="administrator.chaptersMoreAVG" />
+</h2>
+<jstl:forEach var="chapter" items="${chaptersMoreAVG}">
+
+${chapter.name} ${chapter.middleName} ${chapter.surname} ${chapter.title}
+<br>
+</jstl:forEach>
+
+<h2>
+	<spring:message code="administrator.draftModeParadesRatio" />
+</h2>
+${draftModeParades}
+
+<h2>
+	<spring:message code="administrator.finalAcceptedParadesRatio" />
+</h2>
+${finalAcceptedParades}
+
+<h2>
+	<spring:message code="administrator.finalRejectedParadesRatio" />
+</h2>
+${finalRejectedParades}
+
+<h2>
+	<spring:message code="administrator.finalSubmittedParadesRatio" />
+</h2>
+${finalSubmittedParades}
+
+
+
 

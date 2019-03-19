@@ -17,11 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
+import repositories.AreaRepository;
 import repositories.BoxRepository;
 import repositories.BrotherhoodRepository;
+import repositories.ChapterRepository;
 import repositories.FinderRepository;
 import repositories.HistoryRepository;
 import repositories.MessageRepository;
+import repositories.ParadeRepository;
 import repositories.RequestRepository;
 import security.Authority;
 import security.LoginService;
@@ -32,6 +35,7 @@ import domain.Administrator;
 import domain.Area;
 import domain.Box;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Member;
 import domain.Message;
 import domain.Parade;
@@ -73,6 +77,15 @@ public class AdministratorService {
 
 	@Autowired
 	private UserAccountRepository userAccountRepository;
+
+	@Autowired
+	private AreaRepository areaRepository;
+
+	@Autowired
+	private ChapterRepository chapterRepository;
+
+	@Autowired
+	private ParadeRepository paradeRepository;
 
 	// CRUD
 	public Administrator findOne(final int administratorId) {
@@ -463,4 +476,68 @@ public class AdministratorService {
 		return result;
 	}
 
+	public Double getNonCoordinateAreas() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		Double coord = this.areaRepository.coordinateAreasRatio();
+
+		Double nonCord = 1.0 - coord;
+
+		return nonCord;
+
+	}
+
+	public Double[] paradesPerChapter() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+		return this.areaRepository.getParadesPerChapter();
+	}
+
+	public Collection<Chapter> chaptersParadesMoreAvg() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.chapterRepository.chapterMoreAVG();
+
+	}
+
+	public Double getDraftModeParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.draftModeParadesRatio();
+
+	}
+
+	public Double getFinalModeAcceptedParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.finalModeAcceptedParadesRatio();
+
+	}
+
+	public Double getFinalModeRejectedParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.finalModeRejectedParadesRatio();
+
+	}
+
+	public Double getFinalModeSubmittedParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.finalModeSubmittedParadesRatio();
+
+	}
 }

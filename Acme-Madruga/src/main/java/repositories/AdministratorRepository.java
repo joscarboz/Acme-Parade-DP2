@@ -56,7 +56,8 @@ public interface AdministratorRepository extends
 
 	@Query("select count(a) from Area a, Brotherhood b where b.area=a group by a")
 	Collection<Long> BrotherhoodsPerAreaNumber();
-	
+
 	@Query("select a from Administrator a where a.userAccount.id = ?1")
 	Administrator findbyUserAccountID(int id);
+
 }

@@ -33,9 +33,10 @@ import services.SystemConfigService;
 import domain.Actor;
 import domain.Area;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Member;
-import domain.Position;
 import domain.Parade;
+import domain.Position;
 import domain.SystemConfig;
 import forms.RegisterAdminForm;
 import forms.RegisterForm;
@@ -151,6 +152,50 @@ public class AdministratorController extends AbstractController {
 		Collection<Brotherhood> largerAverageHistory = this.adminService
 				.getLargestBrotherhoodAverageHistory();
 
+		Double nonCoord = this.adminService.getNonCoordinateAreas();
+
+		if (nonCoord == null)
+			nonCoord = 0.;
+
+		Double[] ppc = new Double[4];
+
+		ppc = this.adminService.paradesPerChapter();
+
+		if (ppc == null) {
+			ppc = new Double[4];
+			ppc[0] = 0.;
+			ppc[1] = 0.;
+			ppc[2] = 0.;
+			ppc[3] = 0.;
+
+		}
+
+		Collection<Chapter> chaptersMoreAVG = this.adminService
+			.chaptersParadesMoreAvg();
+
+		Double draftMode = this.adminService.getDraftModeParadesRatio();
+
+		if (draftMode == null)
+			draftMode = 0.;
+
+		Double finalAcceptedParades = this.adminService
+				.getFinalModeAcceptedParadesRatio();
+
+		if (finalAcceptedParades == null)
+			finalAcceptedParades = 0.;
+
+		Double finalRejectedParades = this.adminService
+				.getFinalModeRejectedParadesRatio();
+
+		if (finalRejectedParades == null)
+			finalRejectedParades = 0.;
+
+		Double finalSubmittedParades = this.adminService
+				.getFinalModeSubmittedParadesRatio();
+
+		if (finalSubmittedParades == null)
+			finalSubmittedParades = 0.;
+
 		result = new ModelAndView("administrator/dashboard");
 
 		// MembersPerBrotherhood
@@ -200,6 +245,24 @@ public class AdministratorController extends AbstractController {
 		result.addObject("largestHistory", largestHistory);
 
 		result.addObject("largerAverageHistory", largerAverageHistory);
+
+		result.addObject("nonCoordinateAreas", nonCoord);
+
+		// ParadesPerChapter
+		result.addObject("maximumppc", ppc[1]);
+		result.addObject("minimumppc", ppc[2]);
+		result.addObject("averageppc", ppc[0]);
+		result.addObject("stdevppc", ppc[3]);
+
+		result.addObject("chaptersMoreAVG", chaptersMoreAVG);
+
+		result.addObject("draftModeParades", draftMode);
+
+		result.addObject("finalAcceptedParades", finalAcceptedParades);
+
+		result.addObject("finalRejectedParades", finalRejectedParades);
+
+		result.addObject("finalSubmittedParades", finalSubmittedParades);
 
 		return result;
 

@@ -18,6 +18,8 @@
 	<form:hidden path="version" />
 	<form:hidden path="ticker" />
 	<form:hidden path="requests" />
+	<form:hidden path="status" />
+	
 
 	<acme:textbox code="parade.title" path="title" />
 	<br />

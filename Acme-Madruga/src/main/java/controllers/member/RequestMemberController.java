@@ -27,10 +27,10 @@ import domain.Request;
 public class RequestMemberController extends AbstractController {
 
 	@Autowired
-	private RequestService		requestService;
+	private RequestService	requestService;
 
 	@Autowired
-	private MemberService		memberService;
+	private MemberService	memberService;
 
 	@Autowired
 	private ParadeService	paradeService;
@@ -77,8 +77,8 @@ public class RequestMemberController extends AbstractController {
 		request.setParade(parade);
 
 		try {
-			final Request saved = this.requestService.save(request);
-			result = new ModelAndView("redirect:display.do?requestId=" + saved.getId());
+			this.requestService.save(request);
+			result = new ModelAndView("redirect:list.do");
 
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(request, "request.commit.error");

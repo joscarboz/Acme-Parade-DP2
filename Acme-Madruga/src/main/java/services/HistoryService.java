@@ -59,6 +59,7 @@ public class HistoryService {
 	public History save(final History history) {
 		Assert.notNull(history);
 		final History result = this.historyRepository.save(history);
+		this.historyRepository.flush();
 		return result;
 	}
 

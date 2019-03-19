@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -103,7 +104,9 @@ public class Brotherhood extends Actor {
 		this.area = area;
 	}
 
-	@OneToOne
+	@OneToOne(cascade = {
+		CascadeType.ALL
+	})
 	public History getHistory() {
 		return this.history;
 	}

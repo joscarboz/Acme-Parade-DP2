@@ -32,9 +32,9 @@
 		<spring:message code="actor.spammer" />
 	</jstl:if>
 	<br />
-	<b><spring:message code="actor.score" /></b>	
-	<jstl:out value="${brotherhood.score}"/>
-	<br/>
+	<b><spring:message code="actor.score" /></b>
+	<jstl:out value="${brotherhood.score}" />
+	<br />
 </security:authorize>
 
 <!--  Listing grid -->
@@ -45,18 +45,18 @@
 	requestURI="member/list.do" id="row">
 
 	<!-- Attributes -->
-	
+
 	<spring:message code="member.name" var="nameHeader" />
-	<display:column property="name" title="${nameHeader}"/>
+	<display:column property="name" title="${nameHeader}" />
 	<display:column title="${nameHeader}">
-	<a href="member/display.do?memberId=${row.id}">${row.name}</a>
+		<a href="member/display.do?memberId=${row.id}">${row.name}</a>
 	</display:column>
 	<spring:message code="member.middleName" var="middleNameHeader" />
-	<display:column property="middleName" title="${middleNameHeader}"/>
-	
+	<display:column property="middleName" title="${middleNameHeader}" />
+
 	<spring:message code="member.surname" var="surnameHeader" />
-	<display:column property="surname" title="${surnameHeader}"/>
-			
+	<display:column property="surname" title="${surnameHeader}" />
+
 </display:table>
 <br />
 <!--  Listing grid -->
@@ -69,10 +69,10 @@
 	<!-- Attributes -->
 	<spring:message code="float.title" var="titleHeader" />
 	<display:column title="${titleHeader}">
-	<a href="float/display.do?floatId=${row.id}">${row.title}</a>
+		<a href="float/display.do?floatId=${row.id}">${row.title}</a>
 	</display:column>
 	<spring:message code="float.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
 
 </display:table>
 <br />
@@ -84,22 +84,25 @@
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
-	
+
 	<spring:message code="parade.ticker" var="tickerHeader" />
 	<display:column title="${tickerHeader}">
-	<a href="parade/display.do?paradeId=${row.id}">${row.ticker}</a>
+		<a href="parade/display.do?paradeId=${row.id}">${row.ticker}</a>
 	</display:column>
-	
+
 	<spring:message code="parade.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}"/>
-	
+	<display:column property="title" title="${titleHeader}" />
+
 	<spring:message code="parade.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
 
 	<spring:message code="parade.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}"/>
+	<display:column property="moment" title="${momentHeader}" />
 
 </display:table>
+<br />
+
+<b><spring:message code="brotherhood.socialProfiles" /></b>
 
 <display:table pagesize="5" class="displaytag" name="socialProfiles"
 	requestURI="${requestURI}" id="row">
@@ -113,10 +116,12 @@
 	<spring:message code="socialProfile.profile" var="profileHeader" />
 	<display:column property="profileLink" title="${profileHeader}"
 		sortable="false" />
-	
+
 </display:table>
 
-<h2><spring:message code="brotherhood.history"/></h2>
+<h2>
+	<spring:message code="brotherhood.history" />
+</h2>
 <br />
 
 <b><spring:message code="brotherhood.inceptionRecord" /></b>
@@ -125,18 +130,19 @@
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
-	
-	
+
+
 	<spring:message code="record.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}"/>
-	
+	<display:column property="title" title="${titleHeader}" />
+
 	<spring:message code="record.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
 
 	<spring:message code="record.pictures" var="picturesHeader" />
-	<display:column property="pictures" title="${picturesHeader}"/>
+	<display:column property="pictures" title="${picturesHeader}" />
 
 </display:table>
+<br />
 
 <b><spring:message code="brotherhood.legalRecords" /></b>
 
@@ -144,82 +150,82 @@
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
-	
-	
+
+
 	<spring:message code="record.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}"/>
-	
+	<display:column property="title" title="${titleHeader}" />
+
 	<spring:message code="record.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
 
 	<spring:message code="record.laws" var="lawsHeader" />
-	<display:column property="laws" title="${lawsHeader}"/>
-	
+	<display:column property="laws" title="${lawsHeader}" />
+
 	<spring:message code="record.legalName" var="legalNameHeader" />
-	<display:column property="legalName" title="${legalNameHeader}"/>
-	
+	<display:column property="legalName" title="${legalNameHeader}" />
+
 	<spring:message code="record.VAT" var="VATHeader" />
-	<display:column property="VAT" title="${VATHeader}"/>
+	<display:column property="VAT" title="${VATHeader}" />
 
 </display:table>
-
+<br />
 
 <b><spring:message code="brotherhood.linkRecords" /></b>
 <display:table pagesize="5" class="displaytag" name="linkRecords"
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
-	
-	
+
+
 	<spring:message code="record.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}"/>
-	
+	<display:column property="title" title="${titleHeader}" />
+
 	<spring:message code="record.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
 
 	<spring:message code="record.link" var="linkHeader" />
-	<display:column property="link" title="${linkHeader}"/>
+	<display:column property="link" title="${linkHeader}" />
 
 </display:table>
-
+<br />
 <b><spring:message code="brotherhood.miscellaneousRecords" /></b>
-<display:table pagesize="5" class="displaytag" name="miscellaneousRecords"
-	requestURI="parade/list.do" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="miscellaneousRecords" requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
-	
-	
+
+
 	<spring:message code="record.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}"/>
-	
+	<display:column property="title" title="${titleHeader}" />
+
 	<spring:message code="record.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
 
 
 </display:table>
-
+<br />
 
 <b><spring:message code="brotherhood.periodRecords" /></b>
 <display:table pagesize="5" class="displaytag" name="periodRecords"
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
-	
-	
+
+
 	<spring:message code="record.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}"/>
-	
+	<display:column property="title" title="${titleHeader}" />
+
 	<spring:message code="record.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
 
 	<spring:message code="record.pictures" var="picturesHeader" />
-	<display:column property="pictures" title="${picturesHeader}"/>
-	
+	<display:column property="pictures" title="${picturesHeader}" />
+
 	<spring:message code="record.startYear" var="startYearHeader" />
-	<display:column property="startYear" title="${startYearHeader}"/>
-	
+	<display:column property="startYear" title="${startYearHeader}" />
+
 	<spring:message code="record.endYear" var="endYearHeader" />
-	<display:column property="endYear" title="${endYearHeader}"/>
+	<display:column property="endYear" title="${endYearHeader}" />
 
 </display:table>
 <br />

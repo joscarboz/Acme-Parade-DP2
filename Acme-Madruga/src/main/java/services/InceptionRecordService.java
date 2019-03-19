@@ -43,13 +43,13 @@ public class InceptionRecordService {
 		if (inceptionRecord.getId() == 0) {
 			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 			final History history = this.historyService.create();
-			history.setInceptionRecord(null);
+			history.setInceptionRecord(inceptionRecord);
 			this.historyService.save(history);
 			brotherhood.setHistory(history);
-			//this.historyService.flush();
+			this.historyService.flush();
 			this.brotherhoodService.save(brotherhood);
 			result = this.inceptionRecordRepository.save(inceptionRecord);
-			history.setInceptionRecord(inceptionRecord);
+
 			this.flush();
 			this.historyService.flush();
 		} else {

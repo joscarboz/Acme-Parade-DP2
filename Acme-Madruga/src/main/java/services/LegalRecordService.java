@@ -55,6 +55,7 @@ public class LegalRecordService {
 			this.legalRecordRepository.flush();
 			brotherhood.getHistory().getLegalRecords().add(legalRecord);
 			this.historyService.save(brotherhood.getHistory());
+			this.brotherhoodService.save(brotherhood);
 		}
 
 		return result;

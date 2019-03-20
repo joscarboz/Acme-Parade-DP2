@@ -1,48 +1,52 @@
+
 package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class LinkRecord extends DomainEntity {
 
-	private String description;
-	private String link;
-	private String title;
+	private String		description;
+	private Brotherhood	link;
+	private String		title;
+
 
 	@SafeHtml
 	@NotBlank
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
-	@NotBlank
-	@URL
-	public String getLink() {
-		return link;
+	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+	@NotNull
+	public Brotherhood getLink() {
+		return this.link;
 	}
 
-	public void setLink(String link) {
+	public void setLink(final Brotherhood link) {
 		this.link = link;
 	}
 
 	@SafeHtml
 	@NotBlank
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 

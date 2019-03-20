@@ -22,11 +22,11 @@
 	<br />
 	<acme:textarea code="record.description" path="description" />
 	<br />
-	<acme:textarea code="record.link" path="link"/>
+	<acme:select code="record.link" path="link" items="${brotherhoods}"
+		itemLabel="title" id="links" />
 	<br />
 	<acme:submit name="save" code="record.save" />
-	<acme:cancel code="record.cancel"
-		url="history/brotherhood/display.do" />
+	<acme:cancel code="record.cancel" url="history/brotherhood/display.do" />
 
 
 </form:form>

@@ -15,8 +15,8 @@
 	<jstl:when test="${history != null}">
 		<b><spring:message code="brotherhood.inceptionRecord" /></b>
 
-		<display:table pagesize="5" class="displaytag" name="history.inceptionRecord"
-			requestURI="parade/list.do" id="row">
+		<display:table pagesize="5" class="displaytag"
+			name="history.inceptionRecord" requestURI="parade/list.do" id="row">
 
 			<!-- Attributes -->
 
@@ -44,8 +44,8 @@
 
 		<b><spring:message code="brotherhood.legalRecords" /></b>
 
-		<display:table pagesize="5" class="displaytag" name="history.legalRecords"
-			requestURI="parade/list.do" id="row">
+		<display:table pagesize="5" class="displaytag"
+			name="history.legalRecords" requestURI="parade/list.do" id="row">
 
 			<!-- Attributes -->
 
@@ -66,15 +66,13 @@
 			<display:column property="VAT" title="${VATHeader}" />
 
 			<display:column>
-				<a
-					href="history/legalRecord/edit.do?legalRecordId=${row.id}">
-					<spring:message code="record.edit" />
+				<a href="history/legalRecord/edit.do?legalRecordId=${row.id}"> <spring:message
+						code="record.edit" />
 				</a>
 			</display:column>
 
 			<display:column>
-				<a
-					href="history/legalRecord/delete.do?legalRecordId=${row.id}">
+				<a href="history/legalRecord/delete.do?legalRecordId=${row.id}">
 					<spring:message code="record.delete" />
 				</a>
 			</display:column>
@@ -87,8 +85,8 @@
 
 
 		<b><spring:message code="brotherhood.linkRecords" /></b>
-		<display:table pagesize="5" class="displaytag" name="history.linkRecords"
-			requestURI="parade/list.do" id="row">
+		<display:table pagesize="5" class="displaytag"
+			name="history.linkRecords" requestURI="parade/list.do" id="row">
 
 			<!-- Attributes -->
 
@@ -100,19 +98,19 @@
 			<display:column property="description" title="${descriptionHeader}" />
 
 			<spring:message code="record.link" var="linkHeader" />
-			<display:column property="link" title="${linkHeader}" />
+			<display:column title="${linkHeader}">
+				<a href="brotherhood/display.do?brotherhoodId=${row.link.id}">${row.link.title}</a>
+			</display:column>
 
 			<display:column>
-				<a
-					href="history/linkRecord/edit.do?linkRecordId=${row.id}">
-					<spring:message code="record.edit" />
+				<a href="history/linkRecord/edit.do?linkRecordId=${row.id}"> <spring:message
+						code="record.edit" />
 				</a>
 			</display:column>
 
 			<display:column>
-				<a
-					href="history/linkRecord/delete.do?linkRecordId=${row.id}">
-					<spring:message code="record.delete" />
+				<a href="history/linkRecord/delete.do?linkRecordId=${row.id}"> <spring:message
+						code="record.delete" />
 				</a>
 			</display:column>
 
@@ -124,7 +122,8 @@
 
 		<b><spring:message code="brotherhood.miscellaneousRecords" /></b>
 		<display:table pagesize="5" class="displaytag"
-			name="history.miscellaneousRecords" requestURI="parade/list.do" id="row">
+			name="history.miscellaneousRecords" requestURI="parade/list.do"
+			id="row">
 
 			<!-- Attributes -->
 
@@ -158,8 +157,8 @@
 
 
 		<b><spring:message code="brotherhood.periodRecords" /></b>
-		<display:table pagesize="5" class="displaytag" name="history.periodRecords"
-			requestURI="parade/list.do" id="row">
+		<display:table pagesize="5" class="displaytag"
+			name="history.periodRecords" requestURI="parade/list.do" id="row">
 
 			<!-- Attributes -->
 
@@ -180,15 +179,13 @@
 			<display:column property="endYear" title="${endYearHeader}" />
 
 			<display:column>
-				<a
-					href="history/periodRecord/edit.do?periodRecordId=${row.id}">
+				<a href="history/periodRecord/edit.do?periodRecordId=${row.id}">
 					<spring:message code="record.edit" />
 				</a>
 			</display:column>
 
 			<display:column>
-				<a
-					href="history/periodRecord/delete.do?periodRecordId=${row.id}">
+				<a href="history/periodRecord/delete.do?periodRecordId=${row.id}">
 					<spring:message code="record.delete" />
 				</a>
 			</display:column>
@@ -203,7 +200,7 @@
 		<a href="history/inceptionRecord/create.do"> <spring:message
 				code="record.createInception" />
 		</a>
-		
+
 	</jstl:otherwise>
 </jstl:choose>
 

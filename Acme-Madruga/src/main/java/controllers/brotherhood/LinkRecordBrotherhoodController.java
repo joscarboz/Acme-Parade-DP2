@@ -43,6 +43,7 @@ public class LinkRecordBrotherhoodController extends AbstractController {
 		result = new ModelAndView("linkRecord/edit");
 		result.addObject("linkRecord", res);
 		result.addObject("id", res.getId());
+		result.addObject("brotherhoods", this.brotherhoodService.findAll());
 		result.addObject("requestURI", "history/linkRecord/create.do");
 		return result;
 	}
@@ -58,6 +59,7 @@ public class LinkRecordBrotherhoodController extends AbstractController {
 
 		result = this.createEditModelAndView(res);
 		result.addObject("requestURI", "history/linkRecord/edit.do");
+		result.addObject("brotherhoods", this.brotherhoodService.findAll());
 		return result;
 	}
 
@@ -119,6 +121,7 @@ public class LinkRecordBrotherhoodController extends AbstractController {
 		result.addObject("linkRecord", res);
 		result.addObject("id", res.getId());
 		result.addObject("message", message);
+		result.addObject("brotherhoods", this.brotherhoodService.findAll());
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 		result.addObject("history", brotherhood.getHistory());
 		return result;

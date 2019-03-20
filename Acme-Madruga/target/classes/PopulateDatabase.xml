@@ -1498,14 +1498,14 @@
 	<!-- LinkRecord1 -->
 	<bean id="linkRecord1" class="domain.LinkRecord">
 		<property name="description" value="descript" />
-		<property name="link" value="https://www.linkrecord.com" />
+		<property name="link" ref="brotherhood2" />
 		<property name="title" value="Title"/>
 	</bean>
 
 	<!-- LinkRecord2 -->
 	<bean id="linkRecord2" class="domain.LinkRecord">
 		<property name="description" value="descript" />
-		<property name="link" value="https://www.linkrecord.com" />
+		<property name="link" ref="brotherhood3" />
 		<property name="title" value="Title"/>
 	</bean>
 

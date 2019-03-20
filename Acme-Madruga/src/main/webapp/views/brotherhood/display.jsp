@@ -184,7 +184,9 @@
 	<display:column property="description" title="${descriptionHeader}" />
 
 	<spring:message code="record.link" var="linkHeader" />
-	<display:column property="link" title="${linkHeader}" />
+	<display:column title="${linkHeader}">
+		<a href="brotherhood/display.do?brotherhoodId=${row.link.id}">${row.link.title}</a>
+	</display:column>
 
 </display:table>
 <br />

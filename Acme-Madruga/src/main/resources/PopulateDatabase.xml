@@ -553,7 +553,6 @@
 		<property name="userAccount" ref="userAccount2" />
 		<property name="title" value="Brotherhood Title 2" />
 		<property name="establishment" value="2018/12/01" />
-		<property name="history" ref="history2"/>
 		<property name="pictures">
 			<list>
 				<value>https://picture1.jpg</value>

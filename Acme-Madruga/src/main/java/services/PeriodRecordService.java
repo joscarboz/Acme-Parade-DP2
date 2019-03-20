@@ -43,6 +43,7 @@ public class PeriodRecordService {
 
 	public PeriodRecord save(final PeriodRecord periodRecord) {
 		Assert.notNull(periodRecord);
+		Assert.isTrue(periodRecord.getStartYear() <= periodRecord.getEndYear());
 
 		PeriodRecord result;
 		Brotherhood brotherhood;

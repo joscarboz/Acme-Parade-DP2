@@ -1,3 +1,4 @@
+
 package domain;
 
 import javax.persistence.Access;
@@ -5,63 +6,66 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class LegalRecord extends DomainEntity {
 
-	private String description;
-	private String legalName;
-	private int VAT;
-	private String laws;
-	private String title;
+	private String	description;
+	private String	legalName;
+	private int		VAT;
+	private String	laws;
+	private String	title;
+
 
 	@SafeHtml
 	@NotBlank
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 	@SafeHtml
 	@NotBlank
 	public String getLegalName() {
-		return legalName;
+		return this.legalName;
 	}
 
-	public void setLegalName(String legalName) {
+	public void setLegalName(final String legalName) {
 		this.legalName = legalName;
 	}
 
+	@Range(min = 0)
 	public int getVAT() {
-		return VAT;
+		return this.VAT;
 	}
 
-	public void setVAT(int vAT) {
-		VAT = vAT;
+	public void setVAT(final int vAT) {
+		this.VAT = vAT;
 	}
 
 	@SafeHtml
 	@NotBlank
 	public String getLaws() {
-		return laws;
+		return this.laws;
 	}
 
-	public void setLaws(String laws) {
+	public void setLaws(final String laws) {
 		this.laws = laws;
 	}
-	
+
 	@SafeHtml
 	@NotBlank
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 

@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.Collection;
@@ -13,27 +12,38 @@ import org.springframework.util.Assert;
 import repositories.AreaRepository;
 import security.Authority;
 import domain.Actor;
+import domain.Administrator;
 import domain.Area;
+import domain.Brotherhood;
 
 @Service
 @Transactional
 public class AreaService {
 
-	//Managed Repository
+	// Managed Repository
 	@Autowired
-	private AreaRepository	areaRepository;
+	private AreaRepository areaRepository;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService actorService;
 
+	@Autowired
+	private AdministratorService adminService;
 
-	//Constructor
+	@Autowired
+	private BrotherhoodService brotherhoodService;
+
+	// Constructor
 	public AreaService() {
 		super();
 	}
 
 	// CRUD
 	public Area create() {
+
+		Administrator logged = adminService.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		Area result;
 
 		result = new Area();
@@ -53,20 +63,34 @@ public class AreaService {
 	}
 
 	public Area save(final Area area) {
+		Administrator logged = adminService.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		Area result;
 		Assert.notNull(area);
 		result = this.areaRepository.save(area);
 		return result;
 	}
+
 	public void delete(final Area area) {
+
+		Administrator logged = adminService.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		Assert.notNull(area);
 		Assert.isTrue(area.getId() != 0);
 		Assert.isTrue(this.areaRepository.exists(area.getId()));
 
+		Collection<Brotherhood> brotherhoods = this.brotherhoodService
+				.findByArea(area.getId());
+
+		Assert.isTrue(brotherhoods.isEmpty());
+
 		final Actor principal = this.actorService.findByPrincipal();
 		final Authority auth = new Authority();
 		auth.setAuthority(Authority.ADMIN);
-		Assert.isTrue(principal.getUserAccount().getAuthorities().contains(auth));
+		Assert.isTrue(principal.getUserAccount().getAuthorities()
+				.contains(auth));
 
 		this.areaRepository.delete(area);
 
@@ -80,7 +104,7 @@ public class AreaService {
 		return result;
 
 	}
-	
+
 	public Collection<Area> findByName(final String area) {
 		Collection<Area> result;
 

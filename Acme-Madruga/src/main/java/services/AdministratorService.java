@@ -17,11 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
+import repositories.AreaRepository;
 import repositories.BoxRepository;
 import repositories.BrotherhoodRepository;
+import repositories.ChapterRepository;
 import repositories.FinderRepository;
 import repositories.HistoryRepository;
 import repositories.MessageRepository;
+import repositories.ParadeRepository;
 import repositories.RequestRepository;
 import security.Authority;
 import security.LoginService;
@@ -32,6 +35,7 @@ import domain.Administrator;
 import domain.Area;
 import domain.Box;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Member;
 import domain.Message;
 import domain.Parade;
@@ -73,6 +77,15 @@ public class AdministratorService {
 
 	@Autowired
 	private UserAccountRepository userAccountRepository;
+
+	@Autowired
+	private AreaRepository areaRepository;
+
+	@Autowired
+	private ChapterRepository chapterRepository;
+
+	@Autowired
+	private ParadeRepository paradeRepository;
 
 	// CRUD
 	public Administrator findOne(final int administratorId) {
@@ -212,10 +225,16 @@ public class AdministratorService {
 	// Dashboard
 
 	public Double[] membersPerBrotherhoodStats() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.administratorRepository.getMembersPerBrotherhood();
 	}
 
 	public Collection<Brotherhood> largestBrotherhoods() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		final List<Brotherhood> result = new ArrayList<Brotherhood>(
 				this.brotherhoodRepository.findLargestBrotherhoods());
 		if (result.size() > 3)
@@ -224,6 +243,9 @@ public class AdministratorService {
 	}
 
 	public Collection<Brotherhood> smallestBrotherhoods() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		final List<Brotherhood> result = new ArrayList<Brotherhood>(
 				this.brotherhoodRepository.findSmallestBrotherhoods());
 		if (result.size() > 3)
@@ -232,22 +254,37 @@ public class AdministratorService {
 	}
 
 	public Double acceptedRequestsRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.administratorRepository.approvedRequestRatio();
 	}
 
 	public Double rejectedRequestsRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.administratorRepository.rejectedRequestRatio();
 	}
 
 	public Double pendingRequestsRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.administratorRepository.pendingRequestRatio();
 	}
 
 	public Collection<Parade> upcomingParades() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.administratorRepository.upcomingParades();
 	}
 
 	public Map<Position, Long> positionHistogram() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 
 		HashMap<Position, Long> pos = new HashMap<Position, Long>();
 		LinkedList<Position> posList = new LinkedList<Position>(
@@ -265,6 +302,9 @@ public class AdministratorService {
 	}
 
 	public Map<Area, Double[]> brotherhoodsPerArea() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 
 		HashMap<Area, Double[]> statistics = new HashMap<Area, Double[]>();
 		LinkedList<Area> areaList = new LinkedList<Area>(
@@ -295,6 +335,9 @@ public class AdministratorService {
 	}
 
 	public Double[] brotherhoodsPerAreaStatistics() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 
 		Double[] statistics = new Double[4];
 
@@ -341,6 +384,9 @@ public class AdministratorService {
 	}
 
 	public Collection<Member> acceptedRequestMembers() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		final List<Member> result = new ArrayList<Member>();
 
 		for (final Member m : this.memberService.findAll()) {
@@ -356,22 +402,37 @@ public class AdministratorService {
 	}
 
 	public Double[] getNumberResultFinders() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.finderRepository.getNumberResultFinders();
 	}
 
 	public Double countEmptyFinders() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.finderRepository.countEmptyFinders();
 	}
 
 	public Double countNonEmptyFinders() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return 1. - this.finderRepository.countEmptyFinders();
 	}
 
 	public Double[] recordsPerHistory() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.historyRepository.getRecordsPerHistory();
 	}
 
 	public Collection<Brotherhood> largestHistory() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 
 		LinkedList<Brotherhood> brotherhoods = new LinkedList<Brotherhood>();
 		for (Object[] b : this.historyRepository.largestHistory()) {
@@ -382,6 +443,9 @@ public class AdministratorService {
 	}
 
 	public Collection<Brotherhood> getLargestBrotherhoodAverageHistory() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
 		return this.historyRepository.largerAverage();
 	}
 
@@ -412,4 +476,68 @@ public class AdministratorService {
 		return result;
 	}
 
+	public Double getNonCoordinateAreas() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		Double coord = this.areaRepository.coordinateAreasRatio();
+
+		Double nonCord = 1.0 - coord;
+
+		return nonCord;
+
+	}
+
+	public Double[] paradesPerChapter() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+		return this.areaRepository.getParadesPerChapter();
+	}
+
+	public Collection<Chapter> chaptersParadesMoreAvg() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.chapterRepository.chapterMoreAVG();
+
+	}
+
+	public Double getDraftModeParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.draftModeParadesRatio();
+
+	}
+
+	public Double getFinalModeAcceptedParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.finalModeAcceptedParadesRatio();
+
+	}
+
+	public Double getFinalModeRejectedParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.finalModeRejectedParadesRatio();
+
+	}
+
+	public Double getFinalModeSubmittedParadesRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.paradeRepository.finalModeSubmittedParadesRatio();
+
+	}
 }

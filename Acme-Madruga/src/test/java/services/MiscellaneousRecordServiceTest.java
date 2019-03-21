@@ -50,6 +50,43 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 				super.rollbackTransaction();
 			}
 	}
+	@Test
+	public void deleteDriver() {
+		final Object testingData[][] = {
+			{	//Una brotherhood elimina correctamente un miscellaneous recod
+				"brotherhood1", "miscellaneousRecord1", null
+			}, { //Una brotherhood no puede eliminar un miscellaneous record de otra
+				"brotherhood2", "miscellaneousRecord1", IllegalArgumentException.class
+			}, { //Sólo una brotherhood puede eliminar un miscellaneous record
+				"member1", "miscellaneousRecord1", IllegalArgumentException.class
+			}, { //Un anónimo no puede eliminar un miscellaneous record
+				null, "miscellaneousRecord1", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.deleteTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+	protected void deleteTemplate(final String userName, final String miscellaneousRecordBeanName, final Class<?> expected) {
+		Class<?> caught;
+		int miscellaneousRecordId;
+		MiscellaneousRecord miscellaneousRecord;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			miscellaneousRecordId = super.getEntityId(miscellaneousRecordBeanName);
+			miscellaneousRecord = this.miscellaneousRecordService.findOne(miscellaneousRecordId);
+			this.miscellaneousRecordService.delete(miscellaneousRecord);
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 
 	protected void createAndSaveMiscellaneousRecordTemplate(final String userName, final String title, final String description, final Class<?> expected) {
 		Class<?> caught;

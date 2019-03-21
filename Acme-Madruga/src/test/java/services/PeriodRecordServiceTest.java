@@ -58,6 +58,43 @@ public class PeriodRecordServiceTest extends AbstractTest {
 				super.rollbackTransaction();
 			}
 	}
+	@Test
+	public void deleteDriver() {
+		final Object testingData[][] = {
+			{	//Una brotherhood elimina correctamente un period recod
+				"brotherhood1", "periodRecord1", null
+			}, { //Una brotherhood no puede eliminar un period record de otra
+				"brotherhood2", "periodRecord1", IllegalArgumentException.class
+			}, { //Sólo una brotherhood puede eliminar un period record
+				"member1", "periodRecord1", IllegalArgumentException.class
+			}, { //Un anónimo no puede eliminar un period record
+				null, "periodRecord1", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.deleteTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+	protected void deleteTemplate(final String userName, final String periodRecordBeanName, final Class<?> expected) {
+		Class<?> caught;
+		int periodRecordId;
+		PeriodRecord periodRecord;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			periodRecordId = super.getEntityId(periodRecordBeanName);
+			periodRecord = this.periodRecordService.findOne(periodRecordId);
+			this.periodRecordService.delete(periodRecord);
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 	protected void createAndSavePeriodRecordTemplate(final String userName, final String title, final String description, final Integer startYear, final Integer endYear, final String picture, final Class<?> expected) {
 		Class<?> caught;
 

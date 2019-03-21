@@ -51,6 +51,25 @@ public class LegalRecordServiceTest extends AbstractTest {
 			}
 	}
 
+	@Test
+	public void deleteDriver() {
+		final Object testingData[][] = {
+			{	//Una brotherhood elimina correctamente un legal recod
+				"brotherhood1", "legalRecord1", null
+			}, { //Una brotherhood no puede eliminar un legal record de otra
+				"brotherhood2", "legalRecord1", IllegalArgumentException.class
+			}, { //Sólo una brotherhood puede eliminar un legal record
+				"member1", "legalRecord1", IllegalArgumentException.class
+			}, { //Un anónimo no puede eliminar un legal recod
+				null, "legalRecord1", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.deleteTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
 	// Ancillary methods ------------------------------------------------------
 	protected void createAndSaveLegalRecordTemplate(final String userName, final String title, final String description, final String laws, final String legalName, final Integer VAT, final Class<?> expected) {
 		Class<?> caught;
@@ -66,6 +85,26 @@ public class LegalRecordServiceTest extends AbstractTest {
 			legalRecord.setVAT(VAT);
 			this.legalRecordService.save(legalRecord);
 
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	protected void deleteTemplate(final String userName, final String legalRecordBeanName, final Class<?> expected) {
+		Class<?> caught;
+		int legalRecordId;
+		LegalRecord legalRecord;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			legalRecordId = super.getEntityId(legalRecordBeanName);
+			legalRecord = this.legalRecordService.findOne(legalRecordId);
+			this.legalRecordService.delete(legalRecord);
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

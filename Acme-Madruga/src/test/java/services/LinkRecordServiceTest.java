@@ -52,6 +52,24 @@ public class LinkRecordServiceTest extends AbstractTest {
 			}
 	}
 
+	@Test
+	public void deleteDriver() {
+		final Object testingData[][] = {
+			{	//Una brotherhood elimina correctamente un link recod
+				"brotherhood1", "linkRecord1", null
+			}, { //Una brotherhood no puede eliminar un link record de otra
+				"brotherhood2", "linkRecord1", IllegalArgumentException.class
+			}, { //Sólo una brotherhood puede eliminar un link record
+				"member1", "linkRecord1", IllegalArgumentException.class
+			}, { //Un anónimo no puede eliminar un link recod
+				null, "linkRecord1", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.deleteTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
 	protected void createAndSaveLinkRecordTemplate(final String userName, final String title, final String description, final String link, final Class<?> expected) {
 		Class<?> caught;
 
@@ -65,6 +83,26 @@ public class LinkRecordServiceTest extends AbstractTest {
 			linkRecord.setLink(this.brotherhoodService.findOne(Brotherhoodid));
 			this.linkRecordService.save(linkRecord);
 
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	protected void deleteTemplate(final String userName, final String linkRecordBeanName, final Class<?> expected) {
+		Class<?> caught;
+		int linkRecordId;
+		LinkRecord linkRecord;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			linkRecordId = super.getEntityId(linkRecordBeanName);
+			linkRecord = this.linkRecordService.findOne(linkRecordId);
+			this.linkRecordService.delete(linkRecord);
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

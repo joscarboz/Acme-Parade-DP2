@@ -22,7 +22,7 @@ import domain.Parade;
 public class ParadeController extends AbstractController {
 
 	@Autowired
-	private ParadeService	paradeService;
+	private ParadeService		paradeService;
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
@@ -47,7 +47,7 @@ public class ParadeController extends AbstractController {
 		final Collection<Parade> res = new ArrayList<>();
 
 		for (final Parade p : parades)
-			if (p.isDraftMode() == false)
+			if (p.isDraftMode() == false && p.getStatus().equals("accepted"))
 				res.add(p);
 
 		result = new ModelAndView("parade/list");

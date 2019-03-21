@@ -25,7 +25,7 @@ public class ParadeMemberController extends AbstractController {
 	private ParadeService	paradeService;
 
 	@Autowired
-	private MemberService		memberService;
+	private MemberService	memberService;
 
 
 	// Listing Parades from a Brotherhood
@@ -40,7 +40,7 @@ public class ParadeMemberController extends AbstractController {
 		final Collection<Parade> res = new ArrayList<>();
 
 		for (final Parade p : parades)
-			if (p.isDraftMode() == false && p.getMoment().after(Calendar.getInstance().getTime()))
+			if (p.isDraftMode() == false && p.getMoment().after(Calendar.getInstance().getTime()) && p.getStatus().equals("accepted"))
 				res.add(p);
 
 		result = new ModelAndView("parade/list");

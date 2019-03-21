@@ -40,7 +40,7 @@ public class ParadeBrotherhoodController extends AbstractController {
 	private BrotherhoodService		brotherhoodService;
 
 	@Autowired
-	private ParadeService		paradeService;
+	private ParadeService			paradeService;
 
 	@Autowired
 	private Validator				validator;
@@ -105,6 +105,22 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 		return result;
 
+	}
+
+	// Copy --------------------------------------------------------
+
+	@RequestMapping(value = "/copy", method = RequestMethod.GET)
+	public ModelAndView copy(@RequestParam final int paradeId) {
+		ModelAndView result;
+		final Parade parade = this.paradeService.findOne(paradeId);
+		final Parade copy = this.paradeService.create();
+		copy.setTitle(parade.getTitle());
+		copy.setDraftMode(true);
+		copy.setDescription(parade.getDescription());
+
+		result = this.createEditModelAndView(copy);
+
+		return result;
 	}
 
 	// Display --------------------------------------------------------

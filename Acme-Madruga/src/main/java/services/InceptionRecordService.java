@@ -54,6 +54,7 @@ public class InceptionRecordService {
 			this.historyService.flush();
 		} else {
 			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+			Assert.isTrue(brotherhood.getHistory().getInceptionRecord().getId() == (inceptionRecord.getId()));
 			final History history;
 			history = brotherhood.getHistory();
 			brotherhood.setHistory(history);
@@ -68,5 +69,9 @@ public class InceptionRecordService {
 	}
 	public void flush() {
 		this.inceptionRecordRepository.flush();
+	}
+	public InceptionRecord findOne(final Integer recordId) {
+		final InceptionRecord res = this.inceptionRecordRepository.findOne(recordId);
+		return res;
 	}
 }

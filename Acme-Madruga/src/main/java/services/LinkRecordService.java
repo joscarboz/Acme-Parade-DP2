@@ -66,6 +66,7 @@ public class LinkRecordService {
 		Assert.isTrue(this.linkRecordRepository.exists(linkRecord.getId()));
 
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+		Assert.isTrue(brotherhood.getHistory().getLinkRecords().contains(linkRecord));
 		brotherhood.getHistory().getLinkRecords().remove(linkRecord);
 		this.brotherhoodService.save(brotherhood);
 		this.brotherhoodService.flush();

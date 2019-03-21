@@ -67,6 +67,7 @@ public class PeriodRecordService {
 		Assert.isTrue(this.periodRecordRepository.exists(periodRecord.getId()));
 
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+		Assert.isTrue(brotherhood.getHistory().getPeriodRecords().contains(periodRecord));
 		brotherhood.getHistory().getPeriodRecords().remove(periodRecord);
 		this.brotherhoodService.save(brotherhood);
 		this.brotherhoodService.flush();

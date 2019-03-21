@@ -66,6 +66,7 @@ public class MiscellaneousRecordService {
 		Assert.isTrue(this.miscellaneousRecordRepository.exists(miscellaneousRecord.getId()));
 
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+		Assert.isTrue(brotherhood.getHistory().getMiscellaneousRecords().contains(miscellaneousRecord));
 		brotherhood.getHistory().getMiscellaneousRecords().remove(miscellaneousRecord);
 		this.brotherhoodService.save(brotherhood);
 		this.brotherhoodService.flush();

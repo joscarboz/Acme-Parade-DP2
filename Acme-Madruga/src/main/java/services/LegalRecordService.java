@@ -67,6 +67,7 @@ public class LegalRecordService {
 		Assert.isTrue(this.legalRecordRepository.exists(legalRecord.getId()));
 
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+		Assert.isTrue(brotherhood.getHistory().getLegalRecords().contains(legalRecord));
 		brotherhood.getHistory().getLegalRecords().remove(legalRecord);
 		this.brotherhoodService.save(brotherhood);
 		this.brotherhoodService.flush();

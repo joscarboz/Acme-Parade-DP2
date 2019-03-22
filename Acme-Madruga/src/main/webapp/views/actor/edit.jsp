@@ -10,6 +10,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="actor/edit.do" modelAttribute="actor">
 
@@ -19,61 +20,22 @@
 	<form:hidden path="boxes" />
 	<form:hidden path="userAccount" />
 	<form:hidden path="socialProfiles" />
+	
+	<acme:textbox code="actor.name" path="name"/>
+	
+	<acme:textbox code="actor.middlename" path="middleName"/>
+	
+	<acme:textbox code="actor.surname" path="surname"/>
 
-	<form:label path="name">
-		<spring:message code="actor.name" />:
-	</form:label>
-	<form:input path="name" />
-	<form:errors cssClass="error" path="name" />
-	<br />
+	<acme:textbox code="actor.photo" path="photo"/>
+	
+	<acme:textbox code="actor.email" path="email"/>
+	
+	<acme:textbox code="actor.phone" path="phone"/>
+	
+	<acme:textbox code="actor.address" path="address"/>
 
-	<form:label path="middleName">
-		<spring:message code="actor.middlename" />:
-	</form:label>
-	<form:input path="middleName" />
-	<br />
-
-	<form:label path="surname">
-		<spring:message code="actor.surname" />:
-	</form:label>
-	<form:input path="surname" />
-	<form:errors cssClass="error" path="surname" />
-	<br />
-
-	<form:label path="photo">
-		<spring:message code="actor.photo" />:
-	</form:label>
-	<form:input path="photo" />
-	<br />
-
-	<form:label path="email">
-		<spring:message code="actor.email" />:
-	</form:label>
-	<form:input path="email" />
-	<form:errors cssClass="error" path="email" />
-
-	<br />
-
-	<form:label path="phone">
-		<spring:message code="actor.phone" />:
-	</form:label>
-	<form:input path="phone" />
-	<form:errors cssClass="error" path="phone" />
-
-	<br />
-
-	<form:label path="address">
-		<spring:message code="actor.address" />:
-	</form:label>
-	<form:input path="address" />
-	<form:errors cssClass="error" path="address" />
-
-	<br />
-
-
-	<input type="submit" name="save"
-		value="<spring:message code="actor.save" />" />
-	<spring:message code="actor.cancel" var="cancel" />
-	<input type="button" name="cancel" value="${cancel}"
-		onclick="javascript:relativeRedir('actor/display.do');" />
+	<acme:submit name="save" code="actor.save"/>
+		
+	<acme:cancel url="actor/display.do" code="actor.cancel"/>	
 </form:form>

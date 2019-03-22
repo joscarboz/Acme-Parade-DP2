@@ -10,25 +10,17 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="box/edit.do" modelAttribute="box">
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	<form:hidden path="custom"/>
 
+	<acme:textbox code="box.title" path="title"/>
 
-	<form:label path="title">
-		<spring:message code="box.title" />:
-	</form:label>
-	<form:input path="title" />
-	<form:errors cssClass="error" path="title" />
-	<br />
-
-	<input type="submit" name="save"
-		value="<spring:message code="box.save" />" />
-	<spring:message code="box.cancel" var="cancel" />
-	<input type="button" name="cancel" value="${cancel}"
-		onclick="javascript:relativeRedir('message/list.do?boxName=in box');" />
-
+	<acme:submit name="save" code="box.save"/>
+		
+	<acme:cancel url="message/list.do?boxName=in box" code="box.cancel"/>	
 
 </form:form>

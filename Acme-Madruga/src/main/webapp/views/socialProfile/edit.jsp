@@ -9,6 +9,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="socialProfile/edit.do"
 	modelAttribute="socialProfile">
@@ -16,32 +17,14 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 
+	<acme:textbox code="socialProfile.nick" path="nick"/>
 
-	<form:label path="nick">
-		<spring:message code="socialProfile.nick" />:
-	</form:label>
-	<form:input path="nick" />
-	<form:errors cssClass="error" path="nick" />
-	<br />
-
-
-	<form:label path="socialNetwork">
-		<spring:message code="socialProfile.socialNetwork" />:
-	</form:label>
-	<form:textarea path="socialNetwork" />
-	<form:errors cssClass="error" path="socialNetwork" />
-	<br />
+	<acme:textbox code="socialProfile.socialNetwork" path="socialNetwork"/>
 	
-	<form:label path="profileLink">
-		<spring:message code="socialProfile.profile" />:
-	</form:label>
-	<form:textarea path="profileLink" />
-	<form:errors cssClass="error" path="profileLink" />
-	<br />
+	<acme:textarea code="socialProfile.profile" path="profileLink"/>
+
+	<acme:submit name="save" code="socialProfile.save" />
 	
-	<input type="submit" name="save"
-		value="<spring:message code="socialProfile.save" />" />
-	<spring:message code="socialProfile.cancel" var="cancel"/>
-	<input type="button" name="cancel" value="${cancel}" onclick="javascript:relativeRedir('actor/display.do');" />
+	<acme:cancel url="actor/display.do" code="socialProfile.cancel"/>	
 	
 </form:form>

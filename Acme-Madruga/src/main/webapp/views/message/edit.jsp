@@ -10,25 +10,13 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="message/create.do" modelAttribute="messageForm">
 
-
-
-	<form:label path="subject">
-		<spring:message code="message.subject" />:
-	</form:label>
-	<form:input path="subject" />
-	<form:errors cssClass="error" path="subject" />
-	<br />
-
-
-	<form:label path="body">
-		<spring:message code="message.body" />:
-	</form:label>
-	<form:textarea path="body" />
-	<form:errors cssClass="error" path="body" />
-	<br />
+	<acme:textbox code="message.subject" path="subject"/>
+	
+	<acme:textarea code="message.body" path="body"/>
 
 	<spring:message code="message.priority" />:
   <form:select path="priority">
@@ -37,27 +25,14 @@
 		<option value="LOW">LOW</option>
 	</form:select>
 	<br />
+	
+	<acme:textarea code="message.recipient" path="recipient"/>
 
-	<form:label path="recipient">
-		<spring:message code="message.recipient" />:
-	</form:label>
-	<form:textarea path="recipient" />
-	<form:errors cssClass="error" path="recipient" />
-	<br />
-
-	<form:label path="tags">
-		<spring:message code="message.tags" />:
-	</form:label>
-	<form:textarea path="tags" />
-	<form:errors cssClass="error" path="tags" />
-	<br />
-
-
-	<input type="submit" name="save"
-		value="<spring:message code="message.save" />" />
-	<spring:message code="message.cancel" var="cancel" />
-	<input type="button" name="cancel" value="${cancel}"
-		onclick="javascript:relativeRedir('message/list.do?boxName=in box');" />
+	<acme:textarea code="message.tags" path="tags"/>
+	
+	<acme:submit name="save" code="message.save"/>
+		
+	<acme:cancel url="message/list.do?boxName=in box" code="message.cancel"/>	
 
 
 </form:form>

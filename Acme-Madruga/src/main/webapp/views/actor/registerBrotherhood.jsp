@@ -10,93 +10,33 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <form:form action="actor/registerBrotherhood.do" modelAttribute="registerBrotherhoodForm">
 	
-	<br />
-	<form:label path="username">
-		<spring:message code="actor.username" />:
-	</form:label>
-	<form:input path="username" />
-	<form:errors cssClass="error" path="username" />
-	<br />
-
-	<form:label path="password">
-		<spring:message code="actor.password" />:
-	</form:label>
-	<form:password path="password" />
-	<form:errors cssClass="error" path="password" />
-	<br />
-
-	<form:label path="password2">
-		<spring:message code="actor.password2" />:
-	</form:label>
-	<form:password path="password2" />
-	<form:errors cssClass="error" path="password2" />
-	<br />
-
-	<form:label path="title">
-		<spring:message code="actor.title" />:
-	</form:label>
-	<form:input path="title" />
-	<form:errors cssClass="error" path="title" />
-	<br />
 	
-	<form:label path="establishment">
-		<spring:message code="actor.establishment" />:
-	</form:label>
-	<form:input path="establishment" />
-	<form:errors cssClass="error" path="establishment" />
-	<br />
+	<acme:textbox code="actor.username" path="username"/>
 
-	<form:label path="name">
-		<spring:message code="actor.name" />:
-	</form:label>
-	<form:input path="name" />
-	<form:errors cssClass="error" path="name" />
-	<br />
+	<acme:textbox code="actor.password" path="password"/>
 
-	<form:label path="middleName">
-		<spring:message code="actor.middlename" />:
-	</form:label>
-	<form:input path="middleName" />
-	<form:errors cssClass="error" path="middleName" />
-	<br />
+	<acme:textbox code="actor.password2" path="password2"/>
+	
+	<acme:textbox code="actor.title" path="title"/>
+	
+	<acme:textbox code="actor.establishment" path="establishment"/>
 
-	<form:label path="surname">
-		<spring:message code="actor.surname" />:
-	</form:label>
-	<form:input path="surname" />
-	<form:errors cssClass="error" path="surname" />
-	<br />
+	<acme:textbox code="actor.name" path="name"/>
+	
+	<acme:textbox code="actor.middlename" path="middleName"/>
+	
+	<acme:textbox code="actor.surname" path="surname"/>
 
-	<form:label path="photo">
-		<spring:message code="actor.photo" />:
-	</form:label>
-	<form:input path="photo" />
-	<form:errors cssClass="error" path="photo" />
-	<br />
-
-	<form:label path="email">
-		<spring:message code="actor.email" />:
-	</form:label>
-	<form:input path="email" />
-	<form:errors cssClass="error" path="email" />
-	<br />
-
-	<form:label path="address">
-		<spring:message code="actor.address" />:
-	</form:label>
-	<form:input path="address" />
-	<form:errors cssClass="error" path="address" />
-	<br />
-
-	<form:label path="phone">
-		<spring:message code="actor.phone" />:
-	</form:label>
-	<form:input path="phone" />
-	<form:errors cssClass="error" path="phone" />
-	<br />
+	<acme:textbox code="actor.photo" path="photo"/>
+	
+	<acme:textbox code="actor.email" path="email"/>
+	
+	<acme:textbox code="actor.phone" path="phone"/>
+	
+	<acme:textbox code="actor.address" path="address"/>
 	
 	<form:label path="agree">
 		<spring:message code="actor.agree" />
@@ -105,11 +45,9 @@
 	<form:errors cssClass="error" path="agree" />
 	<br />
 	
-	
-	<input type="submit" name="save"
-		value="<spring:message code="actor.save" />" />
-	<spring:message code="actor.cancel" var="cancel" />
-
+	<acme:submit name="save" code="actor.save"/>
+		
+	<acme:cancel url="" code="actor.cancel"/>	
 </form:form>
 <spring:message code="actor.phoneCheck" var="phoneCheck" />
 <script>

@@ -192,8 +192,9 @@ public class ActorController extends AbstractController {
 
 		chapter = this.chapterService.findOne(this.actorService.findByPrincipal().getId());
 
-		if (chapter.getArea().equals(null)) {
+		if (chapter.getArea() == null) {
 			areas = this.areaService.findAll();
+			areas.remove(this.areaService.findByName("defaultArea"));
 			chapters = this.chapterService.findAll();
 			for (Chapter chapt : chapters) {
 				areas.remove(chapt.getArea());
@@ -202,6 +203,8 @@ public class ActorController extends AbstractController {
 				areaName.add(area.getName());
 		}
 
+		areaName.remove("defaultArea");
+		
 		editChapterForm.setArea(chapter.getArea());
 		editChapterForm.setAddress(chapter.getAddress());
 		editChapterForm.setEmail(chapter.getEmail());
@@ -296,7 +299,7 @@ public class ActorController extends AbstractController {
 			else {
 				a = this.chapterService.findOne(this.actorService.findByPrincipal().getId());
 
-				if (a.getArea().equals(null) && editChapterForm.getAreas() != null)
+				if (a.getArea() == null && editChapterForm.getAreas() != null)
 					a.setArea(this.areaService.findByName(editChapterForm.getAreas().iterator().next()).iterator().next());
 
 				a.setAddress(editChapterForm.getAddress());

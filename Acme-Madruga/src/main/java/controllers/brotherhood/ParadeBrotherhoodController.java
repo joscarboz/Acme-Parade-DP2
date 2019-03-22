@@ -174,6 +174,8 @@ public class ParadeBrotherhoodController extends AbstractController {
 	public ModelAndView save(@ModelAttribute("parade") @Valid final Parade parade, final BindingResult binding) {
 		ModelAndView result;
 		Parade parade2 = new Parade();
+		if (parade.getFloats().iterator().next() == null)
+			parade.setFloats(null);
 		parade2 = this.paradeService.reconstruct(parade, binding);
 		this.validator.validate(parade2, binding);
 

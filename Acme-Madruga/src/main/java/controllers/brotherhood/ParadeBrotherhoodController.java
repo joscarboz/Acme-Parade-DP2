@@ -1,6 +1,7 @@
 
 package controllers.brotherhood;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -66,10 +67,14 @@ public class ParadeBrotherhoodController extends AbstractController {
 		brotherhood = this.brotherhoodService.findByPrincipal();
 		parades = brotherhood.getParades();
 
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		final String date = sdf.format(new Date());
+
 		result = new ModelAndView("parade/list");
 		final Boolean hasArea = !this.brotherhoodService.findByPrincipal().getArea().getName().equals("defaultArea");
 		result.addObject("hasArea", hasArea);
 		result.addObject("parades", parades);
+		result.addObject("date", date);
 		result.addObject("role", "brotherhood");
 		result.addObject("requestURI", "parade/brotherhood/list.do");
 

@@ -17,6 +17,33 @@
 	requestURI="${requestURI}" id="row">
 
 	<!-- Attributes -->
+	
+	<security:authorize access="hasRole('BROTHERHOOD')">
+	
+		<jstl:choose>
+			<jstl:when test="${row.status=='accepted'}">
+				<spring:message code="parade.status" var="statusHeader" />
+				<display:column property="status" title="${statusHeader}"
+				sortable="true" style="background-color:#3cea71" />
+			</jstl:when>
+			<jstl:when test="${row.status=='rejected'}">
+				<spring:message code="parade.status" var="statusHeader" />
+				<display:column property="status" title="${statusHeader}"
+			sortable="true" style="background-color:#f95036" />
+			</jstl:when>
+			<jstl:when test="${row.status=='submitted'}">
+				<spring:message code="parade.status" var="statusHeader" />
+				<display:column property="status" title="${statusHeader}"
+			sortable="true" style="background-color:#9c9c9c" />
+			</jstl:when>
+			<jstl:when test="${row.status==''}">
+				<spring:message code="parade.status" var="statusHeader" />
+				<display:column property="status" title="${statusHeader}" 
+				style="background-color:initial" />
+			</jstl:when>
+		</jstl:choose>
+		
+	</security:authorize>
 
 	<spring:message code="parade.ticker" var="tickerHeader" />
 	<display:column title="${tickerHeader}" sortable="false">
@@ -24,36 +51,17 @@
 	</display:column>
 
 	<spring:message code="parade.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" sortable="true" />
+	<display:column property="title" title="${titleHeader}" sortable="false" />
 
 	<spring:message code="parade.moment" var="momentHeader" />
 	<display:column property="moment" title="${momentHeader}"
-		sortable="true" />
+		sortable="false" />
 
 	<security:authorize access="hasRole('BROTHERHOOD')">
-		
-		<jstl:choose>
-		<jstl:when test="${row.status=='accepted'}">
-			<spring:message code="parade.status" var="statusHeader" />
-			<display:column property="status" title="${statusModeHeader}"
-				sortable="true" style="background-color:#3cea71" />
-		</jstl:when>
-		<jstl:when test="${row.status=='rejected'}">
-			<spring:message code="parade.status" var="statusHeader" />
-		<display:column property="status" title="${statusModeHeader}"
-			sortable="true" style="background-color:#f95036" />
-		</jstl:when>
-		<jstl:when test="${row.status=='submitted'}">
-			<spring:message code="parade.status" var="statusHeader" />
-		<display:column property="status" title="${statusModeHeader}"
-			sortable="true" style="background-color:#9c9c9c" />
-		</jstl:when>
-		</jstl:choose>
-		
 			
 		<spring:message code="parade.draftMode" var="draftModeHeader" />
 		<display:column property="draftMode" title="${draftModeHeader}"
-			sortable="true" />
+			sortable="false" />
 
 
 		<!-- Actions -->
@@ -71,19 +79,21 @@
 		<display:column>
 			<jstl:choose>
 				<jstl:when test="${row.draftMode == true }">
-					<display:column>
 						<a href="parade/brotherhood/delete.do?paradeId=${row.id}">
 							<spring:message code="parade.delete" />
 						</a>
-					</display:column>
 				</jstl:when>
 			</jstl:choose>
 		</display:column>
 		
 		<display:column>
-				<a href="parade/brotherhood/copy.do?paradeId=${row.id}">
+			<jstl:choose>
+				<jstl:when test="${row.moment > date}">
+						<a href="parade/brotherhood/copy.do?paradeId=${row.id}">
 					<spring:message code="parade.copy" />
 				</a>
+				</jstl:when>
+			</jstl:choose>
 		</display:column>
 
 		<br />

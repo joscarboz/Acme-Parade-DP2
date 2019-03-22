@@ -79,7 +79,8 @@ public class ParadeService {
 		result.setRequests(new LinkedList<Request>());
 
 		result.setSegments(new LinkedList<Segment>());
-		result.setStatus("PENDING");
+		result.setStatus("");
+		result.setRejectionReason("");
 		return result;
 	}
 
@@ -88,7 +89,9 @@ public class ParadeService {
 		Assert.notNull(parade);
 		Assert.isTrue(parade.getMoment().after(Calendar.getInstance().getTime()));
 		if (parade.isDraftMode())
-			parade.setStatus("PENDING");
+			parade.setStatus("");
+		if ((!parade.isDraftMode()) && (!parade.getStatus().equals("accepted") || !parade.getStatus().equals("rejected")))
+			parade.setStatus("submitted");
 		final Parade result = this.paradeRepository.save(parade);
 		if (parade.getId() == 0) {
 			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();

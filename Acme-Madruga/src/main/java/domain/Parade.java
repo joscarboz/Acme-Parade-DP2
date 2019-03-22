@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -22,15 +23,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = { @Index(columnList = "moment, draftMode") })
+@Table(indexes = {
+	@Index(columnList = "moment, draftMode")
+})
 public class Parade extends DomainEntity {
 
-	private String ticker;
-	private String title;
-	private String description;
-	private Date moment;
-	private boolean draftMode;
-	private String status;
+	private String	ticker;
+	private String	title;
+	private String	description;
+	private Date	moment;
+	private boolean	draftMode;
+	private String	status;
+	private String	rejectionReason;
+
 
 	public Parade() {
 
@@ -96,10 +101,28 @@ public class Parade extends DomainEntity {
 		this.draftMode = draftMode;
 	}
 
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(final String status) {
+		this.status = status;
+	}
+
+	public String getRejectionReason() {
+		return this.rejectionReason;
+	}
+
+	public void setRejectionReason(final String rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+
+
 	// Relationships
-	private Collection<Float> floats;
-	private Collection<Request> requests;
-	private Collection<Segment> segments;
+	private Collection<Float>	floats;
+	private Collection<Request>	requests;
+	private Collection<Segment>	segments;
+
 
 	@OneToMany
 	@NotEmpty
@@ -120,21 +143,12 @@ public class Parade extends DomainEntity {
 		this.requests = requests;
 	}
 
-	@NotBlank
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(final String status) {
-		this.status = status;
-	}
-
 	@OneToMany
 	public Collection<Segment> getSegments() {
-		return segments;
+		return this.segments;
 	}
 
-	public void setSegments(Collection<Segment> segments) {
+	public void setSegments(final Collection<Segment> segments) {
 		this.segments = segments;
 	}
 

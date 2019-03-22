@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
 import services.SystemConfigService;
 import domain.SystemConfig;
 
@@ -29,9 +28,6 @@ public class WelcomeController extends AbstractController {
 
 	@Autowired
 	private SystemConfigService	systemConfigService;
-
-	@Autowired
-	private ActorService		actorService;
 
 
 	// Constructors -----------------------------------------------------------

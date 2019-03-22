@@ -27,6 +27,11 @@
 			value="/views/actor/displayBrotherhood.jsp" />
 	</definition>
 
+	<definition name="actor/displayChapter" extends="master.page">
+		<put-attribute name="title" value="Actor display" />
+		<put-attribute name="body"
+			value="/views/actor/displayChapter.jsp" />
+	</definition>
 
 	<definition name="actor/register" extends="master.page">
 		<put-attribute name="title" value="Actor register" />
@@ -37,6 +42,12 @@
 		<put-attribute name="title" value="Actor register" />
 		<put-attribute name="body"
 			value="/views/actor/registerBrotherhood.jsp" />
+	</definition>
+	
+	<definition name="actor/registerChapter" extends="master.page">
+		<put-attribute name="title" value="Actor register" />
+		<put-attribute name="body"
+			value="/views/actor/registerChapter.jsp" />
 	</definition>
 
 	<definition name="actor/registerAdministrator" extends="master.page">
@@ -55,5 +66,9 @@
 		<put-attribute name="body" value="/views/actor/editBrotherhood.jsp" />
 	</definition>
 
+	<definition name="actor/editChapter" extends="master.page">
+		<put-attribute name="title" value="Edit actor" />
+		<put-attribute name="body" value="/views/actor/editChapter.jsp" />
+	</definition>
 
 </tiles-definitions>

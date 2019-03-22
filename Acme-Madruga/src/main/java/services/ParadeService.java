@@ -40,9 +40,6 @@ public class ParadeService {
 	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private MemberService		memberService;
-
-	@Autowired
 	private RequestService		requestService;
 
 	@Autowired

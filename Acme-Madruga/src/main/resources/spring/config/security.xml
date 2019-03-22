@@ -87,15 +87,21 @@
 
 		<security:intercept-url pattern="/actor/editBrotherhood.do"
 			access="hasAnyRole('BROTHERHOOD')" />
+			
+		<security:intercept-url pattern="/actor/editChapter.do"
+			access="hasAnyRole('CHAPTER')" />
 
 		<security:intercept-url pattern="/actor/display.do"
-			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD')" />
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
 
 		<security:intercept-url pattern="/actor/displayBrotherhood.do"
-			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD')" />
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
+			
+		<security:intercept-url pattern="/actor/displayChapter.do"
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
 
 		<security:intercept-url pattern="/socialProfile/**"
-			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD')" />
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
 		<security:intercept-url pattern="/request/member/**"
 			access="isAuthenticated()" />
 
@@ -120,6 +126,8 @@
 		<security:intercept-url pattern="/actor/register.do"
 			access="isAnonymous()" />
 		<security:intercept-url pattern="/actor/registerBrotherhood.do"
+			access="isAnonymous()" />
+		<security:intercept-url pattern="/actor/registerChapter.do"
 			access="isAnonymous()" />
 		<security:intercept-url pattern="/float/brotherhood/**"
 			access="hasRole('BROTHERHOOD')" />

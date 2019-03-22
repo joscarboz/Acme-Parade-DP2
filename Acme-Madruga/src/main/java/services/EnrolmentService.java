@@ -29,9 +29,6 @@ public class EnrolmentService {
 	private EnrolmentRepository		enrolmentRepository;
 
 	@Autowired
-	private ActorService			actorService;
-
-	@Autowired
 	private MemberService			memberService;
 
 	@Autowired

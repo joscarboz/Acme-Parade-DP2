@@ -17,7 +17,6 @@ public class Chapter extends Actor {
 
 	private String title;
 
-
 	@SafeHtml
 	@NotBlank
 	public String getTitle() {
@@ -42,7 +41,7 @@ public class Chapter extends Actor {
 		this.proclaims = proclaims;
 	}
 
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	public Area getArea() {
 		return area;
 	}

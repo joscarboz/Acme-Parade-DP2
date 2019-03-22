@@ -11,6 +11,9 @@ import domain.Chapter;
 @Repository
 public interface ChapterRepository extends JpaRepository<Chapter, Integer> {
 
+	@Query("select c from Chapter c where c.userAccount.id = ?1")
+	Chapter findbyUserAccountID(int id);
+	
 	@Query("select c from Chapter c where c.area IN(select b.area from Brotherhood b where b.parades.size> (select avg(br.parades.size)*1.1 from Brotherhood br))")
 	Collection<Chapter> chapterMoreAVG();
 

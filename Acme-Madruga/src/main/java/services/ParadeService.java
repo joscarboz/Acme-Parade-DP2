@@ -90,7 +90,7 @@ public class ParadeService {
 		Assert.isTrue(parade.getMoment().after(Calendar.getInstance().getTime()));
 		if (parade.isDraftMode())
 			parade.setStatus("");
-		if ((!parade.isDraftMode()) && (!parade.getStatus().equals("accepted") || !parade.getStatus().equals("rejected")))
+		if ((!parade.isDraftMode()) && (!parade.getStatus().equals("accepted") && !parade.getStatus().equals("rejected")))
 			parade.setStatus("submitted");
 		final Parade result = this.paradeRepository.save(parade);
 		if (parade.getId() == 0) {

@@ -133,6 +133,8 @@
 			access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/history/**"
 			access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/parade/chapter/**"
+			access="hasRole('CHAPTER')" />
 		
 		
 

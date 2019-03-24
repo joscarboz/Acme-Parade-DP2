@@ -880,7 +880,7 @@
 
 	<bean id="systemConfig" class="domain.SystemConfig">
 		<property name="name" value="Acme Parade" />
-		<property name="banner" value="https://imgur.com/vZI1Sft" />
+		<property name="banner" value="https://i.imgur.com/vZI1Sft.png" />
 		<property name="welcomeMessageEng"
 			value="Welcome to Acme Parade, the site to organise your parades." />
 		<property name="welcomeMessageEsp"
@@ -1353,7 +1353,7 @@
 		<property name="make" value="Visa" />
 		<property name="number" value="4841310263816033" />
 		<property name="expirationMonth" value="8" />
-		<property name="expirationYear" value="22" />
+		<property name="expirationYear" value="18" />
 		<property name="cvv" value="481" />
 	</bean>
 
@@ -1571,6 +1571,7 @@
 		<property name="sponsorships">
 			<list>
 				<ref bean="sponsorship1" />
+				<ref bean="sponsorship2" />
 			</list>
 		</property>
 
@@ -1618,6 +1619,15 @@
 		<property name="targetUrl" value="http://www.target.com" />
 		<property name="fare" value="2" />
 		<property name="creditCard" ref="creditCard1" />
+		<property name="parade" ref="parade1" />
+		<property name="active" value="true" />
+	</bean>
+	
+		<bean id="sponsorship2" class="domain.Sponsorship">
+		<property name="banner" value="http://www.banner.com" />
+		<property name="targetUrl" value="http://www.target.com" />
+		<property name="fare" value="2" />
+		<property name="creditCard" ref="creditCard2" />
 		<property name="parade" ref="parade1" />
 		<property name="active" value="true" />
 	</bean>

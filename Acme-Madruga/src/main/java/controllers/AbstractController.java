@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.SystemConfigService;
+import domain.SystemConfig;
 
 @Controller
 @ControllerAdvice
@@ -45,7 +46,10 @@ public class AbstractController {
 
 	@ModelAttribute("bannerUrl")
 	public String getBanner() {
-		return this.systemConfigService.findSystemConfiguration().getBanner();
+		String result;
+		final SystemConfig systemConfig = this.systemConfigService.findSystemConfiguration();
+		result = systemConfig.getBanner();
+		return result;
 	}
 
 }

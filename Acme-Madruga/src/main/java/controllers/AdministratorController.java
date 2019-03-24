@@ -29,6 +29,7 @@ import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
 import services.FinderService;
+import services.SponsorshipService;
 import services.SystemConfigService;
 import domain.Actor;
 import domain.Area;
@@ -46,16 +47,20 @@ import forms.RegisterForm;
 public class AdministratorController extends AbstractController {
 
 	@Autowired
-	private SystemConfigService systemConfigService;
+	private SystemConfigService		systemConfigService;
 
 	@Autowired
-	private AdministratorService adminService;
+	private AdministratorService	adminService;
 
 	@Autowired
-	private FinderService finderService;
+	private FinderService			finderService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
+
+	@Autowired
+	private SponsorshipService		sponsorshipService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -81,11 +86,9 @@ public class AdministratorController extends AbstractController {
 
 		}
 
-		Collection<Brotherhood> largest = this.adminService
-				.largestBrotherhoods();
+		final Collection<Brotherhood> largest = this.adminService.largestBrotherhoods();
 
-		Collection<Brotherhood> smallest = this.adminService
-				.smallestBrotherhoods();
+		final Collection<Brotherhood> smallest = this.adminService.smallestBrotherhoods();
 
 		Double pending = this.adminService.pendingRequestsRatio();
 
@@ -102,15 +105,13 @@ public class AdministratorController extends AbstractController {
 		if (rejected == null)
 			rejected = 0.;
 
-		Collection<Parade> parades = this.adminService.upcomingParades();
+		final Collection<Parade> parades = this.adminService.upcomingParades();
 
-		Collection<Member> acceptedReqMem = this.adminService
-				.acceptedRequestMembers();
+		final Collection<Member> acceptedReqMem = this.adminService.acceptedRequestMembers();
 
-		Map<Position, Long> histogram = this.adminService.positionHistogram();
+		final Map<Position, Long> histogram = this.adminService.positionHistogram();
 
-		Map<Area, Double[]> brotherhoodsPArea = this.adminService
-				.brotherhoodsPerArea();
+		final Map<Area, Double[]> brotherhoodsPArea = this.adminService.brotherhoodsPerArea();
 
 		Double[] sta = new Double[4];
 
@@ -146,11 +147,9 @@ public class AdministratorController extends AbstractController {
 
 		}
 
-		Collection<Brotherhood> largestHistory = this.adminService
-				.largestHistory();
+		final Collection<Brotherhood> largestHistory = this.adminService.largestHistory();
 
-		Collection<Brotherhood> largerAverageHistory = this.adminService
-				.getLargestBrotherhoodAverageHistory();
+		final Collection<Brotherhood> largerAverageHistory = this.adminService.getLargestBrotherhoodAverageHistory();
 
 		Double nonCoord = this.adminService.getNonCoordinateAreas();
 
@@ -170,28 +169,24 @@ public class AdministratorController extends AbstractController {
 
 		}
 
-		Collection<Chapter> chaptersMoreAVG = this.adminService
-			.chaptersParadesMoreAvg();
+		final Collection<Chapter> chaptersMoreAVG = this.adminService.chaptersParadesMoreAvg();
 
 		Double draftMode = this.adminService.getDraftModeParadesRatio();
 
 		if (draftMode == null)
 			draftMode = 0.;
 
-		Double finalAcceptedParades = this.adminService
-				.getFinalModeAcceptedParadesRatio();
+		Double finalAcceptedParades = this.adminService.getFinalModeAcceptedParadesRatio();
 
 		if (finalAcceptedParades == null)
 			finalAcceptedParades = 0.;
 
-		Double finalRejectedParades = this.adminService
-				.getFinalModeRejectedParadesRatio();
+		Double finalRejectedParades = this.adminService.getFinalModeRejectedParadesRatio();
 
 		if (finalRejectedParades == null)
 			finalRejectedParades = 0.;
 
-		Double finalSubmittedParades = this.adminService
-				.getFinalModeSubmittedParadesRatio();
+		Double finalSubmittedParades = this.adminService.getFinalModeSubmittedParadesRatio();
 
 		if (finalSubmittedParades == null)
 			finalSubmittedParades = 0.;
@@ -336,17 +331,24 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/disableSponsorships")
+	public ModelAndView disableSponsorships() {
+		ModelAndView result;
+		this.sponsorshipService.disableExpiredSponsorships();
+		result = new ModelAndView("redirect:management.do");
+
+		return result;
+	}
+
 	@RequestMapping(value = "/registerAdministrator", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final RegisterAdminForm registerMemberForm,
-			final BindingResult binding) {
+	public ModelAndView save(@Valid final RegisterAdminForm registerMemberForm, final BindingResult binding) {
 		SystemConfig systemConfig;
 		if (binding.hasErrors())
 			return this.createRegisterModelAndView();
 		else
 			try {
 				if (registerMemberForm.getPhone().matches("\\d{4,99}")) {
-					systemConfig = this.systemConfigService
-							.findSystemConfiguration();
+					systemConfig = this.systemConfigService.findSystemConfiguration();
 					String newPhone = systemConfig.getPhonePrefix();
 					newPhone += " " + registerMemberForm.getPhone();
 					registerMemberForm.setPhone(newPhone);

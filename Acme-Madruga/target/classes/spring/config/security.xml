@@ -134,17 +134,12 @@
 			access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/history/**"
 			access="hasRole('BROTHERHOOD')" />
-<<<<<<< HEAD
 		<security:intercept-url pattern="/parade/chapter/**"
 			access="hasRole('CHAPTER')" />
-		
-		
-=======
 		<security:intercept-url pattern="/segment/brotherhood/**"
 			access="hasRole('BROTHERHOOD')" />
 
 
->>>>>>> master
 
 
 		<security:intercept-url pattern="/**"

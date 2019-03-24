@@ -81,6 +81,8 @@
 								code="master.page.administrator.spammers" /></a></li>
 					<li><a href="administrator/getScore.do"><spring:message
 								code="master.page.administrator.score" /></a></li>
+					<li><a href="administrator/disableSponsorships.do"><spring:message
+								code="master.page.administrator.disableSponsorships" /></a></li>
 					<li><a href="systemConfig/administrator/edit.do"><spring:message
 								code="master.page.administrator.systemConfig" /></a></li>
 

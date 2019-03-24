@@ -17,32 +17,32 @@
 	requestURI="${requestURI}" id="row">
 
 	<!-- Attributes -->
-	
+
 	<security:authorize access="hasRole('BROTHERHOOD')">
-	
+
 		<jstl:choose>
 			<jstl:when test="${row.status=='accepted'}">
 				<spring:message code="parade.status" var="statusHeader" />
 				<display:column property="status" title="${statusHeader}"
-				sortable="true" style="background-color:#3cea71" />
+					sortable="true" style="background-color:#3cea71" />
 			</jstl:when>
 			<jstl:when test="${row.status=='rejected'}">
 				<spring:message code="parade.status" var="statusHeader" />
 				<display:column property="status" title="${statusHeader}"
-			sortable="true" style="background-color:#f95036" />
+					sortable="true" style="background-color:#f95036" />
 			</jstl:when>
 			<jstl:when test="${row.status=='submitted'}">
 				<spring:message code="parade.status" var="statusHeader" />
 				<display:column property="status" title="${statusHeader}"
-			sortable="true" style="background-color:#9c9c9c" />
+					sortable="true" style="background-color:#9c9c9c" />
 			</jstl:when>
 			<jstl:when test="${row.status==''}">
 				<spring:message code="parade.status" var="statusHeader" />
-				<display:column property="status" title="${statusHeader}" 
-				style="background-color:initial" />
+				<display:column property="status" title="${statusHeader}"
+					style="background-color:initial" />
 			</jstl:when>
 		</jstl:choose>
-		
+
 	</security:authorize>
 
 	<spring:message code="parade.ticker" var="tickerHeader" />
@@ -51,17 +51,24 @@
 	</display:column>
 
 	<spring:message code="parade.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" sortable="false" />
+	<display:column property="title" title="${titleHeader}"
+		sortable="false" />
 
 	<spring:message code="parade.moment" var="momentHeader" />
 	<display:column property="moment" title="${momentHeader}"
 		sortable="false" />
 
 	<security:authorize access="hasRole('BROTHERHOOD')">
-			
+
 		<spring:message code="parade.draftMode" var="draftModeHeader" />
 		<display:column property="draftMode" title="${draftModeHeader}"
 			sortable="false" />
+			
+		<display:column>
+			<a href="segment/brotherhood/list.do?paradeId=${row.id}"> <spring:message
+					code="parade.segments" />
+			</a>
+		</display:column>
 
 
 		<!-- Actions -->
@@ -69,8 +76,8 @@
 		<display:column>
 			<jstl:choose>
 				<jstl:when test="${row.draftMode == true }">
-					<a href="parade/brotherhood/edit.do?paradeId=${row.id}">
-						<spring:message code="parade.edit" />
+					<a href="parade/brotherhood/edit.do?paradeId=${row.id}"> <spring:message
+							code="parade.edit" />
 					</a>
 				</jstl:when>
 			</jstl:choose>
@@ -79,19 +86,19 @@
 		<display:column>
 			<jstl:choose>
 				<jstl:when test="${row.draftMode == true }">
-						<a href="parade/brotherhood/delete.do?paradeId=${row.id}">
-							<spring:message code="parade.delete" />
-						</a>
+					<a href="parade/brotherhood/delete.do?paradeId=${row.id}"> <spring:message
+							code="parade.delete" />
+					</a>
 				</jstl:when>
 			</jstl:choose>
 		</display:column>
-		
+
 		<display:column>
 			<jstl:choose>
 				<jstl:when test="${row.moment > date}">
-						<a href="parade/brotherhood/copy.do?paradeId=${row.id}">
-					<spring:message code="parade.copy" />
-				</a>
+					<a href="parade/brotherhood/copy.do?paradeId=${row.id}"> <spring:message
+							code="parade.copy" />
+					</a>
 				</jstl:when>
 			</jstl:choose>
 		</display:column>
@@ -118,7 +125,9 @@
 					code="parade.create" /></a>
 		</jstl:when>
 		<jstl:otherwise>
-		<h1><spring:message code="parade.noArea"/></h1>
+			<h1>
+				<spring:message code="parade.noArea" />
+			</h1>
 		</jstl:otherwise>
 	</jstl:choose>
 </security:authorize>

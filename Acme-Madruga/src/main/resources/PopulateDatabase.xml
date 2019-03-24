@@ -1624,24 +1624,24 @@
 
 	<!-- Segment 1 -->
 	<bean id="segment1" class="domain.Segment">
-		<property name="origin" value="La Macarena" />
-		<property name="destination" value="Porvenir" />
+		<property name="origin" value="-100,100" />
+		<property name="destination" value="-200,200" />
 		<property name="originReachMoment" value="12/04/2019 12:30" />
 		<property name="destinationReachMoment" value="12/04/2019 13:40" />
 	</bean>
 
 	<!-- Segment 2 -->
 	<bean id="segment2" class="domain.Segment">
-		<property name="origin" value="Nervion" />
-		<property name="destination" value="Gran Plaza" />
+		<property name="origin" value="-200,200" />
+		<property name="destination" value="-300,-300" />
 		<property name="originReachMoment" value="07/03/2019 7:15" />
 		<property name="destinationReachMoment" value="07/03/2019 7:40" />
 	</bean>
 
 	<!-- Segment 3 -->
 	<bean id="segment3" class="domain.Segment">
-		<property name="origin" value="El Tardón" />
-		<property name="destination" value="Los Remedios" />
+		<property name="origin" value="-300,-300" />
+		<property name="destination" value="400,400" />
 		<property name="originReachMoment" value="15/04/2019 2:30" />
 		<property name="destinationReachMoment" value="15/04/2019 3:40" />
 	</bean>

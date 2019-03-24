@@ -45,7 +45,12 @@
 		<value>/views/systemConfig/tiles.xml</value>
 		<value>/views/socialProfile/tiles.xml</value>
 		<value>/views/history/tiles.xml</value>
+<<<<<<< HEAD
 		<value>/views/chapter/tiles.xml</value>
+=======
+		<value>/views/segment/tiles.xml</value>
+		
+>>>>>>> master
 		
 		
 	</util:list>

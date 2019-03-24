@@ -37,7 +37,12 @@
 		<value>/views/law/messages</value>
 		<value>/views/systemConfig/messages</value>
 		<value>/views/history/messages</value>
+<<<<<<< HEAD
 		<value>/views/chapter/messages</value>
+=======
+		<value>/views/segment/messages</value>
+		
+>>>>>>> master
 		
 	</util:list>
 

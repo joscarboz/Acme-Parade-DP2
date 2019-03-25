@@ -11,7 +11,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-<form:form action="actor/registerBrotherhood.do" modelAttribute="registerBrotherhoodForm">
+
+<form:form action="actor/registerSponsor.do" modelAttribute="registerMemberForm">
 	
 	
 	<acme:textbox code="actor.username" path="username"/>
@@ -30,10 +31,6 @@
 	<form:errors cssClass="error" path="password2"/>
 	<br/>
 	
-	<acme:textbox code="actor.title" path="title"/>
-	
-	<acme:textbox code="actor.establishment" path="establishment"/>
-
 	<acme:textbox code="actor.name" path="name"/>
 	
 	<acme:textbox code="actor.middlename" path="middleName"/>
@@ -54,24 +51,23 @@
 	<form:checkbox path="agree" />
 	<form:errors cssClass="error" path="agree" />
 	<br />
-	
+
 	<acme:submit name="save" code="actor.save"/>
 		
 	<acme:cancel url="" code="actor.cancel"/>	
+	
 </form:form>
 <spring:message code="actor.phoneCheck" var="phoneCheck" />
 <script>
-	$('#registerBrotherhoodForm')
-			.submit(
-					function() {
-						var regex = /^((\+[1-9][0-9]{0,2}\s[0-9]{4,})|(\+[1-9][0-9]{0,2}\s\([1-9][0-9]{0,2}\)\s[0-9]{4,})|([0-9]{4,})|(^$))$/;
-						var phone = document.getElementById("phone").value;
-						var submit = false;
-						if (!regex.exec(phone)) {
-							submit = confirm('<jstl:out value="${phoneCheck}" />');
-						} else {
-							submit = true;
-						}
-						return submit;
-					});
+	$('#registerMemberForm').submit(function() {
+		var regex = /^((\+[1-9][0-9]{0,2}\s[0-9]{4,})|(\+[1-9][0-9]{0,2}\s\([1-9][0-9]{0,2}\)\s[0-9]{4,})|([0-9]{4,})|(^$))$/;
+		var phone = document.getElementById("phone").value;
+		var submit = false;
+		if (!regex.exec(phone)) {
+			submit = confirm('<jstl:out value="${phoneCheck}" />');
+		} else {
+			submit = true;
+		}
+		return submit;
+	});
 </script>

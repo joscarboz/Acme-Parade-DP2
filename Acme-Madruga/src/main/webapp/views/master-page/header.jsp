@@ -54,6 +54,12 @@
 						<li><a href="actor/editChapter.do"><spring:message
 									code="master.page.profile.edit" /></a></li>
 					</security:authorize>
+					<security:authorize access="hasRole('SPONSOR')">
+						<li><a href="actor/display.do"><spring:message
+									code="master.page.profile" /></a></li>
+						<li><a href="actor/edit.do"><spring:message
+									code="master.page.profile.edit" /></a></li>
+					</security:authorize>
 					<li><a href="message/list.do?boxName=in box"><spring:message
 								code="master.page.profile.messages" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message
@@ -147,6 +153,8 @@
 						code="master.page.registerBrotherhood" /></a></li>
 			<li><a class="fNiv" href="actor/registerChapter.do"><spring:message
 						code="master.page.registerChapter" /></a></li>
+			<li><a class="fNiv" href="actor/registerSponsor.do"><spring:message
+						code="master.page.registerSponsor" /></a></li>
 			<li><a href="brotherhood/list.do"><spring:message
 						code="master.page.brotherhood.list" /></a></li>
 		</security:authorize>

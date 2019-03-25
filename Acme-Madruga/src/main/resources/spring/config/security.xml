@@ -84,7 +84,7 @@
 			access="permitAll" />
 
 		<security:intercept-url pattern="/actor/edit.do"
-			access="hasAnyRole('ADMIN','MEMBER')" />
+			access="hasAnyRole('ADMIN','MEMBER','SPONSOR')" />
 
 		<security:intercept-url pattern="/actor/editBrotherhood.do"
 			access="hasAnyRole('BROTHERHOOD')" />
@@ -93,16 +93,16 @@
 			access="hasAnyRole('CHAPTER')" />
 
 		<security:intercept-url pattern="/actor/display.do"
-			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER','SPONSOR')" />
 
 		<security:intercept-url pattern="/actor/displayBrotherhood.do"
-			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER','SPONSOR')" />
 
 		<security:intercept-url pattern="/actor/displayChapter.do"
-			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER','SPONSOR')" />
 
 		<security:intercept-url pattern="/socialProfile/**"
-			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER')" />
+			access="hasAnyRole('ADMIN','MEMBER','BROTHERHOOD','CHAPTER','SPONSOR')" />
 		<security:intercept-url pattern="/request/member/**"
 			access="isAuthenticated()" />
 
@@ -130,6 +130,8 @@
 			access="isAnonymous()" />
 		<security:intercept-url pattern="/actor/registerChapter.do"
 			access="isAnonymous()" />
+		<security:intercept-url pattern="/actor/registerSponsor.do"
+			access="isAnonymous()" />
 		<security:intercept-url pattern="/float/brotherhood/**"
 			access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/history/**"
@@ -139,12 +141,8 @@
 		<security:intercept-url pattern="/segment/brotherhood/**"
 			access="hasRole('BROTHERHOOD')" />
 
-
-
-
 		<security:intercept-url pattern="/**"
 			access="hasRole('NONE')" />
-
 
 		<security:form-login login-page="/security/login.do"
 			password-parameter="password" username-parameter="username"
@@ -153,6 +151,5 @@
 		<security:logout logout-success-url="/"
 			invalidate-session="true" />
 	</security:http>
-
 
 </beans>

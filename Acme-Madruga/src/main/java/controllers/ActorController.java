@@ -19,6 +19,7 @@ import services.AreaService;
 import services.BrotherhoodService;
 import services.ChapterService;
 import services.MemberService;
+import services.SponsorService;
 import services.SystemConfigService;
 import domain.Actor;
 import domain.Area;
@@ -50,6 +51,9 @@ public class ActorController extends AbstractController {
 	
 	@Autowired
 	private ChapterService	chapterService;
+	
+	@Autowired
+	private SponsorService	sponsorService;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -418,6 +422,11 @@ public class ActorController extends AbstractController {
 	public ModelAndView createChapter() {
 		return this.createRegisterModelAndViewChapter();
 	}
+	
+	@RequestMapping(value = "/registerSponsor", method = RequestMethod.GET)
+	public ModelAndView createSponsor() {
+		return this.createRegisterModelAndViewSponsor();
+	}
 
 	@RequestMapping(value = "/registerAdministrator", method = RequestMethod.GET)
 	public ModelAndView createAdministrator() {
@@ -491,6 +500,28 @@ public class ActorController extends AbstractController {
 		}
 	}
 	
+	@RequestMapping(value = "/registerSponsor", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveSponsor(@Valid final RegisterMemberForm registerMemberForm, final BindingResult binding) {
+		SystemConfig systemConfig;
+
+		try {
+			if (binding.hasErrors())
+				return this.createRegisterSponsorModelAndView(registerMemberForm, "actor.commit.error");
+			else if (registerMemberForm.getPhone().matches("\\d{4,99}")) {
+				systemConfig = this.systemConfigService.findSystemConfiguration();
+				String newPhone = systemConfig.getPhonePrefix();
+				newPhone += " " + registerMemberForm.getPhone();
+				registerMemberForm.setPhone(newPhone);
+			}
+			this.sponsorService.register(registerMemberForm);
+			return new ModelAndView("redirect:/");
+
+		} catch (final Throwable oops) {
+			return this.createRegisterSponsorModelAndView(registerMemberForm, "actor.commit.error");
+
+		}
+	}
+	
 	@RequestMapping(value = "/registerAdministrator", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final RegisterAdminForm registerAdminForm, final BindingResult binding) {
 		SystemConfig systemConfig;
@@ -539,6 +570,15 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
+	protected ModelAndView createRegisterModelAndViewSponsor() {
+		final ModelAndView result = new ModelAndView("actor/registerSponsor");
+		final RegisterMemberForm registerMemberForm = new RegisterMemberForm();
+
+		result.addObject("registerMemberForm", registerMemberForm);
+
+		return result;
+	}
+	
 	protected ModelAndView createRegisterModelAndViewAdministrator() {
 		final ModelAndView result = new ModelAndView("actor/registerAdministrator");
 		final RegisterAdminForm registerAdminForm = new RegisterAdminForm();
@@ -575,6 +615,16 @@ public class ActorController extends AbstractController {
 
 		result = new ModelAndView("actor/registerChapter");
 		result.addObject("registerChapterForm", registerChapterForm);
+		result.addObject("message", messageCode);
+
+		return result;
+	}
+	
+	protected ModelAndView createRegisterSponsorModelAndView(final RegisterMemberForm registerMemberForm, final String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("actor/registerSponsor");
+		result.addObject("registerMemberForm", registerMemberForm);
 		result.addObject("message", messageCode);
 
 		return result;

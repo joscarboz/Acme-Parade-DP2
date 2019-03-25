@@ -15,9 +15,19 @@
 
 	<acme:textbox code="actor.username" path="username"/>
 
-	<acme:textbox code="actor.password" path="password"/>
+	<form:label path="password">
+		<spring:message code="actor.password"/>
+	</form:label>
+	<form:password path="password"/>
+	<form:errors cssClass="error" path="password"/>
+	<br/>
 
-	<acme:textbox code="actor.password2" path="password2"/>
+	<form:label path="password2">
+		<spring:message code="actor.password2"/>
+	</form:label>
+	<form:password path="password2"/>
+	<form:errors cssClass="error" path="password2"/>
+	<br/>
 	
 	<acme:textbox code="actor.title" path="title"/>
 

@@ -58,6 +58,12 @@
 			value="/views/actor/registerBrotherhood.jsp" />
 	</definition>
 
+	<definition name="actor/registerSponsor" extends="master.page">
+		<put-attribute name="title" value="Registrar actor" />
+		<put-attribute name="body"
+			value="/views/actor/registerSponsor.jsp" />
+	</definition>
+
 	<definition name="actor/registerAdministrator" extends="master.page">
 		<put-attribute name="title" value="Registrar actor" />
 		<put-attribute name="body"

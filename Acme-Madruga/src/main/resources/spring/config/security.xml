@@ -50,6 +50,11 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/brotherhood/display.do"
 			access="permitAll" />
+		<security:intercept-url pattern="/proclaim/**"
+			access="permitAll" />
+			
+		<security:intercept-url pattern="/proclaim/chapter/**"
+			access="hasRole('CHAPTER')" />
 
 		<security:intercept-url pattern="/administrator/**"
 			access="hasRole('ADMIN')" />

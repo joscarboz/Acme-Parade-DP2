@@ -76,6 +76,12 @@
 
 		<security:intercept-url pattern="/member/display.do"
 			access="permitAll" />
+			
+		<security:intercept-url pattern="/chapter/display.do"
+			access="permitAll" />
+			
+		<security:intercept-url pattern="/chapter/list.do"
+			access="permitAll" />
 
 		<security:intercept-url pattern="/parade/display.do"
 			access="permitAll" />

@@ -27,4 +27,14 @@
 		<put-attribute name="body" value="/views/chapter/reject.jsp" />
 	</definition>
 	
+	<definition name="chapter/list" extends="master.page">	
+		<put-attribute name="title" value="Chapter list" />
+		<put-attribute name="body" value="/views/chapter/chapterList.jsp" />
+	</definition>
+	
+	<definition name="chapter/display" extends="master.page">	
+		<put-attribute name="title" value="Chapter display" />
+		<put-attribute name="body" value="/views/chapter/display.jsp" />
+	</definition>
+	
 </tiles-definitions>

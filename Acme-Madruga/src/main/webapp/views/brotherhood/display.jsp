@@ -47,7 +47,6 @@
 	<!-- Attributes -->
 
 	<spring:message code="member.name" var="nameHeader" />
-	<display:column property="name" title="${nameHeader}" />
 	<display:column title="${nameHeader}">
 		<a href="member/display.do?memberId=${row.id}">${row.name}</a>
 	</display:column>

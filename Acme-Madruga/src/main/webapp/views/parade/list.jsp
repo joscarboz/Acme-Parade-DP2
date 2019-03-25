@@ -115,6 +115,13 @@
 		</display:column>
 	</security:authorize>
 
+	<security:authorize access="hasRole('SPONSOR')">
+		<display:column>
+			<a href="sponsorship/sponsor/create.do?paradeId=${row.id}"> <spring:message
+					code="sponsorship.create" />
+			</a>
+		</display:column>
+	</security:authorize>
 </display:table>
 
 
@@ -131,6 +138,8 @@
 		</jstl:otherwise>
 	</jstl:choose>
 </security:authorize>
+
+
 
 <br />
 <br />

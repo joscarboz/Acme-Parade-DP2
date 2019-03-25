@@ -14,4 +14,11 @@ public interface SponsorshipRepository extends JpaRepository<Sponsorship, Intege
 
 	@Query("select s from Sponsorship s where s.creditCard.expirationYear < ?1 or (s.creditCard.expirationYear = ?1 and s.creditCard.expirationMonth < ?2)")
 	Collection<Sponsorship> findExpiredCreditCards(int expirationYear, int expirationMonth);
+
+	@Query("select s from Sponsorship s where s.parade.id = ?1")
+	Collection<Sponsorship> findByParadeId(int id);
+
+	//@Query("select s from Sponsorship s where s.sponsor.id = ?1")
+	//Collection<Sponsorship> findBySponsorId(int id);
+
 }

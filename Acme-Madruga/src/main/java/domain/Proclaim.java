@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -17,27 +18,28 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Proclaim extends DomainEntity {
 
-	private Date moment;
-	private String text;
+	private Date	moment;
+	private String	text;
+
 
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
-		return moment;
+		return this.moment;
 	}
 
-	public void setMoment(Date moment) {
+	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
 
-	@Size(min = 0, max = 250)
+	@Size(min = 1, max = 250)
 	@SafeHtml
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 

@@ -58,6 +58,9 @@
  		<bean class="converters.ParadeToStringConverter" /> 
  		<bean class="converters.StringToParadeConverter" />
  		
+ 		<bean class="converters.ProclaimToStringConverter" /> 
+ 		<bean class="converters.StringToProclaimConverter" />
+ 		
  		<bean class="converters.RequestToStringConverter" /> 
  		<bean class="converters.StringToRequestConverter" />
  		

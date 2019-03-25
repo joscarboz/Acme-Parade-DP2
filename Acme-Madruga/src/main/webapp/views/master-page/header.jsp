@@ -141,6 +141,8 @@
 					<li class="arrow"></li>
 					<li><a href="parade/chapter/list.do"><spring:message
 								code="master.page.chapter.parades" /></a></li>
+					<li><a href="proclaim/chapter/list.do"><spring:message
+								code="master.page.chapter.proclaims" /></a></li>
 				</ul></li>
 		</security:authorize>
 

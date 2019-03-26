@@ -125,7 +125,7 @@
 
 <b><spring:message code="brotherhood.inceptionRecord" /></b>
 
-<display:table pagesize="5" class="displaytag" name="inceptionRecord"
+<display:table pagesize="5" class="displaytag" name="history.inceptionRecord"
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
@@ -145,7 +145,7 @@
 
 <b><spring:message code="brotherhood.legalRecords" /></b>
 
-<display:table pagesize="5" class="displaytag" name="legalRecords"
+<display:table pagesize="5" class="displaytag" name="history.legalRecords"
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
@@ -170,7 +170,7 @@
 <br />
 
 <b><spring:message code="brotherhood.linkRecords" /></b>
-<display:table pagesize="5" class="displaytag" name="linkRecords"
+<display:table pagesize="5" class="displaytag" name="history.linkRecords"
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
@@ -191,7 +191,7 @@
 <br />
 <b><spring:message code="brotherhood.miscellaneousRecords" /></b>
 <display:table pagesize="5" class="displaytag"
-	name="miscellaneousRecords" requestURI="parade/list.do" id="row">
+	name="history.miscellaneousRecords" requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->
 
@@ -207,7 +207,7 @@
 <br />
 
 <b><spring:message code="brotherhood.periodRecords" /></b>
-<display:table pagesize="5" class="displaytag" name="periodRecords"
+<display:table pagesize="5" class="displaytag" name="history.periodRecords"
 	requestURI="parade/list.do" id="row">
 
 	<!-- Attributes -->

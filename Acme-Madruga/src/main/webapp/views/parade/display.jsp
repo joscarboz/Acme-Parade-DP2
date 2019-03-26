@@ -31,6 +31,15 @@
 <jstl:out value="${parade.draftMode}" />
 <br />
 
+<jstl:choose>
+	<jstl:when test="${parade.status == 'rejected' }">
+		<b><spring:message code="parade.rejectionReason" /></b>
+		<jstl:out value="${parade.rejectionReason }" />
+		<br />
+	</jstl:when>
+</jstl:choose>
+
+
 <b><spring:message code="parade.floats" /></b>
 <display:table pagesize="5" class="displaytag" name="floats"
 	requestURI="float/list.do" id="row">
@@ -45,13 +54,14 @@
 </display:table>
 <br />
 
+
 <security:authorize access="hasRole('SPONSOR')">
-		<display:column>
-			<a href="sponsorship/sponsor/create.do?paradeId=${parade.id}"> <spring:message
-					code="sponsorship.create" />
-			</a>
-		</display:column>
-	</security:authorize>
+	<display:column>
+		<a href="sponsorship/sponsor/create.do?paradeId=${parade.id}"> <spring:message
+				code="sponsorship.create" />
+		</a>
+	</display:column>
+</security:authorize>
 
 <jstl:choose>
 	<jstl:when test="${role == 'brotherhood'}">

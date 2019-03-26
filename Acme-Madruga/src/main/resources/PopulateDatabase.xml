@@ -491,7 +491,7 @@
 		<property name="userAccount" ref="userAccount1" />
 		<property name="title" value="Brotherhood Title 1" />
 		<property name="establishment" value="2019/01/01" />
-		<property name="history" ref="history1"/>
+		<property name="history" ref="history1" />
 		<property name="pictures">
 			<list>
 				<value>https://picture1.jpg</value>
@@ -610,7 +610,7 @@
 		<property name="phone" value="636636636" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="title" value="Brotherhood Title 3" />
-		<property name="history" ref="history3"/>
+		<property name="history" ref="history3" />
 		<property name="establishment" value="2018/11/01" />
 		<property name="pictures">
 			<list>
@@ -1273,7 +1273,7 @@
 	</bean>
 
 	<bean id="chapter1" class="domain.Chapter">
-		<property name="title" value="Chapter"/>
+		<property name="title" value="Chapter" />
 		<property name="name" value="Chapter Name 1" />
 		<property name="middleName" value="Chapter Middle Name 1" />
 		<property name="surname" value="Chapter Surname 1" />
@@ -1447,7 +1447,7 @@
 				<value>https://picture3.jpg</value>
 			</list>
 		</property>
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- InceptionRecord 2 -->
@@ -1460,7 +1460,7 @@
 				<value>https://picture3.jpg</value>
 			</list>
 		</property>
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- InceptionRecord 3 -->
@@ -1473,7 +1473,7 @@
 				<value>https://picture3.jpg</value>
 			</list>
 		</property>
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- LegalRecord1 -->
@@ -1482,7 +1482,7 @@
 		<property name="legalName" value="Legalito" />
 		<property name="VAT" value="21" />
 		<property name="laws" value="law1" />
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- LegalRecord2 -->
@@ -1491,27 +1491,27 @@
 		<property name="legalName" value="Legalitu" />
 		<property name="VAT" value="17" />
 		<property name="laws" value="law1" />
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- LinkRecord1 -->
 	<bean id="linkRecord1" class="domain.LinkRecord">
 		<property name="description" value="descript" />
 		<property name="link" ref="brotherhood2" />
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- LinkRecord2 -->
 	<bean id="linkRecord2" class="domain.LinkRecord">
 		<property name="description" value="descript" />
 		<property name="link" ref="brotherhood3" />
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- MiscellaneousRecord1 -->
 	<bean id="miscellaneousRecord1" class="domain.MiscellaneousRecord">
 		<property name="description" value="descript" />
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- PeriodRecord 1 -->
@@ -1526,7 +1526,7 @@
 		</property>
 		<property name="startYear" value="1995" />
 		<property name="endYear" value="2005" />
-		<property name="title" value="Title"/>
+		<property name="title" value="Title" />
 	</bean>
 
 	<!-- Sponsor 1 -->
@@ -1622,8 +1622,8 @@
 		<property name="parade" ref="parade1" />
 		<property name="active" value="true" />
 	</bean>
-	
-		<bean id="sponsorship2" class="domain.Sponsorship">
+
+	<bean id="sponsorship2" class="domain.Sponsorship">
 		<property name="banner" value="http://www.banner.com" />
 		<property name="targetUrl" value="http://www.target.com" />
 		<property name="fare" value="2" />
@@ -1654,6 +1654,179 @@
 		<property name="destination" value="400,400" />
 		<property name="originReachMoment" value="15/04/2019 2:30" />
 		<property name="destinationReachMoment" value="15/04/2019 3:40" />
+	</bean>
+
+	<!-- User accounts -->
+	<bean id="userAccount99" class="security.UserAccount">
+		<property name="username" value="chapter2" />
+		<property name="password" value="07a29f2348d728fad16c5260823f93ef" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHAPTER" />
+				</bean>
+			</list>
+		</property>
+		<property name="accountNonLocked" value="true" />
+	</bean>
+	
+	<bean id="chapter2" class="domain.Chapter">
+		<property name="title" value="Chapter" />
+		<property name="name" value="Chapter Name 2" />
+		<property name="middleName" value="Chapter Middle Name 1" />
+		<property name="surname" value="Chapter Surname 1" />
+		<property name="photo" value="https://photochapter1.jpg" />
+		<property name="email" value="chapter@email.com" />
+		<property name="address" value="Chapter Address 1" />
+		<property name="phone" value="+34 (111) 666666666" />
+		<property name="userAccount" ref="userAccount99" />
+		<property name="socialProfiles">
+
+			<list>
+			</list>
+		</property>
+		<property name="area" ref="area2" />
+		<property name="proclaims">
+			<list>
+				
+			</list>
+		</property>
+		<property name="spammer" value="false" />
+		<property name="score" value="0.0" />
+		<property name="boxes">
+
+			<list>
+				<ref bean="inbox99" />
+				<ref bean="outbox99" />
+				<ref bean="trashbox99" />
+				<ref bean="spambox99" />
+				<ref bean="custombox99" />
+				<ref bean="notificationbox99" />
+			</list>
+		</property>
+
+	</bean>
+
+	<!-- In box 99 -->
+	<bean id="inbox99" class="domain.Box">
+		<property name="title" value="in box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- out box 99 -->
+	<bean id="outbox99" class="domain.Box">
+		<property name="title" value="out box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Trash box 99 -->
+	<bean id="trashbox99" class="domain.Box">
+		<property name="title" value="trash box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Spam box 99 -->
+	<bean id="spambox99" class="domain.Box">
+		<property name="title" value="spam box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Custom box 99 -->
+	<bean id="custombox99" class="domain.Box">
+		<property name="title" value="Custom box" />
+		<property name="custom" value="True" />
+	</bean>
+
+	<!-- Notification box 99 -->
+	<bean id="notificationbox99" class="domain.Box">
+		<property name="title" value="notification box" />
+		<property name="custom" value="False" />
+	</bean>
+	<!-- User accounts -->
+	<bean id="userAccount98" class="security.UserAccount">
+		<property name="username" value="chapter3" />
+		<property name="password" value="4cf7b4e4bb6d429f0f08bc498e397d81" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHAPTER" />
+				</bean>
+			</list>
+		</property>
+		<property name="accountNonLocked" value="true" />
+	</bean>
+	
+	<bean id="chapter3" class="domain.Chapter">
+		<property name="title" value="Chapter" />
+		<property name="name" value="Chapter Name 3" />
+		<property name="middleName" value="Chapter Middle Name 1" />
+		<property name="surname" value="Chapter Surname 1" />
+		<property name="photo" value="https://photochapter1.jpg" />
+		<property name="email" value="chapter@email.com" />
+		<property name="address" value="Chapter Address 1" />
+		<property name="phone" value="+34 (111) 666666666" />
+		<property name="userAccount" ref="userAccount98" />
+		<property name="socialProfiles">
+
+			<list>
+			</list>
+		</property>
+		
+		<property name="proclaims">
+			<list>
+				
+			</list>
+		</property>
+		<property name="spammer" value="false" />
+		<property name="score" value="0.0" />
+		<property name="boxes">
+
+			<list>
+				<ref bean="inbox98" />
+				<ref bean="outbox98" />
+				<ref bean="trashbox98" />
+				<ref bean="spambox98" />
+				<ref bean="custombox98" />
+				<ref bean="notificationbox98" />
+			</list>
+		</property>
+
+	</bean>
+
+	<!-- In box 98 -->
+	<bean id="inbox98" class="domain.Box">
+		<property name="title" value="in box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- out box 98 -->
+	<bean id="outbox98" class="domain.Box">
+		<property name="title" value="out box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Trash box 98 -->
+	<bean id="trashbox98" class="domain.Box">
+		<property name="title" value="trash box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Spam box 98 -->
+	<bean id="spambox98" class="domain.Box">
+		<property name="title" value="spam box" />
+		<property name="custom" value="False" />
+	</bean>
+
+	<!-- Custom box 98 -->
+	<bean id="custombox98" class="domain.Box">
+		<property name="title" value="Custom box" />
+		<property name="custom" value="True" />
+	</bean>
+
+	<!-- Notification box 98 -->
+	<bean id="notificationbox98" class="domain.Box">
+		<property name="title" value="notification box" />
+		<property name="custom" value="False" />
 	</bean>
 
 </beans>

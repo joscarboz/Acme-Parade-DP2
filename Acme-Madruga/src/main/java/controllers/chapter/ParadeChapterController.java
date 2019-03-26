@@ -4,11 +4,13 @@ package controllers.chapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,15 +52,17 @@ public class ParadeChapterController extends AbstractController {
 
 		chapter = this.chapterService.findByPrincipal();
 		final Area area = chapter.getArea();
-		brotherhoods = this.brotherhoodService.findByArea(area.getId());
+		if (area != null) {
+			brotherhoods = this.brotherhoodService.findByArea(area.getId());
 
-		for (final Brotherhood b : brotherhoods)
-			paradesArea.addAll(b.getParades());
-		for (final Parade p : paradesArea)
-			if (p.isDraftMode() == true)
-				paradesArea.remove(p);
-		parades = paradesArea;
-
+			for (final Brotherhood b : brotherhoods)
+				paradesArea.addAll(b.getParades());
+			for (final Parade p : paradesArea)
+				if (p.isDraftMode() == true)
+					paradesArea.remove(p);
+			parades = paradesArea;
+		} else
+			parades = Collections.EMPTY_SET;
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		final String date = sdf.format(new Date());
 
@@ -106,6 +110,7 @@ public class ParadeChapterController extends AbstractController {
 		ModelAndView result;
 
 		try {
+			Assert.isTrue(!parade.getRejectionReason().isEmpty(), "Reject reason cannot be null");
 			parade.setStatus("rejected");
 			this.paradeService.save(parade);
 			result = new ModelAndView("redirect:list.do");

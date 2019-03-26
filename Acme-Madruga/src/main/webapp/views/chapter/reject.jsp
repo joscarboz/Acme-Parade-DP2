@@ -24,7 +24,8 @@
 	<form:hidden path="moment" />
 	<form:hidden path="draftMode" />
 	<form:hidden path="description" />
-	<acme:textarea code="parade.rejectionReason" path="rejectionReason" />
+	<spring:message code="parade.rejectionReason"/>:
+	<form:input code="parade.rejectionReason" path="rejectionReason" placeholder="Not blank"/>
 	<br />
 	<acme:submit name="save" code="parade.save" />
 

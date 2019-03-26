@@ -108,9 +108,10 @@ public class ParadeService {
 		chapterAuthority.setAuthority(Authority.CHAPTER);
 
 		final Authority brotherhoodAuthority = new Authority();
-		chapterAuthority.setAuthority(Authority.BROTHERHOOD);
+		brotherhoodAuthority.setAuthority(Authority.BROTHERHOOD);
 
 		final UserAccount user = LoginService.getPrincipal();
+		Assert.isTrue(user.getAuthorities().contains(chapterAuthority) || user.getAuthorities().contains(brotherhoodAuthority));
 		if (user.getAuthorities().contains(chapterAuthority)) {
 			final Chapter chapter = this.chapterService.findByPrincipal();
 			final Area area = chapter.getArea();
@@ -121,7 +122,7 @@ public class ParadeService {
 			Assert.isTrue(parades.contains(parade));
 		}
 
-		if (user.getAuthorities().contains(brotherhoodAuthority)) {
+		if (user.getAuthorities().contains(brotherhoodAuthority) && parade.getId() != 0) {
 			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 			Assert.isTrue(brotherhood.getParades().contains(parade));
 		}

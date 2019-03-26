@@ -63,7 +63,7 @@
 		<spring:message code="parade.draftMode" var="draftModeHeader" />
 		<display:column property="draftMode" title="${draftModeHeader}"
 			sortable="false" />
-			
+
 		<display:column>
 			<a href="segment/brotherhood/list.do?paradeId=${row.id}"> <spring:message
 					code="parade.segments" />
@@ -114,8 +114,44 @@
 			</a>
 		</display:column>
 	</security:authorize>
+	<security:authorize access="hasRole('CHAPTER')">
+		<jstl:choose>
+			<jstl:when test="${row.status=='accepted'}">
+				<spring:message code="parade.status" var="statusHeader" />
+				<display:column property="status" title="${statusHeader}"
+					sortable="true" style="background-color:#3cea71" />
+			</jstl:when>
+			<jstl:when test="${row.status=='rejected'}">
+				<spring:message code="parade.status" var="statusHeader" />
+				<display:column property="status" title="${statusHeader}"
+					sortable="true" style="background-color:#f95036" />
+			</jstl:when>
+			<jstl:when test="${row.status=='submitted'}">
+				<spring:message code="parade.status" var="statusHeader" />
+				<display:column property="status" title="${statusHeader}"
+					sortable="true" style="background-color:#9c9c9c" />
+			</jstl:when>
+		</jstl:choose>
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${row.status == 'submitted' }">
+					<a href="parade/chapter/accept.do?paradeId=${row.id}"> <spring:message
+							code="parade.accept" />
+					</a>
+				</jstl:when>
+			</jstl:choose>
+		</display:column>
 
-	
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${row.status == 'submitted' }">
+					<a href="parade/chapter/reject.do?paradeId=${row.id}"> <spring:message
+							code="parade.reject" />
+					</a>
+				</jstl:when>
+			</jstl:choose>
+		</display:column>
+	</security:authorize>
 </display:table>
 
 

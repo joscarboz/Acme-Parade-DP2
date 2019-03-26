@@ -76,11 +76,7 @@ public class BrotherhoodController extends AbstractController {
 		result.addObject("socialProfiles", socialProfiles);
 
 		result.addObject("brotherhood", brotherhood);
-		result.addObject("inceptionRecord", history.getInceptionRecord());
-		result.addObject("legalRecords", history.getLegalRecords());
-		result.addObject("linkRecords", history.getLinkRecords());
-		result.addObject("miscellaneousRecords", history.getMiscellaneousRecords());
-		result.addObject("periodRecords", history.getPeriodRecords());
+		result.addObject("history", history);
 		result.addObject("floats", brotherhood.getFloats());
 		result.addObject("parades", res);
 		result.addObject("members", members);

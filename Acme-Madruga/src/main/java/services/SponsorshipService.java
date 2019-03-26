@@ -71,10 +71,20 @@ public class SponsorshipService {
 		this.creditCardService.flush();
 		creditCard = this.creditCardService.findByNumber(creditCard.getNumber());
 		sponsorship.setCreditCard(creditCard);
+		if (sponsorship.getId() == 0) {
+			sponsorship.setFare(0.0);
+			sponsorship.setActive(true);
+		}
 		result = this.sponsorshipRepository.save(sponsorship);
 		sponsor = (Sponsor) this.actorService.findByPrincipal();
 		sponsor.getSponsorships().add(result);
 
+		return result;
+	}
+
+	public Collection<Sponsorship> findByParadeId(final int paradeId) {
+		Collection<Sponsorship> result;
+		result = this.sponsorshipRepository.findByParadeId(paradeId);
 		return result;
 	}
 	public Collection<Sponsorship> getExpiredSponsorships() {

@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
 import domain.CreditCard;
+import domain.Sponsor;
 import domain.Sponsorship;
 
 @Service
@@ -62,6 +63,7 @@ public class SponsorshipService {
 
 	public Sponsorship save(final Sponsorship sponsorship, CreditCard creditCard) {
 		Sponsorship result;
+		Sponsor sponsor;
 		Assert.notNull(sponsorship);
 		Assert.notNull(creditCard);
 
@@ -70,10 +72,11 @@ public class SponsorshipService {
 		creditCard = this.creditCardService.findByNumber(creditCard.getNumber());
 		sponsorship.setCreditCard(creditCard);
 		result = this.sponsorshipRepository.save(sponsorship);
-		//result.setSponsor((Sponsor) this.actorService.findByPrincipal());
+		sponsor = (Sponsor) this.actorService.findByPrincipal();
+		sponsor.getSponsorships().add(result);
+
 		return result;
 	}
-
 	public Collection<Sponsorship> getExpiredSponsorships() {
 		final Collection<Sponsorship> result;
 		final Date date = new Date();

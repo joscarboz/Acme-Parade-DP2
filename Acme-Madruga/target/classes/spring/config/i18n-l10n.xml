@@ -39,12 +39,8 @@
 		<value>/views/history/messages</value>
 		<value>/views/chapter/messages</value>
 		<value>/views/segment/messages</value>
-<<<<<<< HEAD
 		<value>/views/sponsorship/messages</value>
-=======
-		<value>/views/proclaim/messages</value>
->>>>>>> alex
-				
+		<value>/views/proclaim/messages</value>				
 	</util:list>
 
 </beans>

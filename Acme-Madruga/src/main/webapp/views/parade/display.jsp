@@ -45,6 +45,13 @@
 </display:table>
 <br />
 
+<security:authorize access="hasRole('SPONSOR')">
+		<display:column>
+			<a href="sponsorship/sponsor/create.do?paradeId=${parade.id}"> <spring:message
+					code="sponsorship.create" />
+			</a>
+		</display:column>
+	</security:authorize>
 
 <jstl:choose>
 	<jstl:when test="${role == 'brotherhood'}">

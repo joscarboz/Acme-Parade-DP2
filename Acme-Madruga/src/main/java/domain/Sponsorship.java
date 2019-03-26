@@ -1,3 +1,4 @@
+
 package domain;
 
 import javax.persistence.Access;
@@ -14,19 +15,20 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class Sponsorship extends DomainEntity {
 
-	private String banner;
-	private String targetUrl;
-	private int fare;
-	private boolean active;
+	private String	banner;
+	private String	targetUrl;
+	private Double	fare;
+	private boolean	active;
+
 
 	@SafeHtml
 	@NotEmpty
 	@URL
 	public String getBanner() {
-		return banner;
+		return this.banner;
 	}
 
-	public void setBanner(String banner) {
+	public void setBanner(final String banner) {
 		this.banner = banner;
 	}
 
@@ -34,49 +36,51 @@ public class Sponsorship extends DomainEntity {
 	@NotEmpty
 	@URL
 	public String getTargetUrl() {
-		return targetUrl;
+		return this.targetUrl;
 	}
 
-	public void setTargetUrl(String targetUrl) {
+	public void setTargetUrl(final String targetUrl) {
 		this.targetUrl = targetUrl;
 	}
 
-	public int getFare() {
-		return fare;
+	public Double getFare() {
+		return this.fare;
 	}
 
-	public void setFare(int fare) {
+	public void setFare(final Double fare) {
 		this.fare = fare;
 	}
 
 	public boolean isActive() {
-		return active;
+		return this.active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(final boolean active) {
 		this.active = active;
 	}
 
+
 	// Relations
 
-	private Parade parade;
-	private CreditCard creditCard;
+	private Parade		parade;
+	private CreditCard	creditCard;
+
 
 	@ManyToOne(optional = false)
 	public Parade getParade() {
-		return parade;
+		return this.parade;
 	}
 
-	public void setParade(Parade parade) {
+	public void setParade(final Parade parade) {
 		this.parade = parade;
 	}
 
 	@OneToOne(optional = false)
 	public CreditCard getCreditCard() {
-		return creditCard;
+		return this.creditCard;
 	}
 
-	public void setCreditCard(CreditCard creditCard) {
+	public void setCreditCard(final CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
 

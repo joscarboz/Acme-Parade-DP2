@@ -3,6 +3,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
 import services.ParadeService;
+import services.SponsorshipService;
+import services.SystemConfigService;
 import domain.Brotherhood;
 import domain.Float;
 import domain.Parade;
+import domain.Sponsorship;
 
 @Controller
 @RequestMapping("/parade")
@@ -26,6 +30,12 @@ public class ParadeController extends AbstractController {
 
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	private SponsorshipService	sponsorshipService;
+
+	@Autowired
+	private SystemConfigService	systemConfigService;
 
 
 	//Constructor
@@ -63,10 +73,26 @@ public class ParadeController extends AbstractController {
 	public ModelAndView display(@RequestParam final int paradeId) {
 		ModelAndView result;
 		final Parade parade;
+		Collection<Sponsorship> sponsorships;
+		Random rnd;
+		Sponsorship sponsorship;
+		String banner;
 
 		parade = this.paradeService.findOne(paradeId);
 		final Collection<Float> floats = parade.getFloats();
+		sponsorships = this.sponsorshipService.findByParadeId(paradeId);
+
 		result = new ModelAndView("parade/display");
+		if (sponsorships.size() > 0) {
+			rnd = new Random();
+			sponsorship = (Sponsorship) sponsorships.toArray()[rnd.nextInt(sponsorships.size())];
+			sponsorship.setFare(sponsorship.getFare() + this.systemConfigService.findSystemConfiguration().getFareCharge());
+			banner = sponsorship.getBanner();
+			result.addObject("banner", banner);
+			result.addObject("bannerLink", sponsorship.getTargetUrl());
+
+		}
+
 		result.addObject("floats", floats);
 		result.addObject("parade", parade);
 		result.addObject("role", "none");

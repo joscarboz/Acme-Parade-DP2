@@ -46,7 +46,8 @@ public class LoginService implements UserDetailsService {
 		result.getAuthorities().size();
 		return result;
 	}
-
+	
+	
 	public static UserAccount getPrincipal() {
 		UserAccount result;
 		SecurityContext context;

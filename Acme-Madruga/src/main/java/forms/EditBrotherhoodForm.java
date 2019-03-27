@@ -13,8 +13,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import domain.Area;
-
 public class EditBrotherhoodForm {
 
 	private String				name;
@@ -27,8 +25,6 @@ public class EditBrotherhoodForm {
 	private String				title;
 	private Date				establishment;
 	private Collection<String>	pictures;
-	private Collection<String>	areas;
-	private Area				area;
 
 	@NotBlank
 	public String getName() {
@@ -115,22 +111,6 @@ public class EditBrotherhoodForm {
 	}
 	public void setPictures(final Collection<String> pictures) {
 		this.pictures = pictures;
-	}
-	
-	public Collection<String> getAreas() {
-		return this.areas;
-	}
-	public void setAreas(final Collection<String> areas) {
-		this.areas = areas;
-	}
-	
-	@NotNull
-	public Area getArea() {
-		return this.area;
-	}
-
-	public void setArea(final Area area) {
-		this.area = area;
 	}
 	
 }

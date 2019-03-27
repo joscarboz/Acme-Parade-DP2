@@ -28,22 +28,25 @@ public class PeriodRecordServiceTest extends AbstractTest {
 	private PeriodRecordService	periodRecordService;
 
 
+	// Data coverage of 5.7%
+	// Sentence coverage of 1651 sentences
+
 	@Test
 	public void createAndSavePeriodRecordDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de un period record
+			{	//Create period record
 				"brotherhood1", "title", "description", 1939, 1949, "https://www.photo.com", null
-			}, {//Anonimo no puede crear un period record
+			}, {//Anon cannot create period record
 				null, "title", "description", 1939, 1949, "https://www.photo.com", IllegalArgumentException.class
-			}, {//Solo brotherhood puede crear un period record
+			}, {//Only brotherhood can create period record
 				"member1", "title", "description", 1939, 1949, "https://www.photo.com", IllegalArgumentException.class
-			}, {//El end year no puede ser anterior al start year
+			}, {//End year cannot be before start year
 				"brotherhood1", "title", "description", 1959, 1949, "https://www.photo.com", IllegalArgumentException.class
-			}, {//El title no puede ser nulo
+			}, {//Title cannot be null
 				"brotherhood1", null, "description", 1939, 1949, "https://www.photo.com", ConstraintViolationException.class
-			}, {//El end year no puede ser negativo
+			}, {//End year cannot be negative
 				"brotherhood1", "title", "description", 1939, -1949, "https://www.photo.com", IllegalArgumentException.class
-			}, {//Una brotherhood sin inception record no puede tener un period record
+			}, {//Brotherhood without inception record cannot create period record
 				"brotherhood2", "title", "description", 1939, 1949, "https://www.photo.com", NullPointerException.class
 			}
 		};
@@ -61,13 +64,13 @@ public class PeriodRecordServiceTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood elimina correctamente un period recod
+			{	//Brotherhood delete period record
 				"brotherhood1", "periodRecord1", null
-			}, { //Una brotherhood no puede eliminar un period record de otra
+			}, { //Brotherhood cannot delete another one's period record
 				"brotherhood2", "periodRecord1", IllegalArgumentException.class
-			}, { //Sólo una brotherhood puede eliminar un period record
+			}, { //Only brotherhood can delete period record
 				"member1", "periodRecord1", IllegalArgumentException.class
-			}, { //Un anónimo no puede eliminar un period record
+			}, { //Anon cannot delete period record
 				null, "periodRecord1", IllegalArgumentException.class
 			}
 
@@ -87,6 +90,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 			periodRecordId = super.getEntityId(periodRecordBeanName);
 			periodRecord = this.periodRecordService.findOne(periodRecordId);
 			this.periodRecordService.delete(periodRecord);
+			this.periodRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -111,7 +115,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 			final Collection<String> photos = pictures;
 			periodRecord.setPictures(photos);
 			this.periodRecordService.save(periodRecord);
-
+			this.periodRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

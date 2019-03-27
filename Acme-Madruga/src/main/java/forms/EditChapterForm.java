@@ -1,14 +1,10 @@
 
 package forms;
 
-import java.util.Collection;
-
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
-
-import domain.Area;
 
 public class EditChapterForm {
 
@@ -20,8 +16,6 @@ public class EditChapterForm {
 	private String				address;
 	private String				phone;
 	private String				title;
-	private Collection<String>	areas;
-	private Area				area;
 
 	@NotBlank
 	public String getName() {
@@ -90,21 +84,6 @@ public class EditChapterForm {
 
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-	
-	public Collection<String> getAreas() {
-		return this.areas;
-	}
-	public void setAreas(final Collection<String> areas) {
-		this.areas = areas;
-	}
-	
-	public Area getArea() {
-		return this.area;
-	}
-
-	public void setArea(final Area area) {
-		this.area = area;
 	}
 	
 }

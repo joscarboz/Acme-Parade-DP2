@@ -25,18 +25,21 @@ public class LinkRecordServiceTest extends AbstractTest {
 	private BrotherhoodService	brotherhoodService;
 
 
+	// Covers 5.2% of the data in the project
+	//Covers 1500 sentences
+
 	@Test
 	public void createAndSaveLinkRecordDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de un link record
+			{	//Create link record
 				"brotherhood1", "title", "description", "brotherhood2", null
-			}, {//Anonimo no puede crear un link record
+			}, {//Anon cannot create link record
 				null, "title", "description", "brotherhood2", IllegalArgumentException.class
-			}, {//Solo brotherhood puede crear un link record
+			}, {//Member cannot create link record
 				"member1", "title", "description", "brotherhood2", IllegalArgumentException.class
-			}, {//Un brotherhood sin inception record no puede tener un link record
+			}, {//Brotherhood without inception record cannot create link record
 				"brotherhood2", "title", "description", "brotherhood2", NullPointerException.class
-			}, {//Un brotherhood no puede tener un link record sin brotherhood
+			}, {//Brotherhood cannot create link record without link
 				"brotherhood1", "title", "description", null, AssertionError.class
 			}
 		};
@@ -55,13 +58,13 @@ public class LinkRecordServiceTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood elimina correctamente un link recod
+			{	//Brotherhood delete link record
 				"brotherhood1", "linkRecord1", null
-			}, { //Una brotherhood no puede eliminar un link record de otra
+			}, { //Brotherhood cannot delete another one's link record
 				"brotherhood2", "linkRecord1", IllegalArgumentException.class
-			}, { //Sólo una brotherhood puede eliminar un link record
+			}, { //Member cannot delete link record
 				"member1", "linkRecord1", IllegalArgumentException.class
-			}, { //Un anónimo no puede eliminar un link recod
+			}, { //Anon cannot delete link record
 				null, "linkRecord1", IllegalArgumentException.class
 			}
 
@@ -82,7 +85,7 @@ public class LinkRecordServiceTest extends AbstractTest {
 			final int Brotherhoodid = this.getEntityId(link);
 			linkRecord.setLink(this.brotherhoodService.findOne(Brotherhoodid));
 			this.linkRecordService.save(linkRecord);
-
+			this.linkRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -103,6 +106,7 @@ public class LinkRecordServiceTest extends AbstractTest {
 			linkRecordId = super.getEntityId(linkRecordBeanName);
 			linkRecord = this.linkRecordService.findOne(linkRecordId);
 			this.linkRecordService.delete(linkRecord);
+			this.linkRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

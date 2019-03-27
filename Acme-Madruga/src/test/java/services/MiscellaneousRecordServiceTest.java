@@ -24,18 +24,21 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	private MiscellaneousRecordService	miscellaneousRecordService;
 
 
+	// Covers 5.0% of the data in the project
+	//Covers 1442 sentences
+
 	@Test
 	public void createAndSaveMiscellaneousRecordDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de un miscellaneous record
+			{	//Create miscellaneous record
 				"brotherhood1", "title", "description", null
-			}, {//Anonimo no puede crear un miscellaneous record
+			}, {//Anon cannot create miscellaneous record
 				null, "title", "description", IllegalArgumentException.class
-			}, {//Solo brotherhood puede crear un miscellaneous record
+			}, {//Member cannot create miscellaneous record
 				"member1", "title", "description", IllegalArgumentException.class
-			}, {//Un brotherhood sin inception record no puede tener un miscellaneous record
+			}, {//Brotherhood without inception record cannot create miscellaneous record
 				"brotherhood2", "title", "description", NullPointerException.class
-			}, {//Un brotherhood no puede tener un miscellaneous record sin title
+			}, {//Brotherhood cannot create miscellaneous record without title
 				"brotherhood1", null, "description", ConstraintViolationException.class
 			}
 		};
@@ -53,13 +56,13 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood elimina correctamente un miscellaneous recod
+			{	//Brotherhood delete miscellaneous record
 				"brotherhood1", "miscellaneousRecord1", null
-			}, { //Una brotherhood no puede eliminar un miscellaneous record de otra
+			}, { //brotherhood cannot delete another one's miscellaneous record 
 				"brotherhood2", "miscellaneousRecord1", IllegalArgumentException.class
-			}, { //Sólo una brotherhood puede eliminar un miscellaneous record
+			}, { //Member cannot delete miscellaneous record
 				"member1", "miscellaneousRecord1", IllegalArgumentException.class
-			}, { //Un anónimo no puede eliminar un miscellaneous record
+			}, { //Anon cannot delete miscellaneous record
 				null, "miscellaneousRecord1", IllegalArgumentException.class
 			}
 
@@ -79,6 +82,7 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 			miscellaneousRecordId = super.getEntityId(miscellaneousRecordBeanName);
 			miscellaneousRecord = this.miscellaneousRecordService.findOne(miscellaneousRecordId);
 			this.miscellaneousRecordService.delete(miscellaneousRecord);
+			this.miscellaneousRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -98,7 +102,7 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 			miscellaneousRecord.setDescription(description);
 			miscellaneousRecord.setTitle(title);
 			this.miscellaneousRecordService.save(miscellaneousRecord);
-
+			this.miscellaneousRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

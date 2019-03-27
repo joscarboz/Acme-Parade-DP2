@@ -17,6 +17,7 @@ public class SystemConfigForm {
 	private String	spamWords;
 	private int		finderMaxResults;
 	private Double	finderCacheHours;
+	private String	creditCardMakes;
 
 
 	@NotBlank
@@ -103,4 +104,14 @@ public class SystemConfigForm {
 	public void setFinderCacheHours(final Double finderCacheHours) {
 		this.finderCacheHours = finderCacheHours;
 	}
+
+	public String getCreditCardMakes() {
+		return creditCardMakes;
+	}
+
+	public void setCreditCardMakes(String creditCardMakes) {
+		this.creditCardMakes = creditCardMakes;
+	}
+	
+	
 }

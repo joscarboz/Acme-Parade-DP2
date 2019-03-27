@@ -28,16 +28,19 @@ public class InceptionRecordServiceTest extends AbstractTest {
 	private InceptionRecordService	inceptionRecordService;
 
 
+	// Covers 5.1% of the data in the project
+	//Covers 1463 sentences
+
 	@Test
 	public void createAndSaveInceptionRecordDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de una history con su inception record
+			{	//Create history with inception record
 				"brotherhood2", null
-			}, {//Anonimo no puede crear una history con su inception record
+			}, {//Anon cant create history nor inception record
 				null, IllegalArgumentException.class
-			}, {//Solo brotherhood puede crear una history con su inception record
+			}, {//Member cant create history nor inception record
 				"member1", IllegalArgumentException.class
-			}, {//Un brotherhood solo puede tener una history con su inception record
+			}, {//Brotherhood can only have one history and one inception record
 				"brotherhood1", IllegalArgumentException.class
 			}
 		};
@@ -56,13 +59,13 @@ public class InceptionRecordServiceTest extends AbstractTest {
 	@Test
 	public void editDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood edita correctamente su inception
+			{	//Brotherhood updates inception record
 				"brotherhood1", "inceptionRecord1", null
-			}, { //Una brotherhood no puede editar el inception de otra
+			}, { //Brotherhood cannot update another one's inception record
 				"brotherhood1", "inceptionRecord2", IllegalArgumentException.class
-			}, { //Sólo una brotherhood puede editar un inception record
+			}, { //Only brotherhood can update inception record
 				"member1", "inceptionRecord1", IllegalArgumentException.class
-			}, { //Un anónimo no puede editar un inception record
+			}, { //Anon cannot update inception record
 				null, "inceptionRecord1", IllegalArgumentException.class
 			}
 
@@ -89,6 +92,7 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			final Collection<String> photos = pictures;
 			inceptionRecord.setPictures(photos);
 			this.inceptionRecordService.save(inceptionRecord);
+			this.inceptionRecordService.flush();
 
 			this.unauthenticate();
 
@@ -111,6 +115,7 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			inceptionRecord = this.inceptionRecordService.findOne(inceptionRecordId);
 			inceptionRecord.setTitle("modified title");
 			this.inceptionRecordService.save(inceptionRecord);
+			this.inceptionRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

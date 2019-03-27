@@ -45,6 +45,9 @@
 	<acme:textbox code="systemConfig.finderCacheHours" path="finderCacheHours"/>
 	<br />
 	
+	<acme:textbox code="systemConfig.creditCardsMake" path="creditCardMakes"/>
+	<br />
+	
 	
 	<acme:submit name="save" code="systemConfig.save" />
 	

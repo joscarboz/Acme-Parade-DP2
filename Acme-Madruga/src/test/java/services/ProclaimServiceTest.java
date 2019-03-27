@@ -25,16 +25,19 @@ public class ProclaimServiceTest extends AbstractTest {
 	private ProclaimService	proclaimService;
 
 
+	// Data coverage of 3.7%
+	// Sentence coverage of 1078 sentences
+
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de una Proclaim
+			{	//Create proclaim
 				"chapter1", "sampleText", null
-			}, {//Anonimo no puede crear una Proclaim
+			}, {//Anonimo cannot create Proclaim
 				null, "sampleTitle", IllegalArgumentException.class
-			}, {//Solo chapter puede crear una Proclaim
+			}, {//Only chapter can create Proclaim
 				"member1", "sampleText", IllegalArgumentException.class
-			}, { // Text vacío
+			}, { // Empty text
 				"chapter1", "", ConstraintViolationException.class
 			}
 

@@ -25,20 +25,23 @@ public class SocialProfileTest extends AbstractTest {
 	private SocialProfileService	socialProfileService;
 
 
+	// Data coverage of 4.7%
+	// Sentence coverage of 1358 sentences
+
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de un SocialProfile
+			{	//Create SocialProfile
 				"member1", "sampleNick", "http://twitter.com/users/demouser", "Twitter", null
-			}, {//Anonimo no puede crear un SocialProfile
+			}, {//Anon cannot SocialProfile
 				null, "sampleNick", "http://twitter.com/users/demouser", "Twitter", IllegalArgumentException.class
-			}, {// URL Incorrecta
+			}, {// Wrong URL 
 				"member1", "sampleNick", "Esto no es un link", "Twitter", ConstraintViolationException.class
-			}, { // Nick vacío
+			}, { // Empty nick
 				"member1", "", "http://twitter.com/users/demouser", "Twitter", ConstraintViolationException.class
-			}, { // Red Social vacio
+			}, { // Empty social network
 				"member1", "sampleNick", "http://twitter.com/users/demouser", "", ConstraintViolationException.class
-			}, { // URL Vacio
+			}, { // Empty URL
 				"member1", "sampleNick", "", "Twitter", ConstraintViolationException.class
 			}
 
@@ -58,9 +61,9 @@ public class SocialProfileTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Un member puede borrar uno de sus social profiles
+			{	//Member can delete its social profile
 				"member1", "socialProfile1", null
-			}, { //Un usuario no puede borrar un social profile de otro usuario
+			}, { //Member cannot delete another one's social profile
 				"member2", "socialProfile1", IllegalArgumentException.class
 			}
 

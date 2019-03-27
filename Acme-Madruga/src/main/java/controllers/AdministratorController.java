@@ -38,6 +38,7 @@ import domain.Chapter;
 import domain.Member;
 import domain.Parade;
 import domain.Position;
+import domain.Sponsor;
 import domain.SystemConfig;
 import forms.RegisterAdminForm;
 import forms.RegisterForm;
@@ -150,6 +151,8 @@ public class AdministratorController extends AbstractController {
 		final Collection<Brotherhood> largestHistory = this.adminService.largestHistory();
 
 		final Collection<Brotherhood> largerAverageHistory = this.adminService.getLargestBrotherhoodAverageHistory();
+		
+		final Collection<Sponsor> topSponsorSoponsorship = this.adminService.getTopSponsorSponsorshipActive();
 
 		Double nonCoord = this.adminService.getNonCoordinateAreas();
 
@@ -166,6 +169,19 @@ public class AdministratorController extends AbstractController {
 			ppc[1] = 0.;
 			ppc[2] = 0.;
 			ppc[3] = 0.;
+
+		}
+		
+		Double[] sps = new Double[4];
+
+		sps = this.adminService.getActiveSponsorshipPerSponsor();
+
+		if (sps == null) {
+			sps = new Double[4];
+			sps[0] = 0.;
+			sps[1] = 0.;
+			sps[2] = 0.;
+			sps[3] = 0.;
 
 		}
 
@@ -190,6 +206,11 @@ public class AdministratorController extends AbstractController {
 
 		if (finalSubmittedParades == null)
 			finalSubmittedParades = 0.;
+		
+		Double ratioActiveSponsorship = this.adminService.getActiveSponsorshipRatio();
+
+		if (ratioActiveSponsorship == null)
+			ratioActiveSponsorship = 0.;
 
 		result = new ModelAndView("administrator/dashboard");
 
@@ -258,6 +279,17 @@ public class AdministratorController extends AbstractController {
 		result.addObject("finalRejectedParades", finalRejectedParades);
 
 		result.addObject("finalSubmittedParades", finalSubmittedParades);
+		
+		result.addObject("ratioActiveSponsorship", ratioActiveSponsorship);
+		
+		// ActiveSponsorshipPerSponsor
+		result.addObject("maximumsps", sps[1]);
+		result.addObject("minimumsps", sps[2]);
+		result.addObject("averagesps", sps[0]);
+		result.addObject("stdevsps", sps[3]);
+		
+		result.addObject("topSponsorSoponsorship", topSponsorSoponsorship);
+		
 
 		return result;
 

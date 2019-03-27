@@ -24,14 +24,17 @@ public class RequestServiceTest extends AbstractTest {
 	private RequestService	requestService;
 
 
+	// Data coverage of 8.7%
+	// Sentence coverage of 2519 sentences
+
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de una request
+			{	//Create request
 				"member2", "parade2", null
-			}, {//Anonimo no puede crear una Position
+			}, {//Anon cannot create request
 				null, "parade2", IllegalArgumentException.class
-			}, {//Solo member puede crear una Position
+			}, {//Only member can create a request 
 				"brotherhood1", "parade2", IllegalArgumentException.class
 			},
 
@@ -51,11 +54,11 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Un member borra correctamente una request
+			{	//Member deletes request
 				"member1", "request1", null
-			}, { //Un member no puede borrar la request de otro
+			}, { //Member cannot delete another one's request
 				"member2", "request1", IllegalArgumentException.class
-			}, { //Un anónimo no puede borrar una request
+			}, { //Anon cannot create request
 				null, "request1", IllegalArgumentException.class
 			}
 
@@ -68,11 +71,11 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void acceptDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood acepta correctamente una request
+			{	//Brotherhood accepts request
 				"brotherhood1", "request1", null
-			}, { //Una brotherhood no puede aceptar la request de otro
+			}, { //Brotherhood cannot accept another one's request
 				"brotherhood1", "request4", IllegalArgumentException.class
-			}, { //Un anónimo no puede aceptar una request
+			}, { //Anon cannot accept request
 				null, "request1", IllegalArgumentException.class
 			}
 
@@ -85,11 +88,11 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void rejectDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood rechaza correctamente una request
+			{	//Brotherhood rejects request
 				"brotherhood2", "request4", null
-			}, { //Una brotherhood no puede rechazar la request de otro
+			}, { //Brotherhood cannot reject another one's request
 				"brotherhood1", "request4", IllegalArgumentException.class
-			}, { //Un anónimo no puede rechazar una request
+			}, { //Anon cannot reject request
 				null, "request4", IllegalArgumentException.class
 			}
 

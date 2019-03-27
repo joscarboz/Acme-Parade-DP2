@@ -1,6 +1,11 @@
 #./src/main/resources/Entities.map
 <<<<<<< HEAD
+#Wed Mar 27 11:32:03 CET 2019
+=======
+<<<<<<< Updated upstream
+<<<<<<< HEAD
 #Tue Mar 26 22:53:58 CET 2019
+>>>>>>> master
 sponsorship2=779
 sponsorship1=778
 enrolment3=802
@@ -146,8 +151,17 @@ request4=706
 request3=704
 request2=702
 request1=701
+<<<<<<< HEAD
+=======
 =======
 #Tue Mar 26 18:47:38 CET 2019
+=======
+<<<<<<< Updated upstream
+#Tue Mar 26 11:25:35 CET 2019
+=======
+#Tue Mar 26 12:59:35 CET 2019
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 periodRecord1=746
 brotherhood3=753
 brotherhood2=744
@@ -277,4 +291,5 @@ inbox3=678
 inbox2=671
 sponsor1=755
 inbox1=664
+>>>>>>> master
 >>>>>>> master

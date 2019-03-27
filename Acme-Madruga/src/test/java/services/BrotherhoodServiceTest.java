@@ -26,39 +26,42 @@ public class BrotherhoodServiceTest extends AbstractTest {
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
 
-	Date					fechaMinima	= new Date();
-	
+	Date						fechaMinima	= new Date();
+
 
 	// Tests ------------------------------------------------------------------
+	// Covers 6.7% of the data in the project
+	//Covers 1929 sentences
 
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de un Actor
-				"password","password", "usename","name","middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", fechaMinima, null
-			}, { //Pass incorrecta
-				"password","null", "usename","name","middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", fechaMinima, IllegalArgumentException.class
-			},	{ //Email incorrecto
-				"password","password", "username","name","middleName", "surname", "https://photo.com", "email", "address", "+34 344654843", "Title", fechaMinima, ConstraintViolationException.class
-			},	{ //Nombre incorrecto
-				"password","password", "username","","middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", fechaMinima, ConstraintViolationException.class
-			}, 	{ //Apellidos incorrecto
-				"password","password", "username","name","middleName", "", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", fechaMinima, ConstraintViolationException.class
-			},	{ //Foto incorrecto
-				"password","password", "username","name","middleName", "surname", "photo", "email@acme.com", "address", "+34 344654843", "Title", fechaMinima, ConstraintViolationException.class
-			},	{ //Username incorrecto
-				"password","password", "","name","middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", fechaMinima, ConstraintViolationException.class
-			},	{ //Titulo incorrecto
-				"password","password", "username","name","middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "", fechaMinima, ConstraintViolationException.class
-			},	{ //Fecha incorrecta
-				"password","password", "username","name","middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", null, ConstraintViolationException.class
+			{	//Normal actor creation
+				"password", "password", "usename", "name", "middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", this.fechaMinima, null
+			}, { //Wrong pass
+				"password", "null", "usename", "name", "middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", this.fechaMinima, IllegalArgumentException.class
+			}, { //Wrong email
+				"password", "password", "username", "name", "middleName", "surname", "https://photo.com", "email", "address", "+34 344654843", "Title", this.fechaMinima, ConstraintViolationException.class
+			}, { //Wrong name
+				"password", "password", "username", "", "middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", this.fechaMinima, ConstraintViolationException.class
+			}, { //Wrong surname
+				"password", "password", "username", "name", "middleName", "", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", this.fechaMinima, ConstraintViolationException.class
+			}, { //Wrong photo
+				"password", "password", "username", "name", "middleName", "surname", "photo", "email@acme.com", "address", "+34 344654843", "Title", this.fechaMinima, ConstraintViolationException.class
+			}, { //Wrong username
+				"password", "password", "", "name", "middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", this.fechaMinima, ConstraintViolationException.class
+			}, { //Wrong title
+				"password", "password", "username", "name", "middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "", this.fechaMinima, ConstraintViolationException.class
+			}, { //Wrong date
+				"password", "password", "username", "name", "middleName", "surname", "https://photo.com", "email@acme.com", "address", "+34 344654843", "Title", null, ConstraintViolationException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
 			try {
 				super.startTransaction();
-				this.createAndSaveTemplate((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3],(String) testingData[i][4], (String) testingData[i][5],(String) testingData[i][6], (String) testingData[i][7],(String) testingData[i][8], (String) testingData[i][9], (String) testingData[i][10], (Date) testingData[i][11], (Class<?>) testingData[i][12]);
+				this.createAndSaveTemplate((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+					(String) testingData[i][7], (String) testingData[i][8], (String) testingData[i][9], (String) testingData[i][10], (Date) testingData[i][11], (Class<?>) testingData[i][12]);
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			} finally {
@@ -67,9 +70,10 @@ public class BrotherhoodServiceTest extends AbstractTest {
 	}
 
 	// Ancillary methods ------------------------------------------------------
-	protected void createAndSaveTemplate(final String password, final String password2, final String userName, final String name, final String middleName, final String surname, final String photo, final String email, final String address, final String phone, final String title, final Date date, final Class<?> expected) {
+	protected void createAndSaveTemplate(final String password, final String password2, final String userName, final String name, final String middleName, final String surname, final String photo, final String email, final String address,
+		final String phone, final String title, final Date date, final Class<?> expected) {
 		Class<?> caught;
-		RegisterBrotherhoodForm registerBrotherhoodForm = new RegisterBrotherhoodForm();
+		final RegisterBrotherhoodForm registerBrotherhoodForm = new RegisterBrotherhoodForm();
 
 		caught = null;
 		try {

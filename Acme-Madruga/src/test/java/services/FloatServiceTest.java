@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.LinkedList;
@@ -15,21 +16,26 @@ import utilities.AbstractTest;
 import domain.Float;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/junit.xml" })
+@ContextConfiguration(locations = {
+	"classpath:spring/junit.xml"
+})
 @Transactional
 public class FloatServiceTest extends AbstractTest {
 
 	@Autowired
-	private FloatService floatService;
+	private FloatService	floatService;
 
-	protected void template(final String userName, String title, String desc,
-			int numPic, Class<?> expected) {
+
+	// Covers 7.2% of the data in the project
+	//Covers 2095 sentences
+
+	protected void template(final String userName, final String title, final String desc, final int numPic, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
 		try {
 			this.authenticate(userName);
-			Float floatC = floatService.create();
+			final Float floatC = this.floatService.create();
 			floatC.setTitle(title);
 			floatC.setDescription(desc);
 			switch (numPic) {
@@ -63,36 +69,50 @@ public class FloatServiceTest extends AbstractTest {
 	public void createAndSaveDriver() {
 
 		final Object testingData[][] = {
-				// Creación incorrecta con title blank
-				{ "brotherhood1", "", "Desc1", 1,
-						ConstraintViolationException.class },
-				// Creación incorrecta con desc blank
-				{ "brotherhood1", "Title1", "", 1,
-						ConstraintViolationException.class },
-				// Creación correcta de un float
-				{ "brotherhood1", "Title2", "Desc2", 1, null },
-				// Pictures con un sólo elemento
-				{ "brotherhood1", "Title3", "Desc3", 1, null },
-				// Pictures con dos elementos
-				{ "brotherhood1", "Title4", "Desc4", 2, null },
-				// Pictures con más de dos elementos
-				{ "brotherhood1", "Title5", "Desc5", 3, null },
-				// Seguridad
+			// Blank title
+			{
+				"brotherhood1", "", "Desc1", 1, ConstraintViolationException.class
+			},
+			// Blank description
+			{
+				"brotherhood1", "Title1", "", 1, ConstraintViolationException.class
+			},
+			// Creation 
+			{
+				"brotherhood1", "Title2", "Desc2", 1, null
+			},
+			// Pictures with one element
+			{
+				"brotherhood1", "Title3", "Desc3", 1, null
+			},
+			// Pictures with two elements
+			{
+				"brotherhood1", "Title4", "Desc4", 2, null
+			},
+			// Pictures with more than two elements
+			{
+				"brotherhood1", "Title5", "Desc5", 3, null
+			},
+			// Security
 
-				// Member no puede crear un float
-				{ "member1", "Title6", "Desc6", 1,
-						IllegalArgumentException.class },
-				// Admin no puede crear un float
-				{ "admin", "Title7", "Desc7", 1, IllegalArgumentException.class },
-				// Anónimo no puede crear float
-				{ null, "Title8", "Desc8", 1, IllegalArgumentException.class } };
+			// Member cannot create float
+			{
+				"member1", "Title6", "Desc6", 1, IllegalArgumentException.class
+			},
+			// Admin canot create float
+			{
+				"admin", "Title7", "Desc7", 1, IllegalArgumentException.class
+			},
+			// Anon cannot create float
+			{
+				null, "Title8", "Desc8", 1, IllegalArgumentException.class
+			}
+		};
 
 		for (int i = 0; i < testingData.length; i++)
 			try {
 				super.startTransaction();
-				this.template((String) testingData[i][0],
-						(String) testingData[i][1], (String) testingData[i][2],
-						(int) testingData[i][3], (Class<?>) testingData[i][4]);
+				this.template((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (int) testingData[i][3], (Class<?>) testingData[i][4]);
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			} finally {
@@ -100,15 +120,15 @@ public class FloatServiceTest extends AbstractTest {
 			}
 	}
 
-	protected void deleteTemplate(final String userName, Class<?> expected) {
+	protected void deleteTemplate(final String userName, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
 		try {
 			this.authenticate(userName);
 
-			int floatId = this.getEntityId("float1");
-			Float floatPop = this.floatService.findOne(floatId);
+			final int floatId = this.getEntityId("float1");
+			final Float floatPop = this.floatService.findOne(floatId);
 			this.floatService.delete(floatPop);
 			this.floatService.flush();
 
@@ -124,22 +144,32 @@ public class FloatServiceTest extends AbstractTest {
 	public void deleteDriver() {
 
 		final Object testingData[][] = {
-				// Member no puede borrar un Float
-				{ "member1", IllegalArgumentException.class },
-				// Brotherhood puede borrar un Float suyo
-				{ "brotherhood1", null },
-				// Brotherhood no puede borrar un Float que no es suyo
-				{ "brotherhood2", IllegalArgumentException.class },
-				// Admin no puede borrar un Float
-				{ "admin", IllegalArgumentException.class },
-				// Anónimo no puede borrar un Float
-				{ null, IllegalArgumentException.class } };
+			// Member cannot delete Float
+			{
+				"member1", IllegalArgumentException.class
+			},
+			// Brotherhood can delete his Float 
+			{
+				"brotherhood1", null
+			},
+			// Brotherhood cant delete a float that does not belong to him
+			{
+				"brotherhood2", IllegalArgumentException.class
+			},
+			// Admin cannot delete Float
+			{
+				"admin", IllegalArgumentException.class
+			},
+			// Anon cannot delete Float
+			{
+				null, IllegalArgumentException.class
+			}
+		};
 
 		for (int i = 0; i < testingData.length; i++)
 			try {
 				super.startTransaction();
-				this.deleteTemplate((String) testingData[i][0],
-						(Class<?>) testingData[i][1]);
+				this.deleteTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			} finally {
@@ -147,18 +177,17 @@ public class FloatServiceTest extends AbstractTest {
 			}
 	}
 
-	protected void updateTemplate(final String userName, String title,
-			String desc, int numPic, Class<?> expected) {
+	protected void updateTemplate(final String userName, final String title, final String desc, final int numPic, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
 		try {
 			this.authenticate(userName);
-			int floatId = this.getEntityId("float1");
-			Float floatU = this.floatService.findOne(floatId);
+			final int floatId = this.getEntityId("float1");
+			final Float floatU = this.floatService.findOne(floatId);
 			floatU.setTitle(title);
 			floatU.setDescription(desc);
-			LinkedList<String> picturesU = new LinkedList<String>();
+			final LinkedList<String> picturesU = new LinkedList<String>();
 			switch (numPic) {
 			case 1:
 				picturesU.add("http://www.foto1.com");
@@ -191,36 +220,50 @@ public class FloatServiceTest extends AbstractTest {
 	public void updateDriver() {
 
 		final Object testingData[][] = {
-				// Actualización incorrecta con title blank
-				{ "brotherhood1", "", "Desc1", 1,
-						ConstraintViolationException.class },
-				// Actualización incorrecta con desc blank
-				{ "brotherhood1", "Title1", "", 1,
-						ConstraintViolationException.class },
-				// Actualización correcta de un float
-				{ "brotherhood1", "Title2", "Desc2", 1, null },
-				// Pictures con un sólo elemento
-				{ "brotherhood1", "Title3", "Desc3", 1, null },
-				// Pictures con dos elementos
-				{ "brotherhood1", "Title4", "Desc4", 2, null },
-				// Pictures con más de dos elementos
-				{ "brotherhood1", "Title5", "Desc5", 3, null },
-				// Seguridad
+			// Wrong update with title blank
+			{
+				"brotherhood1", "", "Desc1", 1, ConstraintViolationException.class
+			},
+			// Wrong update with desc blank
+			{
+				"brotherhood1", "Title1", "", 1, ConstraintViolationException.class
+			},
+			// float update
+			{
+				"brotherhood1", "Title2", "Desc2", 1, null
+			},
+			// Pictures with one element
+			{
+				"brotherhood1", "Title3", "Desc3", 1, null
+			},
+			// Pictures with two elements
+			{
+				"brotherhood1", "Title4", "Desc4", 2, null
+			},
+			// Pictures with more than two elements
+			{
+				"brotherhood1", "Title5", "Desc5", 3, null
+			},
+			// Security
 
-				// Member no puede actualizar un float
-				{ "member1", "Title6", "Desc6", 1,
-						IllegalArgumentException.class },
-				// Admin no puede actualizar un float
-				{ "admin", "Title7", "Desc7", 1, IllegalArgumentException.class },
-				// Anónimo no puede actualizar un float
-				{ null, "Title8", "Desc8", 1, IllegalArgumentException.class } };
+			// Member cannot update float
+			{
+				"member1", "Title6", "Desc6", 1, IllegalArgumentException.class
+			},
+			// Admin cannot update float
+			{
+				"admin", "Title7", "Desc7", 1, IllegalArgumentException.class
+			},
+			// Anon cannot update float
+			{
+				null, "Title8", "Desc8", 1, IllegalArgumentException.class
+			}
+		};
 
 		for (int i = 0; i < testingData.length; i++)
 			try {
 				super.startTransaction();
-				this.updateTemplate((String) testingData[i][0],
-						(String) testingData[i][1], (String) testingData[i][2],
-						(int) testingData[i][3], (Class<?>) testingData[i][4]);
+				this.updateTemplate((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (int) testingData[i][3], (Class<?>) testingData[i][4]);
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			} finally {

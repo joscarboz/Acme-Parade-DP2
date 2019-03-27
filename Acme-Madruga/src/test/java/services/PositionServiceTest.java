@@ -25,18 +25,21 @@ public class PositionServiceTest extends AbstractTest {
 	private PositionService	positionService;
 
 
+	// Data coverage of 4.4%
+	// Sentence coverage of 1286 sentences
+
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de una Position
+			{	//Position create
 				"admin", "sampleTitle", "sampleSpanishTitle", null
-			}, {//Anonimo no puede crear una Position
+			}, {//Anon cannot create position
 				null, "sampleTitle", "sampleSpanishTitle", IllegalArgumentException.class
-			}, {//Solo admin puede crear una Position
+			}, {//Only admin can create position
 				"member1", "sampleTitle", "sampleSpanishTitle", IllegalArgumentException.class
-			}, { // Title vacío
+			}, { // Empty title
 				"admin", "", "sampleSpanishTitle", ConstraintViolationException.class
-			}, { // Spanish Title vacío
+			}, { // Empty Spanish Title
 				"admin", "sampleTitle", "", ConstraintViolationException.class
 			}
 
@@ -56,9 +59,9 @@ public class PositionServiceTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Un admin borra correctamente una position
+			{	//Admin deletes position
 				"admin", "position2", null
-			}, { //Un admin no puede borrar una position que está en uso
+			}, { //Admin cannot delete position in use
 				"admin", "position1", IllegalArgumentException.class
 			}
 

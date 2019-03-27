@@ -25,30 +25,33 @@ public class SystemConfigServiceTest extends AbstractTest {
 	private SystemConfigService	systemConfigService;
 
 
+	// Data coverage of 4.9%
+	// Sentence coverage of 1418 sentences
+
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{ //Guardado Correcto del SystemConfig
+			{ // SystemConfig save
 				"admin", "https://tinyurl.com/acme-parada", 12.0, 50, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", null
-			}, { //URL del banner invalida
+			}, { //Wrong banner URL
 				"admin", "No link", 12.0, 50, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, {//Horas de cache debajo del rango
+			}, {//Cache hours under range
 				"admin", "https://tinyurl.com/acme-parada", 0.5, 50, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, { //Horas de cache en por encima del rango
+			}, { //Cache hours above range
 				"admin", "https://tinyurl.com/acme-parada", 25.0, 50, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, { //Resultados del finder por debajo del rango
+			}, { //Finder results under range
 				"admin", "https://tinyurl.com/acme-parada", 12.0, 0, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, {//Resultados del finder por encima del rango
+			}, {//Finder results above range
 				"admin", "https://tinyurl.com/acme-parada", 12.0, 150, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, {//Nombre en blanco
+			}, {//Blank name
 				"admin", "https://tinyurl.com/acme-parada", 12.0, 50, "", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, {//URL en blanco
+			}, {//Empty URL
 				"admin", "", 12.0, 50, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, {//Mensaje de bienvenida español en blanco
+			}, {//Spanish welcome message empty
 				"admin", "https://tinyurl.com/acme-parada", 12.0, 50, "New name", "", "Welcome to Acme Parade", "+55", ConstraintViolationException.class
-			}, {//Mensaje de bienvenida ingles en blanco
+			}, {//Welcome message empty
 				"admin", "https://tinyurl.com/acme-parada", 12.0, 50, "New name", "Bienvenido a Acme Parade", "", "+55", ConstraintViolationException.class
-			}, {//Prefijo Telefonico en blanco
+			}, {//Empty prefix
 				"admin", "https://tinyurl.com/acme-parada", 12.0, 50, "New name", "Bienvenido a Acme Parade", "Welcome to Acme Parade", "", ConstraintViolationException.class
 			}
 

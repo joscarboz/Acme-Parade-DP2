@@ -12,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import utilities.AbstractTest;
 import domain.Enrolment;
 import domain.Member;
 import domain.Request;
-
-import utilities.AbstractTest;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -27,29 +26,45 @@ public class MemberServiceTest extends AbstractTest {
 
 	//SUT
 	@Autowired
-	private MemberService	memberService;
-	
+	private MemberService		memberService;
+
 	@Autowired
-	private RequestService	requestService;
-	
+	private RequestService		requestService;
+
 	@Autowired
 	private EnrolmentService	enrolmentService;
 
+
 	// Tests ------------------------------------------------------------------
+	// Data coverage of 4.8%
+	// Sentence coverage of 1376 sentences
 
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
+<<<<<<< HEAD
+			{	//Member create
+				"member1", "enrolment1", "request1", null
+			}, {	//Cannot create member without enrolment nor request list
+				"member1", "", "", AssertionError.class
+			}, {	//Cannot create member without request
+				"member1", "enrolment1", "", AssertionError.class
+			}, {	//Cannot create member without enrolment
+				"member1", "", "request1", AssertionError.class
+=======
 			{	//Creación correcta de un Member
 				"member1","enrolment1", "request1", null
-			},{	//Creación correcta de un Member
+			},{	//Creación incorrecta de un Member falta enrolment
 				"member1","", "", NumberFormatException.class
-			},{	//Creación correcta de un Member
+			},{	//Creación incorrecta de un Member falta requets
 				"member1","enrolment1", "", NumberFormatException.class
-			},{	//Creación correcta de un Member
+			},{	//Creación incorrecta de un Member fata tanto request como enrolments
 				"member1","", "request1", NumberFormatException.class
+			},{	//Creación incorrecta de un Member fata actor
+				"","enrolment1", "request1", NumberFormatException.class
+>>>>>>> master
 			}
-			
+
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -64,16 +79,16 @@ public class MemberServiceTest extends AbstractTest {
 	}
 
 	// Ancillary methods ------------------------------------------------------
-	protected void createAndSaveTemplate(final String name,final String enrolmentName, final String requestName, final Class<?> expected) {
+	protected void createAndSaveTemplate(final String name, final String enrolmentName, final String requestName, final Class<?> expected) {
 		Class<?> caught;
 		final int memberId;
 		Member member;
 		final int requestId;
 		Request request;
-		Collection<Request> requests = new ArrayList<>();
+		final Collection<Request> requests = new ArrayList<>();
 		final int enrolmentId;
 		Enrolment enrolment;
-		Collection<Enrolment> enrolments = new ArrayList<>();
+		final Collection<Enrolment> enrolments = new ArrayList<>();
 
 		caught = null;
 		try {

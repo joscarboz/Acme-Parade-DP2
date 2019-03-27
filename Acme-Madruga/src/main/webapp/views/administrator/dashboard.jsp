@@ -238,6 +238,34 @@ ${finalRejectedParades}
 </h2>
 ${finalSubmittedParades}
 
+<h2>
+	<spring:message code="administrator.activeSponsorshipRatio" />
+</h2>
+${ratioActiveSponsorship}
 
+<h2>
+	<spring:message code="administrator.spoPerSpo" />
+</h2>
 
+<p>
+	<b><spring:message code="administrator.maximum" /> :</b> ${maximumsps}
+</p>
+<p>
+	<b><spring:message code="administrator.minimum" /> :</b> ${minimumsps}
+</p>
+<p>
+	<b><spring:message code="administrator.average" /> :</b> ${averagesps}
+</p>
+<p>
+	<b><spring:message code="administrator.stdev" /> :</b> ${stdevsps}
+</p>
+
+<h2>
+	<spring:message code="administrator.topSponsors" />
+</h2>
+<jstl:forEach var="sponsor" items="${topSponsorSoponsorship}">
+
+${sponsor.name} ${sponsor.middleName} ${sponsor.surname}
+<br>
+</jstl:forEach>
 

@@ -3,6 +3,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -51,12 +52,12 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private BrotherhoodService		brotherhoodService;
-	
+
 	@Autowired
-	private ChapterService	chapterService;
-	
+	private ChapterService			chapterService;
+
 	@Autowired
-	private SponsorService	sponsorService;
+	private SponsorService			sponsorService;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -69,7 +70,7 @@ public class ActorController extends AbstractController {
 
 
 	//-------------------------------------------------------
-	
+
 	public ActorController() {
 		super();
 	}
@@ -114,7 +115,7 @@ public class ActorController extends AbstractController {
 		result.addObject("actorId", brotherhood.getId());
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/displayChapter", method = RequestMethod.GET)
 	public ModelAndView displayChapter(Integer actorId) {
 		final ModelAndView result;
@@ -137,7 +138,7 @@ public class ActorController extends AbstractController {
 	}
 
 	//-------------------------------------------------------
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		final ModelAndView result;
@@ -157,7 +158,7 @@ public class ActorController extends AbstractController {
 		final ModelAndView result;
 		final EditBrotherhoodForm editBrotherhoodForm = new EditBrotherhoodForm();
 		final Brotherhood brotherhood;
-		
+
 		brotherhood = this.brotherhoodService.findOne(this.actorService.findByPrincipal().getId());
 
 		editBrotherhoodForm.setAddress(brotherhood.getAddress());
@@ -177,7 +178,7 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/editChapter", method = RequestMethod.GET)
 	public ModelAndView editChapter() {
 		final ModelAndView result;
@@ -185,7 +186,7 @@ public class ActorController extends AbstractController {
 		final Chapter chapter;
 
 		chapter = this.chapterService.findOne(this.actorService.findByPrincipal().getId());
-		
+
 		editChapterForm.setAddress(chapter.getAddress());
 		editChapterForm.setEmail(chapter.getEmail());
 		editChapterForm.setMiddleName(chapter.getMiddleName());
@@ -203,7 +204,7 @@ public class ActorController extends AbstractController {
 	}
 
 	//-------------------------------------------------------
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
@@ -263,7 +264,7 @@ public class ActorController extends AbstractController {
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/editChapter", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveChapter(@Valid final EditChapterForm editChapterForm, final BindingResult binding) {
 		ModelAndView result;
@@ -274,7 +275,7 @@ public class ActorController extends AbstractController {
 				result = this.createEditChapterModelAndView(editChapterForm, "actor.commit.error");
 			else {
 				a = this.chapterService.findOne(this.actorService.findByPrincipal().getId());
-				
+
 				a.setAddress(editChapterForm.getAddress());
 				a.setEmail(editChapterForm.getEmail());
 				a.setMiddleName(editChapterForm.getMiddleName());
@@ -293,7 +294,7 @@ public class ActorController extends AbstractController {
 		}
 		return result;
 	}
-	
+
 	//-------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final Actor actor) {
@@ -311,7 +312,7 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	protected ModelAndView createEditChapterModelAndView(final EditChapterForm editChapterForm) {
 		ModelAndView result;
 
@@ -321,7 +322,7 @@ public class ActorController extends AbstractController {
 	}
 
 	//-------------------------------------------------------
-	
+
 	protected ModelAndView createEditModelAndView(final Actor actor, final String messageCode) {
 		ModelAndView result;
 
@@ -336,13 +337,13 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("actor/editBrotherhood");
-		
+
 		result.addObject("editBrotherhoodForm", editBrotherhoodForm);
 		result.addObject("message", messageCode);
 
 		return result;
 	}
-	
+
 	protected ModelAndView createEditChapterModelAndView(final EditChapterForm editChapterForm, final String messageCode) {
 		ModelAndView result;
 		final Collection<String> areaName = new ArrayList<>();
@@ -357,7 +358,7 @@ public class ActorController extends AbstractController {
 	}
 
 	//-------------------------------------------------------
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView create() {
 		return this.createRegisterModelAndView();
@@ -367,12 +368,12 @@ public class ActorController extends AbstractController {
 	public ModelAndView createBrotherhood() {
 		return this.createRegisterModelAndViewBrotherhood();
 	}
-	
+
 	@RequestMapping(value = "/registerChapter", method = RequestMethod.GET)
 	public ModelAndView createChapter() {
 		return this.createRegisterModelAndViewChapter();
 	}
-	
+
 	@RequestMapping(value = "/registerSponsor", method = RequestMethod.GET)
 	public ModelAndView createSponsor() {
 		return this.createRegisterModelAndViewSponsor();
@@ -384,7 +385,7 @@ public class ActorController extends AbstractController {
 	}
 
 	//-------------------------------------------------------
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final RegisterMemberForm registerMemberForm, final BindingResult binding) {
 		SystemConfig systemConfig;
@@ -449,7 +450,7 @@ public class ActorController extends AbstractController {
 
 		}
 	}
-	
+
 	@RequestMapping(value = "/registerSponsor", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveSponsor(@Valid final RegisterMemberForm registerMemberForm, final BindingResult binding) {
 		SystemConfig systemConfig;
@@ -471,7 +472,7 @@ public class ActorController extends AbstractController {
 
 		}
 	}
-	
+
 	@RequestMapping(value = "/registerAdministrator", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final RegisterAdminForm registerAdminForm, final BindingResult binding) {
 		SystemConfig systemConfig;
@@ -494,7 +495,7 @@ public class ActorController extends AbstractController {
 	}
 
 	//-------------------------------------------------------
-	
+
 	protected ModelAndView createRegisterModelAndView() {
 		final ModelAndView result = new ModelAndView("actor/register");
 		final RegisterMemberForm registerMemberForm = new RegisterMemberForm();
@@ -511,7 +512,7 @@ public class ActorController extends AbstractController {
 		result.addObject("registerBrotherhoodForm", registerBrotherhoodForm);
 		return result;
 	}
-	
+
 	protected ModelAndView createRegisterModelAndViewChapter() {
 		final ModelAndView result = new ModelAndView("actor/registerChapter");
 		final RegisterChapterForm registerChapterForm = new RegisterChapterForm();
@@ -528,7 +529,7 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	protected ModelAndView createRegisterModelAndViewAdministrator() {
 		final ModelAndView result = new ModelAndView("actor/registerAdministrator");
 		final RegisterAdminForm registerAdminForm = new RegisterAdminForm();
@@ -539,7 +540,7 @@ public class ActorController extends AbstractController {
 	}
 
 	//-------------------------------------------------------
-	
+
 	protected ModelAndView createRegisterModelAndView(final RegisterMemberForm registerMemberForm, final String messageCode) {
 		ModelAndView result;
 
@@ -559,7 +560,7 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	protected ModelAndView createRegisterChapterModelAndView(final RegisterChapterForm registerChapterForm, final String messageCode) {
 		ModelAndView result;
 
@@ -569,7 +570,7 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	protected ModelAndView createRegisterSponsorModelAndView(final RegisterMemberForm registerMemberForm, final String messageCode) {
 		ModelAndView result;
 
@@ -589,7 +590,7 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	//-------------------------------------------------------
 
 	@RequestMapping(value = "/selectArea", method = RequestMethod.GET)
@@ -599,30 +600,28 @@ public class ActorController extends AbstractController {
 		final Collection<Area> areas = this.areaService.findAll();
 		final Collection<String> areasName = new ArrayList<>();
 		final SelectAreaForm selectAreaForm = new SelectAreaForm();
-		Authority authB = new Authority();
-		Authority authC = new Authority();
+		final Authority authB = new Authority();
+		final Authority authC = new Authority();
 		authB.setAuthority(Authority.BROTHERHOOD);
 		authC.setAuthority(Authority.CHAPTER);
 		result = new ModelAndView("actor/selectArea");
 
-		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB)) {			Assert.isTrue(this.brotherhoodService.findByPrincipal().getArea().getName().equals("defaultArea"));
-			for (Area a : areas) {
+		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB)) {
+			Assert.isTrue(this.brotherhoodService.findByPrincipal().getArea().getName().equals("defaultArea"));
+			for (final Area a : areas)
 				areasName.add(a.getName());
-			}
 			areasName.remove("defaultArea");
 			result.addObject("selectAreaForm", selectAreaForm);
 			result.addObject("areas", areasName);
 			result.addObject("requestURI", "actor/selectArea.do");
 		}
-		
+
 		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authC)) {
-			Assert.isTrue(this.chapterService.findByPrincipal().getArea()==null);
-			for (Chapter chapter : chapters) {
+			Assert.isTrue(this.chapterService.findByPrincipal().getArea() == null);
+			for (final Chapter chapter : chapters)
 				areas.remove(chapter.getArea());
-			}
-			for (Area a : areas) {
+			for (final Area a : areas)
 				areasName.add(a.getName());
-			}
 			areasName.remove("defaultArea");
 			result.addObject("selectAreaForm", selectAreaForm);
 			result.addObject("areas", areasName);
@@ -631,12 +630,12 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/selectArea", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveArea(@Valid final SelectAreaForm selectAreaForm, final BindingResult binding) {
 		ModelAndView result;
-		Authority authB = new Authority();
-		Authority authC = new Authority();
+		final Authority authB = new Authority();
+		final Authority authC = new Authority();
 		authB.setAuthority(Authority.BROTHERHOOD);
 		authC.setAuthority(Authority.CHAPTER);
 
@@ -644,16 +643,16 @@ public class ActorController extends AbstractController {
 			if (binding.hasErrors())
 				result = this.createSelectAreaModelAndView("actor.commit.error");
 			else {
-				if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB)) {			
+				if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB)) {
 					Assert.isTrue(this.brotherhoodService.findByPrincipal().getArea().getName().equals("defaultArea"));
-					Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+					final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 					brotherhood.setArea((this.areaService.findByName(selectAreaForm.getAreas().iterator().next()).iterator().next()));
 					this.brotherhoodService.save(brotherhood);
 				}
-				
-				if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authC)) {					
-					Assert.isTrue(this.chapterService.findByPrincipal().getArea()==null);
-					Chapter chapter = this.chapterService.findByPrincipal();
+
+				if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authC)) {
+					Assert.isTrue(this.chapterService.findByPrincipal().getArea() == null);
+					final Chapter chapter = this.chapterService.findByPrincipal();
 					chapter.setArea((this.areaService.findByName(selectAreaForm.getAreas().iterator().next()).iterator().next()));
 					this.chapterService.save(chapter);
 				}
@@ -665,14 +664,68 @@ public class ActorController extends AbstractController {
 		}
 		return result;
 	}
-	
+
+	@RequestMapping(value = "/account", method = RequestMethod.GET)
+	public ModelAndView account() {
+		return new ModelAndView("actor/account");
+	}
+
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+	public ModelAndView deleteUser() {
+		final Authority authB = new Authority();
+		authB.setAuthority(Authority.BROTHERHOOD);
+		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB))
+			this.brotherhoodService.deleteBrotherhood(this.brotherhoodService.findByPrincipal().getId());
+		else
+			this.actorService.deleteActor(this.actorService.findByPrincipal().getId());
+
+		return new ModelAndView("redirect:/j_spring_security_logout");
+
+	}
+
+	@RequestMapping(value = "/getPersonalData", method = RequestMethod.GET)
+	public ModelAndView getPersonalData() {
+		ModelAndView result;
+		final Authority authB = new Authority();
+		authB.setAuthority(Authority.BROTHERHOOD);
+		final List<Object> data = new ArrayList<Object>();
+		if (!this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB)) {
+			final Actor actor = this.actorService.findByPrincipal();
+			data.add(actor.getName());
+			data.add(actor.getMiddleName());
+			data.add(actor.getSurname());
+			data.add(actor.getPhoto());
+			data.add(actor.getEmail());
+			data.add(actor.getPhone());
+			data.add(actor.getAddress());
+
+		} else {
+
+			final Brotherhood actor = this.brotherhoodService.findByPrincipal();
+			data.add(actor.getName());
+			data.add(actor.getMiddleName());
+			data.add(actor.getSurname());
+			data.add(actor.getPhoto());
+			data.add(actor.getEmail());
+			data.add(actor.getPhone());
+			data.add(actor.getAddress());
+			data.add(actor.getTitle());
+			data.add(actor.getEstablishment());
+			data.add(actor.getPictures());
+		}
+		result = new ModelAndView("actor/getPersonalData");
+		result.addObject("data", data);
+		return result;
+
+	}
 	protected ModelAndView createSelectAreaModelAndView(final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("actor/selectArea");
-		
+
 		result.addObject("message", messageCode);
 
 		return result;
 	}
+
 }

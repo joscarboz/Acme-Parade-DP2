@@ -237,6 +237,14 @@ public class ActorService {
 		return result;
 	}
 
+	public void selfBan() {
+		final Actor principal = this.findByPrincipal();
+		final UserAccount userAccount = principal.getUserAccount();
+		userAccount.setAccountNonLocked(false);
+		this.userAccountRepository.save(userAccount);
+
+	}
+
 	public boolean unbanActor(final UserAccount uc) {
 		Assert.notNull(uc);
 
@@ -268,6 +276,23 @@ public class ActorService {
 
 		result = this.actorRepository.save(actor);
 
+		return result;
+	}
+
+	public Actor deleteActor(final int actorId) {
+		Actor result;
+		final Actor actor = this.findByPrincipal();
+
+		actor.setName("deleted");
+		actor.setMiddleName("deleted");
+		actor.setSurname("deleted");
+		actor.setPhoto("http://deleted.com");
+		actor.setEmail("deleted@deleted.com");
+		actor.setPhone("deleted");
+		actor.setAddress("deleted");
+
+		result = this.actorRepository.save(actor);
+		this.selfBan();
 		return result;
 	}
 }

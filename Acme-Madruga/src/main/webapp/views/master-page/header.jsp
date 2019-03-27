@@ -31,6 +31,8 @@
 			</a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="actor/account.do"><spring:message
+									code="master.page.profile.account" /></a></li>
 					<security:authorize access="hasRole('ADMIN')">
 						<li><a href="actor/display.do"><spring:message
 									code="master.page.profile" /></a></li>

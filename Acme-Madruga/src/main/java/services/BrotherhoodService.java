@@ -16,6 +16,13 @@ import org.springframework.util.Assert;
 
 import repositories.BoxRepository;
 import repositories.BrotherhoodRepository;
+import repositories.EnrolmentRepository;
+import repositories.FloatRepository;
+import repositories.MessageRepository;
+import repositories.ParadeRepository;
+import repositories.RequestRepository;
+import repositories.SponsorRepository;
+import repositories.SponsorshipRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
@@ -43,6 +50,30 @@ public class BrotherhoodService {
 	private BoxService				boxService;
 	@Autowired
 	private AreaService				areaService;
+	@Autowired
+	private MessageService			messageService;
+	@Autowired
+	private MessageRepository		messageRepository;
+	@Autowired
+	private MemberService			memberService;
+	@Autowired
+	private RequestRepository		requestRepository;
+	@Autowired
+	private ParadeRepository		paradeRepository;
+	@Autowired
+	private FloatRepository			floatRepository;
+	@Autowired
+	private EnrolmentRepository		enrolmentRepository;
+	@Autowired
+	private SponsorshipService		sponsorshipService;
+	@Autowired
+	private SponsorshipRepository	sponsorshipRepository;
+	@Autowired
+	private SponsorService			sponsorService;
+	@Autowired
+	private SponsorRepository		sponsorRepository;
+	@Autowired
+	private ActorService			actorService;
 
 
 	// Constructor ----------------------------------------------------
@@ -222,5 +253,29 @@ public class BrotherhoodService {
 			if (!p.equals(parade))
 				res.removeAll(p.getFloats());
 		return res;
+	}
+
+	public Brotherhood deleteBrotherhood(final int brotherhoodId) {
+		Brotherhood result;
+		final Brotherhood brotherhood = this.findByPrincipal();
+
+		brotherhood.setName("deleted");
+		brotherhood.setMiddleName("deleted");
+		brotherhood.setSurname("deleted");
+		brotherhood.setPhoto("http://deleted.com");
+		brotherhood.setEmail("deleted@deleted.com");
+		brotherhood.setPhone("deleted");
+		brotherhood.setAddress("deleted");
+		brotherhood.setTitle("deleted");
+		final Date date = new Date();
+		date.setYear(-1900);
+		date.setMonth(0);
+		date.setDate(0);
+		brotherhood.setEstablishment(date);
+		brotherhood.getPictures().clear();
+
+		result = this.brotherhoodRepository.save(brotherhood);
+		this.actorService.selfBan();
+		return result;
 	}
 }

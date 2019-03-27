@@ -79,5 +79,15 @@
 		<put-attribute name="title" value="Selecionar area" />
 		<put-attribute name="body" value="/views/actor/selectArea.jsp" />
 	</definition>
+	
+		<definition name="actor/account" extends="master.page">
+		<put-attribute name="title" value="Mi cuenta" />
+		<put-attribute name="body" value="/views/actor/account.jsp" />
+	</definition>
+	
+		<definition name="actor/getPersonalData" extends="master.page">
+		<put-attribute name="title" value="Obtener informacion personal" />
+		<put-attribute name="body" value="/views/actor/getPersonalData.jsp" />
+	</definition>
 
 </tiles-definitions>

@@ -26,6 +26,8 @@ import repositories.HistoryRepository;
 import repositories.MessageRepository;
 import repositories.ParadeRepository;
 import repositories.RequestRepository;
+import repositories.SponsorRepository;
+import repositories.SponsorshipRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
@@ -41,6 +43,7 @@ import domain.Message;
 import domain.Parade;
 import domain.Position;
 import domain.SocialProfile;
+import domain.Sponsor;
 import forms.RegisterAdminForm;
 
 @Service
@@ -86,6 +89,12 @@ public class AdministratorService {
 
 	@Autowired
 	private ParadeRepository paradeRepository;
+
+	@Autowired
+	private SponsorRepository sponsorRepository;
+
+	@Autowired
+	private SponsorshipRepository sponsorshipRepository;
 
 	// CRUD
 	public Administrator findOne(final int administratorId) {
@@ -538,6 +547,38 @@ public class AdministratorService {
 		Assert.isTrue(logged instanceof Administrator);
 
 		return this.paradeRepository.finalModeSubmittedParadesRatio();
+
+	}
+
+	public Double getActiveSponsorshipRatio() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.sponsorshipRepository.activeSponsorshipRatio();
+
+	}
+
+	public Double[] getActiveSponsorshipPerSponsor() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		return this.sponsorRepository.activeSponsorshipPerSponsor();
+
+	}
+
+	public Collection<Sponsor> getTopSponsorSponsorshipActive() {
+		Administrator logged = this.findByPrincipal();
+
+		Assert.isTrue(logged instanceof Administrator);
+
+		List<Sponsor> result = new ArrayList<Sponsor>(
+				this.sponsorRepository.findTopSponsorSponsorshipActive());
+		if (result.size() > 5) {
+			return result.subList(0, 5);
+		}
+		return result;
 
 	}
 }

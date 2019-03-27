@@ -16,7 +16,7 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
 
 	@Query("select count(c)/(select count(a) from Area a)*1.0 from Chapter c join c.area")
 	Double coordinateAreasRatio();
-
+	
 	@Query("select avg(b.parades.size), max(b.parades.size), min(b.parades.size),stddev(b.parades.size) from Brotherhood b")
 	Double[] getParadesPerChapter();
 

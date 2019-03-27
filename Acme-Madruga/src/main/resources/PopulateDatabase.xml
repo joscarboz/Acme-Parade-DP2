@@ -936,9 +936,10 @@
 		<property name="creditCardMakes">
 			<list>
 				<value>VISA</value>
-				<value>MASTER</value>
+				<value>MCARD</value>
 				<value>DINNERS</value>
 				<value>AMEX</value>
+				<value>FLY</value>
 			</list>
 		</property>
 		<property name="VAT" value="21" />

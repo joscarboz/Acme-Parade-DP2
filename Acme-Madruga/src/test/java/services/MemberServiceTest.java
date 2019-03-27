@@ -36,13 +36,12 @@ public class MemberServiceTest extends AbstractTest {
 
 
 	// Tests ------------------------------------------------------------------
-	// Data coverage of 4.8%
+	// Data coverage of 4.7%
 	// Sentence coverage of 1376 sentences
 
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-<<<<<<< HEAD
 			{	//Member create
 				"member1", "enrolment1", "request1", null
 			}, {	//Cannot create member without enrolment nor request list
@@ -51,18 +50,7 @@ public class MemberServiceTest extends AbstractTest {
 				"member1", "enrolment1", "", AssertionError.class
 			}, {	//Cannot create member without enrolment
 				"member1", "", "request1", AssertionError.class
-=======
-			{	//Creación correcta de un Member
-				"member1","enrolment1", "request1", null
-			},{	//Creación incorrecta de un Member falta enrolment
-				"member1","", "", NumberFormatException.class
-			},{	//Creación incorrecta de un Member falta requets
-				"member1","enrolment1", "", NumberFormatException.class
-			},{	//Creación incorrecta de un Member fata tanto request como enrolments
-				"member1","", "request1", NumberFormatException.class
-			},{	//Creación incorrecta de un Member fata actor
-				"","enrolment1", "request1", NumberFormatException.class
->>>>>>> master
+
 			}
 
 		};

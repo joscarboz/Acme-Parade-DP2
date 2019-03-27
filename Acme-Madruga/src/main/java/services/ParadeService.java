@@ -111,7 +111,6 @@ public class ParadeService {
 		brotherhoodAuthority.setAuthority(Authority.BROTHERHOOD);
 
 		final UserAccount user = LoginService.getPrincipal();
-		Assert.isTrue(user.getAuthorities().contains(chapterAuthority) || user.getAuthorities().contains(brotherhoodAuthority));
 		if (user.getAuthorities().contains(chapterAuthority)) {
 			final Chapter chapter = this.chapterService.findByPrincipal();
 			final Area area = chapter.getArea();

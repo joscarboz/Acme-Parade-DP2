@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -18,7 +19,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ParadeRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
+import domain.Area;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Finder;
 import domain.Float;
 import domain.Member;
@@ -40,10 +46,19 @@ public class ParadeService {
 	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
+	private ChapterService		chapterService;
+
+	@Autowired
 	private RequestService		requestService;
 
 	@Autowired
 	private Validator			validator;
+
+	@Autowired
+	private LoginService		loginService;
+
+	@Autowired
+	private AreaService			areaService;
 
 
 	public ParadeService() {
@@ -88,6 +103,29 @@ public class ParadeService {
 
 		Assert.notNull(parade);
 		Assert.isTrue(parade.getMoment().after(Calendar.getInstance().getTime()));
+
+		final Authority chapterAuthority = new Authority();
+		chapterAuthority.setAuthority(Authority.CHAPTER);
+
+		final Authority brotherhoodAuthority = new Authority();
+		brotherhoodAuthority.setAuthority(Authority.BROTHERHOOD);
+
+		final UserAccount user = LoginService.getPrincipal();
+		if (user.getAuthorities().contains(chapterAuthority)) {
+			final Chapter chapter = this.chapterService.findByPrincipal();
+			final Area area = chapter.getArea();
+			final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findByArea(area.getId());
+			final Set<Parade> parades = new HashSet<Parade>();
+			for (final Brotherhood brotherhood : brotherhoods)
+				parades.addAll(brotherhood.getParades());
+			Assert.isTrue(parades.contains(parade));
+		}
+
+		if (user.getAuthorities().contains(brotherhoodAuthority) && parade.getId() != 0) {
+			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+			Assert.isTrue(brotherhood.getParades().contains(parade));
+		}
+
 		if (parade.isDraftMode())
 			parade.setStatus("");
 		if ((!parade.isDraftMode()) && (!parade.getStatus().equals("accepted") && !parade.getStatus().equals("rejected")))
@@ -101,7 +139,6 @@ public class ParadeService {
 		}
 		return result;
 	}
-
 	public void delete(final Parade parade) {
 
 		Assert.notNull(parade);

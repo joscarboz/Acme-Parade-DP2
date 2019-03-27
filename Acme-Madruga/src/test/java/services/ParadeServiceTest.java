@@ -78,6 +78,48 @@ public class ParadeServiceTest extends AbstractTest {
 		for (int i = 0; i < testingData.length; i++)
 			this.deleteTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
+	@Test
+	public void acceptDriver() {
+		final Object testingData[][] = {
+			{	//Un chapter acepta una parade
+				"chapter1", "parade2", null
+			}, { //Un chapter no puede aceptar una parade de otro area
+				"chapter2", "parade2", IllegalArgumentException.class
+			}, { //Un chapter sin area no puede aceptar una parade
+				"chapter3", "parade2", NullPointerException.class
+			}, { //Un anónimo no puede aceptar una parade
+				null, "parade2", IllegalArgumentException.class
+			}, { //Un member no puede aceptar una parade
+				"member1", "parade2", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.acceptTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+	@Test
+	public void rejectDriver() {
+		final Object testingData[][] = {
+			{	//Un chapter rechaza una parade
+				"chapter1", "parade2", "rejected", null
+			}, { //Un chapter no puede rechazar una parade de otro area
+				"chapter2", "parade2", "rejected", IllegalArgumentException.class
+			}, { //Un chapter sin area no puede rechazar una parade
+				"chapter3", "parade2", "rejected", NullPointerException.class
+			}, { //Un anónimo no puede rechazar una parade
+				null, "parade2", "rejected", IllegalArgumentException.class
+			}, { //Un member no puede rechazar una parade
+				"member1", "parade2", "rechazar", IllegalArgumentException.class
+			}, { //No se puede rechazar una parade sin razon
+				"member1", "parade2", "", IllegalArgumentException.class
+			}
+
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.rejectTemplate((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+	}
 
 	// Ancillary methods ------------------------------------------------------
 	protected void createAndSaveTemplate(final String userName, final String title, final String description, final Date moment, final boolean draftMode, final String status, final Class<?> expected) {
@@ -125,6 +167,48 @@ public class ParadeServiceTest extends AbstractTest {
 			paradeId = super.getEntityId(paradeBeanName);
 			parade = this.paradeService.findOne(paradeId);
 			this.paradeService.delete(parade);
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+	protected void acceptTemplate(final String userName, final String paradeBeanName, final Class<?> expected) {
+		Class<?> caught;
+		int paradeId;
+		Parade parade;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			paradeId = super.getEntityId(paradeBeanName);
+			parade = this.paradeService.findOne(paradeId);
+			parade.setStatus("accepted");
+			this.paradeService.save(parade);
+			this.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	protected void rejectTemplate(final String userName, final String paradeBeanName, final String rejectReason, final Class<?> expected) {
+		Class<?> caught;
+		int paradeId;
+		Parade parade;
+
+		caught = null;
+		try {
+			this.authenticate(userName);
+			paradeId = super.getEntityId(paradeBeanName);
+			parade = this.paradeService.findOne(paradeId);
+			parade.setStatus("rejected");
+			parade.setRejectionReason(rejectReason);
+			this.paradeService.save(parade);
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

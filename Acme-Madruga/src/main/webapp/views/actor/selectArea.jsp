@@ -12,30 +12,28 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="actor/editBrotherhood.do"
-	modelAttribute="editBrotherhoodForm">
+<form:form action="actor/selectArea.do"
+	modelAttribute="selectAreaForm">
 
-	<acme:textbox code="actor.title" path="title"/>
+	<jstl:choose>
+		<jstl:when test="${!areas.isEmpty()}">
+			<form:label path="areas">
+				<spring:message code="actor.areaWarning" />:
+			</form:label>
+			<br />
+			<form:select path="areas">
+				<form:options items="${areas}" />
+			</form:select>
+			<br />
+		</jstl:when>
+		<jstl:otherwise>
 
-	<acme:textbox code="actor.establishment" path="establishment"/>
+		</jstl:otherwise>
+	</jstl:choose>
 	
-	<acme:textbox code="actor.pictures" path="pictures"/>
+	<br/>
 	
-	<acme:textbox code="actor.name" path="name"/>
-	
-	<acme:textbox code="actor.middlename" path="middleName"/>
-	
-	<acme:textbox code="actor.surname" path="surname"/>
-
-	<acme:textbox code="actor.photo" path="photo"/>
-	
-	<acme:textbox code="actor.email" path="email"/>
-	
-	<acme:textbox code="actor.phone" path="phone"/>
-	
-	<acme:textbox code="actor.address" path="address"/>
-
 	<acme:submit name="save" code="actor.save"/>
 		
-	<acme:cancel url="actor/display.do" code="actor.cancel"/>	
+	<acme:cancel url="/" code="actor.cancel"/>	
 </form:form>

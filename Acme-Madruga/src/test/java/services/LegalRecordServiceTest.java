@@ -24,18 +24,21 @@ public class LegalRecordServiceTest extends AbstractTest {
 	private LegalRecordService	legalRecordService;
 
 
+	// Covers 5.4% of the data in the project
+	//Covers 1561 sentences
+
 	@Test
 	public void createAndSaveLegalRecordDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de un legal record
+			{	//Legal record create
 				"brotherhood1", "title", "description", "law", "legalName", 10, null
-			}, {//Anonimo no puede crear un legal record
+			}, {//Anon cannot create legal record
 				null, "title", "description", "law", "legalName", 10, IllegalArgumentException.class
-			}, {//Solo brotherhood puede crear un legal record
+			}, {//Only brotherhood can create legal record
 				"member1", "title", "description", "law", "legalName", 10, IllegalArgumentException.class
-			}, {//Un brotherhood sin inception record no puede tener un legal record
+			}, {//Brotherhood without inception record cannot create legal record
 				"brotherhood2", "title", "description", "law", "legalName", 10, NullPointerException.class
-			}, {//Un brotherhood no puede tener un legal record sin legal name
+			}, {//Brotherhood cannot create legal record without legal name
 				"brotherhood1", "title", "description", "law", null, 10, ConstraintViolationException.class
 			}
 		};
@@ -54,13 +57,13 @@ public class LegalRecordServiceTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood elimina correctamente un legal recod
+			{	//Legal record delete
 				"brotherhood1", "legalRecord1", null
-			}, { //Una brotherhood no puede eliminar un legal record de otra
+			}, { //Brotherhood cannot delete another one's legal record
 				"brotherhood2", "legalRecord1", IllegalArgumentException.class
-			}, { //Sólo una brotherhood puede eliminar un legal record
+			}, { //Only brotherhood can delete legal record
 				"member1", "legalRecord1", IllegalArgumentException.class
-			}, { //Un anónimo no puede eliminar un legal recod
+			}, { //Anon cannot delete legal record
 				null, "legalRecord1", IllegalArgumentException.class
 			}
 
@@ -84,6 +87,7 @@ public class LegalRecordServiceTest extends AbstractTest {
 			legalRecord.setTitle(title);
 			legalRecord.setVAT(VAT);
 			this.legalRecordService.save(legalRecord);
+			this.legalRecordService.flush();
 
 			this.unauthenticate();
 
@@ -105,6 +109,7 @@ public class LegalRecordServiceTest extends AbstractTest {
 			legalRecordId = super.getEntityId(legalRecordBeanName);
 			legalRecord = this.legalRecordService.findOne(legalRecordId);
 			this.legalRecordService.delete(legalRecord);
+			this.legalRecordService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

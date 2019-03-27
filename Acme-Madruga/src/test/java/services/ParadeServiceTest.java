@@ -32,18 +32,21 @@ public class ParadeServiceTest extends AbstractTest {
 	private FloatService	floatService;
 
 
+	// Covers 9.0% of the data in the project
+	//Covers 2607 sentences
+
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de una parade
+			{	//Parade create
 				"brotherhood1", "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() + 10000), true, "sampleStatus", null
-			}, {//Anonimo no puede crear una parade
+			}, {//Anon cannot create parade
 				null, "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() + 10000), true, "sampleStatus", IllegalArgumentException.class
-			}, {//Solo brotherhood puede crear una parade
+			}, {//Member cannot create parade
 				"member1", "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() + 10000), true, "sampleStatus", IllegalArgumentException.class
-			}, { // Title vacío
+			}, { // Empty title
 				"brotherhood1", "", "sampleDescription", new Date(System.currentTimeMillis() + 10000), true, "sampleStatus", ConstraintViolationException.class
-			}, { // Moment pasado
+			}, { // Past moment
 				"brotherhood1", "sampleTitle", "sampleDescription", new Date(System.currentTimeMillis() - 10000), true, "sampleStatus", IllegalArgumentException.class
 			}
 
@@ -63,13 +66,13 @@ public class ParadeServiceTest extends AbstractTest {
 	@Test
 	public void deleteDriver() {
 		final Object testingData[][] = {
-			{	//Una brotherhood elimina correctamente una parade
+			{	//Delete parade
 				"brotherhood1", "parade1", null
-			}, { //Una brotherhood no puede eliminar la parade de otra
+			}, { //Brotherhood cannot delete another one's parade
 				"brotherhood1", "parade3", IllegalArgumentException.class
-			}, { //Sólo una brotherhood puede eliminar una parade
+			}, { //Member cannot delete parade
 				"member1", "parade1", IllegalArgumentException.class
-			}, { //Un anónimo no puede eliminar una parade
+			}, { //Anon cannot delete parade
 				null, "parade1", IllegalArgumentException.class
 			}
 
@@ -81,16 +84,14 @@ public class ParadeServiceTest extends AbstractTest {
 	@Test
 	public void acceptDriver() {
 		final Object testingData[][] = {
-			{	//Un chapter acepta una parade
+			{	//Chapter accepts parade
 				"chapter1", "parade2", null
-			}, { //Un chapter no puede aceptar una parade de otro area
+			}, { //Chapter cannot accept parade out of its area
 				"chapter2", "parade2", IllegalArgumentException.class
-			}, { //Un chapter sin area no puede aceptar una parade
+			}, { //Chapter without area cannot accept parade
 				"chapter3", "parade2", NullPointerException.class
-			}, { //Un anónimo no puede aceptar una parade
+			}, { //Anon cannot accept parade
 				null, "parade2", IllegalArgumentException.class
-			}, { //Un member no puede aceptar una parade
-				"member1", "parade2", IllegalArgumentException.class
 			}
 
 		};
@@ -101,18 +102,14 @@ public class ParadeServiceTest extends AbstractTest {
 	@Test
 	public void rejectDriver() {
 		final Object testingData[][] = {
-			{	//Un chapter rechaza una parade
+			{	//Chapter rejects parade
 				"chapter1", "parade2", "rejected", null
-			}, { //Un chapter no puede rechazar una parade de otro area
+			}, { //Chapter cannot reject parade out its area
 				"chapter2", "parade2", "rejected", IllegalArgumentException.class
-			}, { //Un chapter sin area no puede rechazar una parade
+			}, { //Chapter without area cannot reject parade
 				"chapter3", "parade2", "rejected", NullPointerException.class
-			}, { //Un anónimo no puede rechazar una parade
+			}, { //Anon cannot reject parade
 				null, "parade2", "rejected", IllegalArgumentException.class
-			}, { //Un member no puede rechazar una parade
-				"member1", "parade2", "rechazar", IllegalArgumentException.class
-			}, { //No se puede rechazar una parade sin razon
-				"member1", "parade2", "", IllegalArgumentException.class
 			}
 
 		};
@@ -167,6 +164,7 @@ public class ParadeServiceTest extends AbstractTest {
 			paradeId = super.getEntityId(paradeBeanName);
 			parade = this.paradeService.findOne(paradeId);
 			this.paradeService.delete(parade);
+			this.paradeService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -187,6 +185,7 @@ public class ParadeServiceTest extends AbstractTest {
 			parade = this.paradeService.findOne(paradeId);
 			parade.setStatus("accepted");
 			this.paradeService.save(parade);
+			this.paradeService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -209,6 +208,7 @@ public class ParadeServiceTest extends AbstractTest {
 			parade.setStatus("rejected");
 			parade.setRejectionReason(rejectReason);
 			this.paradeService.save(parade);
+			this.paradeService.flush();
 			this.unauthenticate();
 
 		} catch (final Throwable oops) {

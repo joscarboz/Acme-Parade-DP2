@@ -1,8 +1,5 @@
-
 package services;
 
-import java.util.Calendar;
-import java.util.Collection;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +10,9 @@ import org.springframework.util.Assert;
 import repositories.ProclaimRepository;
 import domain.Chapter;
 import domain.Proclaim;
+import java.util.Calendar;
+import java.util.Collection;
+
 
 @Service
 @Transactional
@@ -35,14 +35,14 @@ public class ProclaimService {
 
 	}
 
-	public Proclaim findOne(final Integer proclaimId) {
+	public Proclaim findOne(final int proclaimId) {
 		Assert.isTrue(proclaimId != 0);
+
 		Proclaim result;
 
 		result = this.proclaimRepository.findOne(proclaimId);
 
 		return result;
-
 	}
 
 	public Collection<Proclaim> findAll() {

@@ -35,17 +35,19 @@ public class FinderServiceTest extends AbstractTest {
 
 
 	// Tests ------------------------------------------------------------------
+	// Covers 4.8% of the data in the project
+	//Covers 1387 sentences
 
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
-			{	//Creación correcta de un Finder
+			{	// Finder creation
 				"member1", "sampleKeyword", this.fechaMinima, this.fechaMáxima, "sampleArea", null
-			}, { //Brotherhood no puede crear un Finder
+			}, { //Brotherhood cannot create Finder
 				"brotherhood1", "sampleKeyword", this.fechaMinima, this.fechaMáxima, "sampleArea", IllegalArgumentException.class
-			}, { //Admin no puede crear un Finder
+			}, { //Admin cannot create Finder
 				"admin", "sampleKeyword", this.fechaMinima, this.fechaMáxima, "sampleArea", IllegalArgumentException.class
-			}, { // Anonimo no puede crear un Finder
+			}, { // Anonimo cannot create Finder
 				null, "", this.fechaMinima, this.fechaMáxima, "sampleArea", IllegalArgumentException.class
 			}
 		};

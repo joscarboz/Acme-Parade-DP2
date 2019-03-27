@@ -38,7 +38,6 @@ public class ChapterService {
 	@Autowired
 	private ChapterRepository	chapterRepository;
 
-
 	// Constructor ----------------------------------------------------
 
 	public ChapterService() {
@@ -103,6 +102,7 @@ public class ChapterService {
 	
 	public Chapter save(final Chapter chapter) {
 		Assert.notNull(chapter);
+		
 		Chapter result;
 		result = this.chapterRepository.save(chapter);
 		return result;

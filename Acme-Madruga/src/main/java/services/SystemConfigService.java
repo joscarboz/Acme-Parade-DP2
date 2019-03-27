@@ -106,6 +106,7 @@ public class SystemConfigService {
 		String spamWords = "";
 		String positiveWords = "";
 		String negativeWords = "";
+		String creditCardMakes = "";
 		for (final String s : systemConfig.getSpamWords())
 			if (spamWords == "")
 				spamWords = s;
@@ -123,9 +124,16 @@ public class SystemConfigService {
 				negativeWords = s;
 			else
 				negativeWords = negativeWords + ", " + s;
+		
+		for (final String s : systemConfig.getCreditCardMakes())
+			if (creditCardMakes == "")
+				creditCardMakes = s;
+			else
+				creditCardMakes = creditCardMakes + ", " + s;
 		result.setSpamWords(spamWords);
 		result.setPositiveWords(positiveWords);
 		result.setNegativeWords(negativeWords);
+		result.setCreditCardMakes(creditCardMakes);
 		return result;
 	}
 
@@ -143,6 +151,7 @@ public class SystemConfigService {
 		final Set<String> negativeWords = new HashSet<String>();
 		final Set<String> positiveWords = new HashSet<String>();
 		final Set<String> spamWords = new HashSet<String>();
+		final Set<String> creditCardMakes = new HashSet<String>();
 
 		final String[] negwords = systemConfigForm.getNegativeWords().split(",");
 		for (final String string : negwords)
@@ -155,10 +164,15 @@ public class SystemConfigService {
 		final String[] spwords = systemConfigForm.getSpamWords().split(",");
 		for (final String string : spwords)
 			spamWords.add(string.trim());
+		
+		final String[] cCardMakes = systemConfigForm.getCreditCardMakes().split(",");
+		for (final String string : cCardMakes)
+			creditCardMakes.add(string.trim());
 
 		result.setNegativeWords(negativeWords);
 		result.setPositiveWords(positiveWords);
 		result.setSpamWords(spamWords);
+		result.setCreditCardMakes(creditCardMakes);
 		return result;
 	}
 	public void flush() {

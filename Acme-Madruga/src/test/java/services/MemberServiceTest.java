@@ -42,12 +42,14 @@ public class MemberServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{	//Creación correcta de un Member
 				"member1","enrolment1", "request1", null
-			},{	//Creación correcta de un Member
+			},{	//Creación incorrecta de un Member falta enrolment
 				"member1","", "", NumberFormatException.class
-			},{	//Creación correcta de un Member
+			},{	//Creación incorrecta de un Member falta requets
 				"member1","enrolment1", "", NumberFormatException.class
-			},{	//Creación correcta de un Member
+			},{	//Creación incorrecta de un Member fata tanto request como enrolments
 				"member1","", "request1", NumberFormatException.class
+			},{	//Creación incorrecta de un Member fata actor
+				"","enrolment1", "request1", NumberFormatException.class
 			}
 			
 		};

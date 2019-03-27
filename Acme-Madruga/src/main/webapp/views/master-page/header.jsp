@@ -11,6 +11,7 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
@@ -130,6 +131,10 @@
 								code="master.page.brotherhood.member" /></a></li>
 					<li><a href="history/brotherhood/display.do"><spring:message
 								code="master.page.brotherhood.history" /></a></li>
+					<jstl:if test="${!isAreaSet}">
+					<li><a href="actor/selectArea.do"><spring:message
+								code="master.page.setArea" /></a></li>
+					</jstl:if>
 
 				</ul></li>
 		</security:authorize>
@@ -143,6 +148,13 @@
 								code="master.page.chapter.parades" /></a></li>
 					<li><a href="proclaim/chapter/list.do"><spring:message
 								code="master.page.chapter.proclaims" /></a></li>
+					<li><a href="actor/selectArea.do"><spring:message
+								code="master.page.brotherhood.history" /></a></li>
+					<jstl:if test="${!isAreaSet}">
+					<li><a href="actor/selectArea.do"><spring:message
+								code="master.page.setArea" /></a></li>
+					</jstl:if>
+					
 				</ul></li>
 		</security:authorize>
 

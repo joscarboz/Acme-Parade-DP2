@@ -71,7 +71,7 @@ public class SponsorshipSponsorController extends AbstractController {
 		res = this.sponsorshipService.findOne(sponsorshipId);
 		Assert.isTrue(sponsorships.contains(res));
 		result = new ModelAndView("sponsorship/display");
-		result.addObject("res", res);
+		result.addObject("sponsorship", res);
 
 		return result;
 	}
@@ -80,48 +80,91 @@ public class SponsorshipSponsorController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int paradeId) {
-		ModelAndView result;
+		final ModelAndView result;
 		final SponsorshipForm sponsorshipForm = new SponsorshipForm();
 		final Sponsorship sponsorship = new Sponsorship();
 		final CreditCard creditCard = new CreditCard();
 
-		result = new ModelAndView("sponsorship/edit");
-		result.addObject("paradeId", paradeId);
-		result.addObject("sponsorshipForm", sponsorshipForm);
-		result.addObject("sponsorship", sponsorship);
-		result.addObject("creditCard", creditCard);
-		result.addObject("requestURI", "sponsorship/sponsor/create.do");
+		result = this.createEditModelAndView(sponsorshipForm, paradeId, creditCard, sponsorship);
 
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final SponsorshipForm sponsorshipForm, final BindingResult binding, @RequestParam final int tutorialId) {
+	@RequestMapping(value = "/disable", method = RequestMethod.GET)
+	public ModelAndView disable(@RequestParam final int sponsorshipId) {
 		ModelAndView result;
-		final Sponsorship sponsorship = new Sponsorship();
+
+		this.sponsorshipService.disable(sponsorshipId);
+		result = new ModelAndView("redirect:display.do?sponsorshipId=" + sponsorshipId);
+		return result;
+	}
+
+	@RequestMapping(value = "/enable", method = RequestMethod.GET)
+	public ModelAndView enable(@RequestParam final int sponsorshipId) {
+		ModelAndView result;
+
+		this.sponsorshipService.enable(sponsorshipId);
+		result = new ModelAndView("redirect:display.do?sponsorshipId=" + sponsorshipId);
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int sponsorshipId) {
+		final ModelAndView result;
+		final SponsorshipForm sponsorshipForm = new SponsorshipForm();
+		final Sponsorship sponsorship = this.sponsorshipService.findOne(sponsorshipId);
+		final CreditCard creditCard = sponsorship.getCreditCard();
+		final int paradeId = sponsorship.getParade().getId();
+		sponsorshipForm.setBanner(sponsorship.getBanner());
+		sponsorshipForm.setCvv(creditCard.getCvv());
+		sponsorshipForm.setExpirationMonth(creditCard.getExpirationMonth());
+		sponsorshipForm.setExpirationYear(creditCard.getExpirationYear());
+		sponsorshipForm.setHolder(creditCard.getHolder());
+		sponsorshipForm.setId(sponsorship.getId());
+		sponsorshipForm.setMake(creditCard.getMake());
+		sponsorshipForm.setNumber(creditCard.getNumber());
+		sponsorshipForm.setParade(sponsorship.getParade());
+		sponsorshipForm.setTargetUrl(sponsorship.getTargetUrl());
+		sponsorshipForm.setVersion(sponsorship.getVersion());
+
+		result = this.createEditModelAndView(sponsorshipForm, paradeId, creditCard, sponsorship);
+
+		return result;
+	}
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid final SponsorshipForm sponsorshipForm, final BindingResult binding) {
+		ModelAndView result;
+		Sponsorship sponsorship = new Sponsorship();
 		final CreditCard creditCard = new CreditCard();
+
+		if (sponsorshipForm.getId() != 0) {
+			sponsorship = this.sponsorshipService.findOne(sponsorshipForm.getId());
+			creditCard.setId(sponsorship.getCreditCard().getId());
+			creditCard.setVersion(sponsorship.getCreditCard().getVersion());
+		}
 
 		creditCard.setMake(sponsorshipForm.getMake());
 		creditCard.setCvv(sponsorshipForm.getCvv());
 		creditCard.setExpirationMonth(sponsorshipForm.getExpirationMonth());
-		creditCard.setExpirationYear(sponsorshipForm.getExpirationMonth());
+		creditCard.setExpirationYear(sponsorshipForm.getExpirationYear());
 		creditCard.setHolder(sponsorshipForm.getHolder());
 		creditCard.setNumber(sponsorshipForm.getNumber());
-
+		sponsorship.setId(sponsorshipForm.getId());
 		sponsorship.setBanner(sponsorshipForm.getBanner());
 		sponsorship.setTargetUrl(sponsorshipForm.getTargetUrl());
 		//sponsorship.setSponsor((Sponsor) this.actorService.findByPrincipal());
-		sponsorship.setParade(this.paradeService.findOne(tutorialId));
+		final int paradeId = sponsorshipForm.getParade().getId();
+		sponsorship.setParade(this.paradeService.findOne(paradeId));
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(sponsorshipForm, tutorialId, creditCard, sponsorship);
+			result = this.createEditModelAndView(sponsorshipForm, paradeId, creditCard, sponsorship);
 		else
 			try {
 				this.sponsorshipService.save(sponsorship, creditCard);
-				result = new ModelAndView("redirect:/tutorial/sponsor/list.do?");
+				result = new ModelAndView("redirect:/sponsorship/sponsor/list.do?");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(sponsorshipForm, tutorialId, creditCard, sponsorship, "sponsorshipForm.commit.error");
-				result.addObject("tutorialId", tutorialId);
+				result = this.createEditModelAndView(sponsorshipForm, paradeId, creditCard, sponsorship, "sponsorshipForm.commit.error");
+				result.addObject("paradeId", paradeId);
 				result.addObject("sponsorshipForm", sponsorshipForm);
 				result.addObject("sponsorship", sponsorship);
 				result.addObject("creditCard", creditCard);
@@ -144,8 +187,8 @@ public class SponsorshipSponsorController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("sponsorship/edit");
+		sponsorshipForm.setParade(this.paradeService.findOne(paradeId));
 		result.addObject("sponsorshipForm", sponsorshipForm);
-		result.addObject("paradeId", paradeId);
 		result.addObject("creditCard", creditCard);
 		result.addObject("sponsorship", sponsorship);
 		result.addObject("message", messageCode);

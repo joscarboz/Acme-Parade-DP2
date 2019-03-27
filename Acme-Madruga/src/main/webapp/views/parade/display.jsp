@@ -11,6 +11,13 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+
+<jstl:if test="${sponsorship != null}">
+<img src="${sponsorship.banner}" height="100" width="100" alt="${sponsorship.banner}">
+</jstl:if>
+
+<br/>
+
 <b><spring:message code="parade.ticker" /></b>
 <jstl:out value="${parade.ticker}" />
 <br />
@@ -51,17 +58,19 @@
 	<spring:message code="float.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}"
 		sortable="true" />
+	<security:authorize access="hasRole('SPONSOR')">
+		<display:column>
+			<a href="sponsorship/sponsor/create.do?paradeId=${parade.id}"> <spring:message
+					code="sponsorship.create" />
+			</a>
+		</display:column>
+	</security:authorize>
+
 </display:table>
 <br />
 
 
-<security:authorize access="hasRole('SPONSOR')">
-	<display:column>
-		<a href="sponsorship/sponsor/create.do?paradeId=${parade.id}"> <spring:message
-				code="sponsorship.create" />
-		</a>
-	</display:column>
-</security:authorize>
+
 
 <jstl:choose>
 	<jstl:when test="${role == 'brotherhood'}">

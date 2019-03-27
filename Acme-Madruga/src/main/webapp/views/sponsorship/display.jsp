@@ -16,7 +16,7 @@
 <br />
 
 <b><spring:message code="sponsorship.targetURL" /></b>
-<jstl:out value="${sponsorship.targetURL}" />
+<jstl:out value="${sponsorship.targetUrl}" />
 <br />
 
 <b><spring:message code="sponsorship.active" /></b>
@@ -26,3 +26,9 @@
 <b><spring:message code="sponsorship.parade" /></b>
 <jstl:out value="${sponsorship.parade.title}" />
 <br />
+
+<b><spring:message code="sponsorship.fare" /></b>
+<jstl:out value="${sponsorship.fare}" />
+<br />
+
+

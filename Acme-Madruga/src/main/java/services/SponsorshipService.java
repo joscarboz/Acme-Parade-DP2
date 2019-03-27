@@ -1,8 +1,11 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -27,6 +30,12 @@ public class SponsorshipService {
 
 	@Autowired
 	private CreditCardService		creditCardService;
+
+	@Autowired
+	private SponsorService			sponsorService;
+
+	@Autowired
+	private SystemConfigService		systemConfigService;
 
 
 	public Sponsorship create() {
@@ -61,27 +70,25 @@ public class SponsorshipService {
 		this.sponsorshipRepository.delete(sponsorship);
 	}
 
-	public Sponsorship save(final Sponsorship sponsorship, CreditCard creditCard) {
+	public Sponsorship save(final Sponsorship sponsorship, final CreditCard creditCard) {
 		Sponsorship result;
 		Sponsor sponsor;
 		Assert.notNull(sponsorship);
 		Assert.notNull(creditCard);
 
-		this.creditCardService.save(creditCard);
-		this.creditCardService.flush();
-		creditCard = this.creditCardService.findByNumber(creditCard.getNumber());
-		sponsorship.setCreditCard(creditCard);
-		if (sponsorship.getId() == 0) {
-			sponsorship.setFare(0.0);
-			sponsorship.setActive(true);
-		}
+		final CreditCard savedCreditCard = this.creditCardService.save(creditCard);
+		sponsorship.setCreditCard(savedCreditCard);
 		result = this.sponsorshipRepository.save(sponsorship);
-		sponsor = (Sponsor) this.actorService.findByPrincipal();
-		sponsor.getSponsorships().add(result);
+
+		if (sponsorship.getId() == 0) {
+			sponsor = this.sponsorService.findByPrincipal();
+			sponsor.getSponsorships().add(result);
+			this.sponsorService.save(sponsor);
+
+		}
 
 		return result;
 	}
-
 	public Collection<Sponsorship> findByParadeId(final int paradeId) {
 		Collection<Sponsorship> result;
 		result = this.sponsorshipRepository.findByParadeId(paradeId);
@@ -104,5 +111,44 @@ public class SponsorshipService {
 			sponsorship.setActive(false);
 			this.sponsorshipRepository.save(sponsorship);
 		}
+	}
+
+	public Sponsorship disable(final int sponsorshipId) {
+		Sponsorship result;
+
+		final Sponsorship sponsorship = this.findOne(sponsorshipId);
+		Assert.isTrue(this.sponsorService.findByPrincipal().getSponsorships().contains(sponsorship));
+		sponsorship.setActive(false);
+		result = this.sponsorshipRepository.save(sponsorship);
+
+		return result;
+	}
+
+	public Sponsorship enable(final int sponsorshipId) {
+		Sponsorship result;
+
+		final Sponsorship sponsorship = this.findOne(sponsorshipId);
+		Assert.isTrue(this.sponsorService.findByPrincipal().getSponsorships().contains(sponsorship));
+		sponsorship.setActive(true);
+		result = this.sponsorshipRepository.save(sponsorship);
+
+		return result;
+
+	}
+
+	public Sponsorship randomSponsorshipFromParade(final int id) {
+		final Sponsorship result;
+		final List<Sponsorship> sponsorships = new ArrayList<Sponsorship>(this.sponsorshipRepository.findActiveByParadeId(id));
+		if (sponsorships.isEmpty())
+			return null;
+		final Random random = new Random();
+		final int randomInt = random.nextInt(sponsorships.size());
+		final Sponsorship sponsorship = sponsorships.get(randomInt);
+		final double fare = this.systemConfigService.findSystemConfiguration().getFareCharge();
+
+		sponsorship.setFare(sponsorship.getFare() + fare);
+		result = this.sponsorshipRepository.save(sponsorship);
+
+		return result;
 	}
 }

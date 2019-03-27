@@ -3,7 +3,6 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,26 +72,14 @@ public class ParadeController extends AbstractController {
 	public ModelAndView display(@RequestParam final int paradeId) {
 		ModelAndView result;
 		final Parade parade;
-		Collection<Sponsorship> sponsorships;
-		Random rnd;
 		Sponsorship sponsorship;
-		String banner;
 
 		parade = this.paradeService.findOne(paradeId);
 		final Collection<Float> floats = parade.getFloats();
-		sponsorships = this.sponsorshipService.findByParadeId(paradeId);
 
 		result = new ModelAndView("parade/display");
-		if (sponsorships.size() > 0) {
-			rnd = new Random();
-			sponsorship = (Sponsorship) sponsorships.toArray()[rnd.nextInt(sponsorships.size())];
-			sponsorship.setFare(sponsorship.getFare() + this.systemConfigService.findSystemConfiguration().getFareCharge());
-			banner = sponsorship.getBanner();
-			result.addObject("banner", banner);
-			result.addObject("bannerLink", sponsorship.getTargetUrl());
-
-		}
-
+		sponsorship = this.sponsorshipService.randomSponsorshipFromParade(paradeId);
+		result.addObject("sponsorship", sponsorship);
 		result.addObject("floats", floats);
 		result.addObject("parade", parade);
 		result.addObject("role", "none");

@@ -10,71 +10,29 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <form:form action="sponsorship/sponsor/edit.do"
 	modelAttribute="sponsorshipForm">
+	
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="parade" />
+	
+	<b><spring:message code="sponsorship.sponsorship"/></b>
+	<acme:textbox code="sponsorship.banner" path="banner" />
+	<acme:textbox code="sponsorship.targetURL" path="targetUrl" />
+	
+	<b><spring:message code="sponsorship.creditCard"/></b>
+	<acme:textbox code="sponsorship.holder" path="holder" />
+	<acme:textbox code="sponsorship.make" path="make" />
+	<acme:textbox code="sponsorship.number" path="number" />
+	<acme:textbox code="sponsorship.expirationmonth" path="expirationMonth" />
+	<acme:textbox code="sponsorship.expirationyear" path="expirationYear" />
+	<acme:textbox code="sponsorship.cvv" path="cvv" />
+	
 
-	<input type="hidden" name="paradeId" value="${paradeId}">
-	<input type="hidden" name="sponsorship" value="${sponsorship}">
-	<input type="hidden" name="creditCard" value="${creditCard}">
-
-	<form:label path="banner">
-		<spring:message code="sponsorship.banner" />:
-	</form:label>
-	<form:input path="banner" />
-	<form:errors cssClass="error" path="banner" >
-	</form:errors>
-	<br />
-
-	<form:label path="infoPage">
-		<spring:message code="sponsorship.infoPage" />:
-	</form:label>
-	<form:input path="infoPage" />
-	<form:errors cssClass="error" path="infoPage" />
-	<br />
-
-
-	<form:label path="holdername">
-		<spring:message code="sponsorship.holdername" />:
-	</form:label>
-	<form:input path="holdername" />
-	<form:errors cssClass="error" path="holdername" />
-	<br />
-
-	<form:label path="brandname">
-		<spring:message code="sponsorship.brandname" />:
-	</form:label>
-	<form:input path="brandname" />
-	<form:errors cssClass="error" path="brandname" />
-	<br />
-
-	<form:label path="number">
-		<spring:message code="sponsorship.number" />:
-	</form:label>
-	<form:input path="number" />
-	<form:errors cssClass="error" path="number" />
-	<br />
-
-	<form:label path="expirationmonth">
-		<spring:message code="sponsorship.expirationmonth" />:
-	</form:label>
-	<form:input path="expirationmonth" />
-	<form:errors cssClass="error" path="expirationmonth" />
-	<br />
-
-	<form:label path="expirationyear">
-		<spring:message code="sponsorship.expirationyear" />:
-	</form:label>
-	<form:input path="expirationyear" />
-	<form:errors cssClass="error" path="expirationyear" />
-	<br />
-
-	<form:label path="cvv">
-		<spring:message code="sponsorship.cvv" />:
-	</form:label>
-	<form:input path="cvv" />
-	<form:errors cssClass="error" path="cvv" />
-	<br />
+	
 
 	<input type="submit" name="save"
 		value="<spring:message code="sponsorship.save" />" />

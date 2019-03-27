@@ -9,7 +9,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <!--  Listing grid -->
 
@@ -17,28 +17,44 @@
 	requestURI="sponsorship/sponsor/list.do" id="row">
 
 	<!-- Attributes -->
-	
-	<spring:message code="sponsor.banner" var="bannerHeader" />
+
+	<spring:message code="sponsorship.banner" var="bannerHeader" />
 	<display:column property="banner" title="${bannerHeader}"
 		sortable="false" />
 
-	<spring:message code="sponsor.targetURL" var="targetUrlHeader" />
-	<display:column property="targetURL" title="${targetUrlHeader}"
+	<spring:message code="sponsorship.targetURL" var="targetUrlHeader" />
+	<display:column property="targetUrl" title="${targetUrlHeader}"
 		sortable="false" />
-		
+
 	<!-- Actions -->
-		
+
 	<display:column>
-		<a href="sponsorship/sponsor/display.do?sponsorshipId=${row.id}"> <spring:message
-				code="sponsorship.display" />
+		<a href="sponsorship/sponsor/display.do?sponsorshipId=${row.id}">
+			<spring:message code="sponsorship.display" />
 		</a>
 	</display:column>
-	
+
 	<display:column>
 		<a href="sponsorship/sponsor/edit.do?sponsorshipId=${row.id}"> <spring:message
 				code="sponsorship.edit" />
 		</a>
 	</display:column>
-	
+
+	<display:column>
+		<jstl:choose>
+			<jstl:when test="${row.active}">
+				<a href="sponsorship/sponsor/disable.do?sponsorshipId=${row.id}">
+					<spring:message code="sponsorship.disable" />
+				</a>
+			</jstl:when>
+			<jstl:otherwise>
+				<a href="sponsorship/sponsor/enable.do?sponsorshipId=${row.id}">
+					<spring:message code="sponsorship.enable" />
+				</a>
+			</jstl:otherwise>
+		</jstl:choose>
+
+	</display:column>
+
 </display:table>
-<br/>
+<br />

@@ -59,6 +59,7 @@
 									code="master.page.profile" /></a></li>
 						<li><a href="actor/edit.do"><spring:message
 									code="master.page.profile.edit" /></a></li>
+						
 					</security:authorize>
 					<li><a href="message/list.do?boxName=in box"><spring:message
 								code="master.page.profile.messages" /></a></li>
@@ -145,6 +146,11 @@
 								code="master.page.chapter.proclaims" /></a></li>
 				</ul></li>
 		</security:authorize>
+		<security:authorize access="hasRole('SPONSOR')">
+			<li><a href="sponsorship/sponsor/list.do"><spring:message
+								code="master.page.sponsorship.list" /></a></li>
+		</security:authorize>
+		
 
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message

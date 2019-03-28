@@ -11,7 +11,7 @@
 	">
 
 	<!-- User accounts -->
-<bean id="userAccount1" class="security.UserAccount">
+	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
 		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
@@ -159,9 +159,20 @@
 				<value>desastroso</value>
 			</list>
 		</property>
+		<property name="creditCardMakes">
+			<list>
+				<value>VISA</value>
+				<value>MCARD</value>
+				<value>AMEX</value>
+				<value>DINNERS</value>
+				<value>FLY</value>
+			</list>
+		</property>
+		<property name="VAT" value="21" />
+		<property name="fareCharge" value="12.23" />
 
 	</bean>
-	
+
 	<!-- Positions -->
 
 
@@ -220,6 +231,6 @@
 		<property name="spanishTitle" value="Vocal" />
 
 	</bean>
-	
+
 
 </beans>

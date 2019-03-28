@@ -43,8 +43,8 @@ public class ChapterServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{	//Creación correcta de un Chapter
 				"chapter1","area1","titulo","proclaim1", null
-			},{	//Creación correcta de un Chapter
-				"chapter1","area1","titulo","proclaim1", null
+			},{	//Creación incorrecta de un Chapter area ya asignada
+				"chapter1","area2","titulo","proclaim1", IllegalArgumentException.class
 			}
 		};
 

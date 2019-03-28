@@ -158,4 +158,9 @@ public class SegmentService {
 		return result;
 
 	}
+
+	public void flush() {
+		this.segmentRepository.flush();
+
+	}
 }

@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
@@ -43,6 +44,7 @@ public class Sponsorship extends DomainEntity {
 		this.targetUrl = targetUrl;
 	}
 
+	@Range(min = 0)
 	public Double getFare() {
 		return this.fare;
 	}

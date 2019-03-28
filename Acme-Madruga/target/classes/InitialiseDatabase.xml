@@ -106,7 +106,7 @@
 
 	<bean id="systemConfig" class="domain.SystemConfig">
 		<property name="name" value="Acme Parade" />
-		<property name="banner" value="https://imgur.com/vZI1Sft" />
+		<property name="banner" value="https://imgur.com/vZI1Sft.png" />
 		<property name="welcomeMessageEng"
 			value="Welcome to Acme Parade, the site to organise your parades." />
 		<property name="welcomeMessageEsp"

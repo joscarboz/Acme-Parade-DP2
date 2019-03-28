@@ -151,8 +151,6 @@
 								code="master.page.chapter.parades" /></a></li>
 					<li><a href="proclaim/chapter/list.do"><spring:message
 								code="master.page.chapter.proclaims" /></a></li>
-					<li><a href="actor/selectArea.do"><spring:message
-								code="master.page.brotherhood.history" /></a></li>
 					<jstl:if test="${!isAreaSet}">
 					<li><a href="actor/selectArea.do"><spring:message
 								code="master.page.setArea" /></a></li>

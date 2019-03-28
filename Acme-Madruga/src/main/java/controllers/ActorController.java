@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import repositories.MessageRepository;
+import repositories.ParadeRepository;
 import security.Authority;
 import services.ActorService;
 import services.AdministratorService;
@@ -28,6 +30,8 @@ import domain.Actor;
 import domain.Area;
 import domain.Brotherhood;
 import domain.Chapter;
+import domain.Message;
+import domain.Parade;
 import domain.SocialProfile;
 import domain.SystemConfig;
 import forms.EditBrotherhoodForm;
@@ -67,6 +71,12 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private SystemConfigService		systemConfigService;
+
+	@Autowired
+	private ParadeRepository		paradeRepository;
+
+	@Autowired
+	private MessageRepository		messageRepository;
 
 
 	//-------------------------------------------------------
@@ -674,15 +684,34 @@ public class ActorController extends AbstractController {
 	public ModelAndView deleteUser() {
 		final Authority authB = new Authority();
 		authB.setAuthority(Authority.BROTHERHOOD);
-		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB))
-			this.brotherhoodService.deleteBrotherhood(this.brotherhoodService.findByPrincipal().getId());
-		else
+		final Authority authC = new Authority();
+		authC.setAuthority(Authority.CHAPTER);
+		final Authority authM = new Authority();
+		authM.setAuthority(Authority.MEMBER);
+		final Collection<Message> messages = this.messageRepository.findbySender(this.actorService.findByPrincipal().getId());
+		for (final Message message : messages)
+			this.messageRepository.delete(message);
+		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authC)) {
+			final Chapter chapter = this.chapterService.findByPrincipal();
+			chapter.setArea(null);
+			this.chapterService.save(chapter);
+			this.actorService.deleteActor(chapter.getId());
+		}
+		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authB)) {
+			final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
+			final Collection<Parade> parades = brotherhood.getParades();
+			for (final Parade parade : parades) {
+				parade.setDraftMode(true);
+				this.paradeRepository.save(parade);
+			}
+			this.brotherhoodService.deleteBrotherhood(brotherhood.getId());
+
+		} else
 			this.actorService.deleteActor(this.actorService.findByPrincipal().getId());
 
 		return new ModelAndView("redirect:/j_spring_security_logout");
 
 	}
-
 	@RequestMapping(value = "/getPersonalData", method = RequestMethod.GET)
 	public ModelAndView getPersonalData() {
 		ModelAndView result;

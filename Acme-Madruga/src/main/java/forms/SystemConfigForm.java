@@ -18,6 +18,8 @@ public class SystemConfigForm {
 	private int		finderMaxResults;
 	private Double	finderCacheHours;
 	private String	creditCardMakes;
+	private int		VAT;
+	private double	fareCharge;
 
 
 	@NotBlank
@@ -106,12 +108,27 @@ public class SystemConfigForm {
 	}
 
 	public String getCreditCardMakes() {
-		return creditCardMakes;
+		return this.creditCardMakes;
 	}
 
-	public void setCreditCardMakes(String creditCardMakes) {
+	public void setCreditCardMakes(final String creditCardMakes) {
 		this.creditCardMakes = creditCardMakes;
 	}
-	
-	
+
+	public int getVAT() {
+		return this.VAT;
+	}
+
+	public void setVAT(final int vAT) {
+		this.VAT = vAT;
+	}
+
+	public double getFareCharge() {
+		return this.fareCharge;
+	}
+
+	public void setFareCharge(final double fareCharge) {
+		this.fareCharge = fareCharge;
+	}
+
 }

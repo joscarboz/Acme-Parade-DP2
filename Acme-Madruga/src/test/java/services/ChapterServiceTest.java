@@ -9,14 +9,14 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import utilities.AbstractTest;
 import domain.Area;
 import domain.Chapter;
 import domain.Proclaim;
-
-import utilities.AbstractTest;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -28,23 +28,24 @@ public class ChapterServiceTest extends AbstractTest {
 	//SUT
 	@Autowired
 	private ChapterService	chapterService;
-	
+
 	@Autowired
-	private AreaService	areaService;
-	
+	private AreaService		areaService;
+
 	@Autowired
 	private ProclaimService	proclaimService;
+
 
 	// Tests ------------------------------------------------------------------
 
 	@Test
 	public void createAndSaveDriver() {
-		
+
 		final Object testingData[][] = {
 			{	//Creación correcta de un Chapter
-				"chapter1","area1","titulo","proclaim1", null
-			},{	//Creación incorrecta de un Chapter area ya asignada
-				"chapter1","area2","titulo","proclaim1", IllegalArgumentException.class
+				"chapter1", "area1", "titulo", "proclaim1", null
+			}, {	//Creación incorrecta de un Chapter area ya asignada
+				"chapter2", "area1", "titulo", "proclaim1", DataIntegrityViolationException.class
 			}
 		};
 
@@ -65,7 +66,7 @@ public class ChapterServiceTest extends AbstractTest {
 		Chapter chapter;
 		Area area;
 		Proclaim proclaim;
-		Collection<Proclaim> proclaims = new ArrayList<>();
+		final Collection<Proclaim> proclaims = new ArrayList<>();
 		final int chapterId;
 		final int areaId;
 		final int proclaimId;

@@ -102,6 +102,8 @@ public class SystemConfigService {
 		result.setPhonePrefix(systemConfig.getPhonePrefix());
 		result.setWelcomeMessageEng(systemConfig.getWelcomeMessageEng());
 		result.setWelcomeMessageEsp(systemConfig.getWelcomeMessageEsp());
+		result.setVAT(systemConfig.getVAT());
+		result.setFareCharge(systemConfig.getFareCharge());
 
 		String spamWords = "";
 		String positiveWords = "";
@@ -124,7 +126,7 @@ public class SystemConfigService {
 				negativeWords = s;
 			else
 				negativeWords = negativeWords + ", " + s;
-		
+
 		for (final String s : systemConfig.getCreditCardMakes())
 			if (creditCardMakes == "")
 				creditCardMakes = s;
@@ -147,6 +149,8 @@ public class SystemConfigService {
 		result.setPhonePrefix(systemConfigForm.getPhonePrefix());
 		result.setWelcomeMessageEng(systemConfigForm.getWelcomeMessageEng());
 		result.setWelcomeMessageEsp(systemConfigForm.getWelcomeMessageEsp());
+		result.setFareCharge(systemConfigForm.getFareCharge());
+		result.setVAT(systemConfigForm.getVAT());
 
 		final Set<String> negativeWords = new HashSet<String>();
 		final Set<String> positiveWords = new HashSet<String>();
@@ -164,7 +168,7 @@ public class SystemConfigService {
 		final String[] spwords = systemConfigForm.getSpamWords().split(",");
 		for (final String string : spwords)
 			spamWords.add(string.trim());
-		
+
 		final String[] cCardMakes = systemConfigForm.getCreditCardMakes().split(",");
 		for (final String string : cCardMakes)
 			creditCardMakes.add(string.trim());

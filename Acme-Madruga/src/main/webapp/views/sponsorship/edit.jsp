@@ -14,25 +14,28 @@
 
 <form:form action="sponsorship/sponsor/edit.do"
 	modelAttribute="sponsorshipForm">
-	
+
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="parade" />
-	
-	<b><spring:message code="sponsorship.sponsorship"/></b>
+
+	<b><spring:message code="sponsorship.sponsorship" /></b>
 	<acme:textbox code="sponsorship.banner" path="banner" />
 	<acme:textbox code="sponsorship.targetURL" path="targetUrl" />
-	
-	<b><spring:message code="sponsorship.creditCard"/></b>
+
+	<b><spring:message code="sponsorship.creditCard" /></b>
 	<acme:textbox code="sponsorship.holder" path="holder" />
-	<acme:textbox code="sponsorship.make" path="make" />
+	<spring:message code="sponsorship.make" />
+	<form:select path="make">
+		<form:options items="${creditCardMakes}" />
+	</form:select>
 	<acme:textbox code="sponsorship.number" path="number" />
 	<acme:textbox code="sponsorship.expirationmonth" path="expirationMonth" />
 	<acme:textbox code="sponsorship.expirationyear" path="expirationYear" />
 	<acme:textbox code="sponsorship.cvv" path="cvv" />
-	
 
-	
+
+
 
 	<input type="submit" name="save"
 		value="<spring:message code="sponsorship.save" />" />

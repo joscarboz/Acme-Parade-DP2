@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,10 +62,14 @@ public class ChapterController extends AbstractController {
 
 		chapter = this.chapterService.findOne(chapterId);
 		area = chapter.getArea();
-		brotherhoods = this.brotherhoodService.findByArea(area.getId());
+		if (area != null)
+			brotherhoods = this.brotherhoodService.findByArea(area.getId());
+		else
+			brotherhoods = Collections.EMPTY_SET;
 
 		result = new ModelAndView("chapter/display");
 		final Collection<SocialProfile> socialProfiles = chapter.getSocialProfiles();
+
 		result.addObject("socialProfiles", socialProfiles);
 
 		result.addObject("brotherhoods", brotherhoods);

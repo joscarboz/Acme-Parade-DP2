@@ -12,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import utilities.AbstractTest;
 import domain.Sponsor;
 import domain.Sponsorship;
-
-import utilities.AbstractTest;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -26,23 +25,26 @@ public class SponsorServiceTest extends AbstractTest {
 
 	//SUT
 	@Autowired
-	private SponsorService	sponsorService;
-	
+	private SponsorService		sponsorService;
+
 	@Autowired
 	private SponsorshipService	sponsorshipService;
 
+
 	// Tests ------------------------------------------------------------------
+	//Data coverage of 3.8%
+	//Sentence coverage of 1160 sentences
 
 	@Test
 	public void createAndSaveDriver() {
 		final Object testingData[][] = {
 			{	//Creación correcta de un Sponsor
-				"sponsor1","sponsorship1", null
-			},{	//Creación incorrecta de un Sponsor falta sponsorship
-				"sponsor1","", NumberFormatException.class
-			},{	//Creación incorrecta de un Sponsorm falta actor
-				"","sponsorship1", NumberFormatException.class
-			}	
+				"sponsor1", "sponsorship1", null
+			}, {	//Creación incorrecta de un Sponsor falta sponsorship
+				"sponsor1", "", AssertionError.class
+			}, {	//Creación incorrecta de un Sponsorm falta actor
+				"", "sponsorship1", AssertionError.class
+			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -57,13 +59,13 @@ public class SponsorServiceTest extends AbstractTest {
 	}
 
 	// Ancillary methods ------------------------------------------------------
-	protected void createAndSaveTemplate(final String name,final String SponsorshipName, final Class<?> expected) {
+	protected void createAndSaveTemplate(final String name, final String SponsorshipName, final Class<?> expected) {
 		Class<?> caught;
 		final int sponsorId;
 		Sponsor sponsor;
 		final int sponsorshipId;
 		Sponsorship sponsorship;
-		Collection<Sponsorship> sponsorships = new ArrayList<>();
+		final Collection<Sponsorship> sponsorships = new ArrayList<>();
 
 		caught = null;
 		try {

@@ -151,4 +151,9 @@ public class SponsorshipService {
 
 		return result;
 	}
+
+	public void flush() {
+		this.sponsorshipRepository.flush();
+
+	}
 }

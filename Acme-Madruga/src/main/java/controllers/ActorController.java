@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import repositories.MessageRepository;
 import repositories.ParadeRepository;
 import security.Authority;
 import services.ActorService;
@@ -29,6 +30,7 @@ import domain.Actor;
 import domain.Area;
 import domain.Brotherhood;
 import domain.Chapter;
+import domain.Message;
 import domain.Parade;
 import domain.SocialProfile;
 import domain.SystemConfig;
@@ -72,6 +74,9 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private ParadeRepository		paradeRepository;
+
+	@Autowired
+	private MessageRepository		messageRepository;
 
 
 	//-------------------------------------------------------
@@ -683,6 +688,9 @@ public class ActorController extends AbstractController {
 		authC.setAuthority(Authority.CHAPTER);
 		final Authority authM = new Authority();
 		authM.setAuthority(Authority.MEMBER);
+		final Collection<Message> messages = this.messageRepository.findbySender(this.actorService.findByPrincipal().getId());
+		for (final Message message : messages)
+			this.messageRepository.delete(message);
 		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authC)) {
 			final Chapter chapter = this.chapterService.findByPrincipal();
 			chapter.setArea(null);

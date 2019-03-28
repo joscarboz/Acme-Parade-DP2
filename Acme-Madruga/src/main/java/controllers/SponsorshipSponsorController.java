@@ -18,6 +18,7 @@ import services.ActorService;
 import services.ParadeService;
 import services.SponsorService;
 import services.SponsorshipService;
+import services.SystemConfigService;
 import domain.CreditCard;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -38,6 +39,9 @@ public class SponsorshipSponsorController extends AbstractController {
 
 	@Autowired
 	private ParadeService		paradeService;
+
+	@Autowired
+	private SystemConfigService	systemConfigService;
 
 
 	// Listing --------------------------------------------------------
@@ -186,8 +190,10 @@ public class SponsorshipSponsorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final SponsorshipForm sponsorshipForm, final int paradeId, final CreditCard creditCard, final Sponsorship sponsorship, final String messageCode) {
 		ModelAndView result;
 
+		final Collection<String> creditCardMakes = this.systemConfigService.findSystemConfiguration().getCreditCardMakes();
 		result = new ModelAndView("sponsorship/edit");
 		sponsorshipForm.setParade(this.paradeService.findOne(paradeId));
+		result.addObject("creditCardMakes", creditCardMakes);
 		result.addObject("sponsorshipForm", sponsorshipForm);
 		result.addObject("creditCard", creditCard);
 		result.addObject("sponsorship", sponsorship);

@@ -48,6 +48,12 @@
 	<acme:textbox code="systemConfig.creditCardsMake" path="creditCardMakes"/>
 	<br />
 	
+	<acme:textbox code="systemConfig.VAT" path="VAT"/>
+	<br />
+	
+	<acme:textbox code="systemConfig.fareCharge" path="fareCharge"/>
+	<br />
+	
 	
 	<acme:submit name="save" code="systemConfig.save" />
 	
